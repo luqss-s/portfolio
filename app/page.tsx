@@ -8,7 +8,7 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-const supabase = createClient(supabaseUrl, supabaseKey);
+const supabase = (supabaseUrl && supabaseKey) ? createClient(supabaseUrl, supabaseKey) : null;
 
 const GithubIcon = ({ size = 24, className = "" }) => (
   <svg
@@ -157,6 +157,7 @@ export default function Portfolio() {
   useEffect(() => {
     setMounted(true);
     const fetchProjects = async () => {
+      if (!supabase) return;
       const { data, error } = await supabase.from("projects").select("*").order("id", { ascending: true });
       if (!error && data) {
         setProjects(data);
