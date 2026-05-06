@@ -166,6 +166,21 @@ export default function Portfolio() {
     fetchProjects();
   }, []);
 
+  // Auto Slideshow Logic
+  useEffect(() => {
+    if (!selectedProject || !Array.isArray(selectedProject.images) || selectedProject.images.length <= 1) return;
+    
+    const interval = setInterval(() => {
+      setSelectedProject(prev => {
+        if (!prev) return null;
+        const nextIndex = ((prev.currentImageIndex || 0) + 1) % prev.images.length;
+        return { ...prev, currentImageIndex: nextIndex };
+      });
+    }, 4000);
+    
+    return () => clearInterval(interval);
+  }, [selectedProject?.title, selectedProject?.images?.length]);
+
   const getYoutubeId = (url: string) => {
     if (!url) return null;
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
@@ -488,8 +503,12 @@ export default function Portfolio() {
 
               {/* Image */}
               <div className="relative h-48 w-full overflow-hidden bg-black/5">
-                {project.image ? (
-                  <img src={project.image} alt={project.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" />
+                {project.images && (Array.isArray(project.images) ? project.images[0] : project.images) ? (
+                  <img 
+                    src={Array.isArray(project.images) ? project.images[0] : project.images} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
+                  />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <Terminal size={32} className="text-black/10" />
@@ -561,7 +580,7 @@ export default function Portfolio() {
               exit={{ y: 30, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 300, damping: 30 }}
               onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-cream border border-black/20 flex flex-col"
+              className="w-full max-w-[1920px] max-h-[95vh] overflow-y-auto bg-cream border border-black/20 flex flex-col"
             >
               {/* Modal Header */}
               <div className="flex items-start justify-between gap-6 p-8 border-b border-black/20">
@@ -585,12 +604,57 @@ export default function Portfolio() {
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-3 flex-1">
-                {/* Left: Image + Description */}
+                {/* Image Gallery & Info */}
                 <div className="lg:col-span-2 p-8 border-r border-black/20 space-y-8">
-                  {/* Image */}
-                  {selectedProject.image && (
-                    <div className="w-full h-64 md:h-80 overflow-hidden bg-black/5">
-                      <img src={selectedProject.image} alt={selectedProject.title} className="w-full h-full object-cover" />
+                  {/* Gallery Slider */}
+                  {selectedProject.images && (
+                    <div className="space-y-4">
+                      <div className="relative w-full aspect-video overflow-hidden bg-black/10 border border-black/10 flex items-center justify-center">
+                        {/* Blurred Background for Portrait Images */}
+                        <div 
+                          className="absolute inset-0 scale-110 blur-2xl opacity-30 pointer-events-none"
+                          style={{
+                            backgroundImage: `url(${Array.isArray(selectedProject.images) 
+                              ? selectedProject.images[selectedProject.currentImageIndex || 0] 
+                              : selectedProject.images})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center'
+                          }}
+                        />
+                        
+                        <AnimatePresence mode="wait">
+                          <motion.img
+                            key={selectedProject.currentImageIndex || 0}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 1.05 }}
+                            transition={{ duration: 0.4 }}
+                            src={Array.isArray(selectedProject.images) 
+                              ? selectedProject.images[selectedProject.currentImageIndex || 0] 
+                              : selectedProject.images}
+                            alt={selectedProject.title}
+                            className="relative z-10 w-full h-full object-contain"
+                          />
+                        </AnimatePresence>
+                        
+                      </div>
+                      
+                      {/* Thumbnails */}
+                      {Array.isArray(selectedProject.images) && selectedProject.images.length > 1 && (
+                        <div className="flex flex-wrap gap-2">
+                          {selectedProject.images.map((img: string, i: number) => (
+                            <button 
+                              key={i}
+                              onClick={() => setSelectedProject({...selectedProject, currentImageIndex: i})}
+                              className={`w-16 h-16 border-2 transition-all ${
+                                (selectedProject.currentImageIndex || 0) === i ? 'border-sage opacity-100' : 'border-transparent opacity-40 hover:opacity-70'
+                              }`}
+                            >
+                              <img src={img} className="w-full h-full object-cover" alt="" />
+                            </button>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   )}
 
