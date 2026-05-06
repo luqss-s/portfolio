@@ -10,14 +10,23 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
+  --font-serif: var(--font-playfair);
+  
+  /* Custom palette */
+  --color-cream: #FFF8EC;
+  --color-sand: #DCCCAC;
+  --color-sage: #99AD7A;
+  --color-deep-sage: #546B41;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --animate-marquee: marquee 40s linear infinite;
+  
+  @keyframes marquee {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0%); }
   }
 }
+
+
 
 body {
   background: var(--background);
