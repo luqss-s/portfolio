@@ -158,7 +158,7 @@ export default function Portfolio() {
     setMounted(true);
     const fetchProjects = async () => {
       if (!supabase) return;
-      const { data, error } = await supabase.from("projects").select("*").order("id", { ascending: true });
+      const { data, error } = await supabase.from("projects").select("*").order("created_at", { ascending: true });
       if (!error && data) {
         setProjects(data);
       }
@@ -212,6 +212,7 @@ export default function Portfolio() {
             <a href="#about" className="hover:text-black transition-colors">./about</a>
             <a href="#experience" className="hover:text-black transition-colors">./experience</a>
             <a href="#projects" className="hover:text-black transition-colors">./projects</a>
+            <a href="#tools" className="hover:text-black transition-colors">./tools</a>
             <a href="#github" className="hover:text-black transition-colors">./github</a>
           </div>
         </div>
@@ -219,6 +220,7 @@ export default function Portfolio() {
 
       {/* Full Screen Hero Section */}
       <motion.section 
+        id="about"
         initial="hidden"
         animate="visible"
         variants={staggerContainer}
@@ -438,7 +440,7 @@ export default function Portfolio() {
 
       {/* Tools & Languages - Full Width Marquee */}
       <motion.section 
-        id="about" 
+        id="tools" 
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
