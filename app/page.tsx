@@ -171,7 +171,7 @@ export default function Portfolio() {
     if (!selectedProject || !Array.isArray(selectedProject.images) || selectedProject.images.length <= 1) return;
     
     const interval = setInterval(() => {
-      setSelectedProject(prev => {
+      setSelectedProject((prev: any) => {
         if (!prev) return null;
         const nextIndex = ((prev.currentImageIndex || 0) + 1) % prev.images.length;
         return { ...prev, currentImageIndex: nextIndex };
