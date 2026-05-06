@@ -19,11 +19,27 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  icons: {
-    icon: '/1.png', 
-  },
   title: "Luqman Azri | Portfolio",
-  description: "Software Engineer & Computer Science Graduate",
+  description: "Luqman Azri's Portfolio",
+  openGraph: {
+    title: "Luqman Azri | Portfolio",
+    description: "Luqman Azri's Portfolio",
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Luqman Azri Portfolio',
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Luqman Azri | Portfolio",
+    description: "Software Engineer & Computer Science Graduate",
+    images: ['/og-image.png'],
+  },
 };
 
 export default function RootLayout({
