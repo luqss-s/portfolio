@@ -12,11 +12,11 @@
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-playfair);
   
-  /* Custom palette */
-  --color-cream: #FFF8EC;
-  --color-sand: #DCCCAC;
-  --color-sage: #99AD7A;
-  --color-deep-sage: #546B41;
+  /* Nordic Slate Palette */
+  --color-cream: #F3F4F6;
+  --color-sand: #D1D5DB;
+  --color-sage: #4B5563;
+  --color-deep-sage: #1F2937;
 
   --animate-marquee: marquee 40s linear infinite;
   

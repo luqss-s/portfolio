@@ -242,7 +242,7 @@ export default function Portfolio() {
           {/* Row 1 */}
           <div className="flex items-baseline overflow-hidden">
             <motion.span 
-              whileHover={{ color: "#546B41" }}
+              whileHover={{ color: "#1F2937" }}
               className="font-mono text-[22vw] leading-[0.8] text-black tracking-tight cursor-default"
             >
               LUQMAN
@@ -253,7 +253,7 @@ export default function Portfolio() {
           <div className="flex flex-col xl:flex-row xl:items-end gap-12 xl:gap-32 mt-2">
             <div className="flex overflow-hidden">
               <motion.span 
-                whileHover={{ color: "#546B41" }}
+                whileHover={{ color: "#1F2937" }}
                 className="font-sans font-black text-[20vw] leading-[0.75] text-black tracking-tighter uppercase cursor-default"
               >
                 AZRI.
@@ -743,8 +743,8 @@ export default function Portfolio() {
             username="luqss-s" 
             colorScheme="light"
             theme={{
-              light: ['#f0f0f0', '#dccca1', '#99AD7A', '#7a915c', '#546B41'],
-              dark: ['#1a1a1a', '#2a2a1a', '#3d4d2a', '#6b8a50', '#99AD7A'],
+              light: ['#ebedf0', '#9ca3af', '#6b7280', '#4b5563', '#1f2937'],
+              dark: ['#1a1a1a', '#374151', '#4b5563', '#9ca3af', '#e5e7eb'],
             }}
             fontSize={14}
             blockSize={16}
