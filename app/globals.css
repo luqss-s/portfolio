@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f1f8fa;
+  --foreground: #0f172a;
 }
 
 @theme inline {
@@ -12,11 +12,24 @@
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-playfair);
   
-  /* Nordic Slate Palette */
-  --color-cream: #F3F4F6;
-  --color-sand: #D1D5DB;
-  --color-sage: #4B5563;
-  --color-deep-sage: #1F2937;
+  /* Override cyan to use the requested custom blue #344465 */
+  --color-cyan-50: color-mix(in srgb, #344465 5%, white);
+  --color-cyan-100: color-mix(in srgb, #344465 10%, white);
+  --color-cyan-200: color-mix(in srgb, #344465 20%, white);
+  --color-cyan-300: color-mix(in srgb, #344465 40%, white);
+  --color-cyan-400: color-mix(in srgb, #344465 60%, white);
+  --color-cyan-500: color-mix(in srgb, #344465 80%, white);
+  --color-cyan-600: #344465;
+  --color-cyan-700: color-mix(in srgb, #344465 80%, black);
+  --color-cyan-800: color-mix(in srgb, #344465 60%, black);
+  --color-cyan-900: color-mix(in srgb, #344465 40%, black);
+  --color-cyan-950: color-mix(in srgb, #344465 20%, black);
+  
+  /* Nordic Slate Palette mapped to Glass Styles */
+  --color-cream: rgba(255, 255, 255, 0.45);
+  --color-sand: rgba(255, 255, 255, 0.55);
+  --color-sage: #475569;
+  --color-deep-sage: #0f172a;
 
   --animate-marquee: marquee 40s linear infinite;
   
@@ -26,10 +39,145 @@
   }
 }
 
-
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
 }
+
+/* Beautiful Animated Aurora/Mesh Background - Cream White Glass Theme */
+.aurora-container {
+  position: fixed;
+  inset: 0;
+  z-index: -20;
+  overflow: hidden;
+  background: linear-gradient(135deg, #e4e2dd 0%, #ebe9e3 50%, #f2efe9 100%);
+  pointer-events: none;
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.85;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.aurora-blob-1 {
+  top: -10%;
+  left: -10%;
+  width: 70vw;
+  height: 70vw;
+  background: radial-gradient(circle, rgba(215, 210, 200, 0.9) 0%, rgba(240, 235, 225, 0.2) 100%);
+  animation: float-1 30s infinite alternate ease-in-out;
+}
+
+.aurora-blob-2 {
+  bottom: -20%;
+  right: -10%;
+  width: 75vw;
+  height: 75vw;
+  background: radial-gradient(circle, rgba(205, 200, 190, 0.8) 0%, rgba(235, 230, 220, 0.2) 100%);
+  animation: float-2 35s infinite alternate ease-in-out;
+}
+
+.aurora-blob-3 {
+  top: 35%;
+  left: 25%;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(220, 212, 205, 0.7) 0%, rgba(245, 240, 235, 0.2) 100%);
+  animation: float-3 28s infinite alternate ease-in-out;
+}
+
+@keyframes float-1 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(60px, -80px) scale(1.1); }
+  100% { transform: translate(-30px, 40px) scale(0.95); }
+}
+
+@keyframes float-2 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(-80px, 50px) scale(0.9); }
+  100% { transform: translate(40px, -40px) scale(1.05); }
+}
+
+@keyframes float-3 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(50px, 60px) scale(1.15); }
+  100% { transform: translate(-40px, -60px) scale(0.85); }
+}
+
+/* Glassmorphism Styles */
+.glass-container {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 
+    0 20px 50px -12px rgba(148, 187, 233, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 4px 30px rgba(100, 116, 139, 0.04);
+}
+
+.glass-card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 
+    0 30px 60px -10px rgba(148, 187, 233, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 8px 40px rgba(100, 116, 139, 0.08);
+  transform: translateY(-4px);
+}
+
+.glass-panel-sub {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 
+    0 8px 32px 0 rgba(100, 116, 139, 0.03),
+    inset 0 1px 1px rgba(255, 255, 255, 0.7);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 
+    0 4px 12px rgba(100, 116, 139, 0.05),
+    inset 0 1px 1px rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.glass-pill:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 
+    0 8px 20px rgba(148, 187, 233, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.9);
+}
+
+.glass-input {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 2px 4px rgba(100, 116, 139, 0.06);
+}
+
+.glass-input:focus {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(148, 187, 233, 0.8);
+  box-shadow: 
+    0 0 0 4px rgba(148, 187, 233, 0.15),
+    inset 0 2px 4px rgba(100, 116, 139, 0.04);
+}
+
