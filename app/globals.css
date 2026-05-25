@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f1f8fa;
+  --background: #dce8f0;
   --foreground: #0f172a;
 }
 
@@ -52,7 +52,7 @@ body {
   inset: 0;
   z-index: -20;
   overflow: hidden;
-  background: linear-gradient(135deg, #e4e2dd 0%, #ebe9e3 50%, #f2efe9 100%);
+  background: linear-gradient(135deg, #d4dce6 0%, #dde5ed 50%, #e6eef5 100%);
   pointer-events: none;
 }
 
@@ -70,7 +70,7 @@ body {
   left: -10%;
   width: 70vw;
   height: 70vw;
-  background: radial-gradient(circle, rgba(215, 210, 200, 0.9) 0%, rgba(240, 235, 225, 0.2) 100%);
+  background: radial-gradient(circle, rgba(180, 195, 215, 0.9) 0%, rgba(210, 225, 240, 0.2) 100%);
   animation: float-1 30s infinite alternate ease-in-out;
 }
 
@@ -79,7 +79,7 @@ body {
   right: -10%;
   width: 75vw;
   height: 75vw;
-  background: radial-gradient(circle, rgba(205, 200, 190, 0.8) 0%, rgba(235, 230, 220, 0.2) 100%);
+  background: radial-gradient(circle, rgba(170, 185, 205, 0.8) 0%, rgba(205, 220, 235, 0.2) 100%);
   animation: float-2 35s infinite alternate ease-in-out;
 }
 
@@ -88,7 +88,7 @@ body {
   left: 25%;
   width: 60vw;
   height: 60vw;
-  background: radial-gradient(circle, rgba(220, 212, 205, 0.7) 0%, rgba(245, 240, 235, 0.2) 100%);
+  background: radial-gradient(circle, rgba(185, 200, 220, 0.7) 0%, rgba(220, 235, 245, 0.2) 100%);
   animation: float-3 28s infinite alternate ease-in-out;
 }
 

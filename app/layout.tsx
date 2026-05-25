@@ -19,11 +19,23 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Luqman Azri | Portfolio",
-  description: "Luqman Azri's Portfolio",
+  title: "Luqman Azri | Software Engineer Portfolio",
+  description: "Portfolio of Luqman Azri, a Software Engineer and Computer Science Graduate. Explore my projects, skills, and professional experience.",
+  keywords: [
+    "Luqman Azri",
+    "Software Engineer",
+    "Frontend Developer",
+    "Full Stack Developer",
+    "Web Developer",
+    "Portfolio",
+    "React",
+    "Next.js"
+  ],
+  authors: [{ name: "Luqman Azri" }],
+  creator: "Luqman Azri",
   openGraph: {
-    title: "Luqman Azri | Portfolio",
-    description: "Luqman Azri's Portfolio",
+    title: "Luqman Azri | Software Engineer Portfolio",
+    description: "Portfolio of Luqman Azri, a Software Engineer and Computer Science Graduate. Explore my projects, skills, and professional experience.",
     images: [
       {
         url: '/og-image.png',
@@ -36,9 +48,23 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Luqman Azri | Portfolio",
+    title: "Luqman Azri | Software Engineer Portfolio",
     description: "Software Engineer & Computer Science Graduate",
     images: ['/og-image.png'],
+  },
+  verification: {
+    google: "YOUR_GOOGLE_VERIFICATION_CODE", // Replace with your actual Google Search Console code
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
