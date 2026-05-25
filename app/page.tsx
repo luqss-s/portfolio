@@ -152,6 +152,21 @@ const BootLoader = ({ onDone }: { onDone: () => void }) => {
   );
 };
 
+const getValidSrc = (src: any, fallbackTitle?: string): string => {
+  if (typeof src !== 'string' || !src || src === '[]') {
+    const text = encodeURIComponent(fallbackTitle || "Project");
+    return `https://placehold.co/800x500/18181b/ffffff/png?font=Roboto&text=${text}`;
+  }
+  
+  // Automatically fix user-provided placehold.co links that are missing the png format
+  if (src.includes('placehold.co') && !src.includes('/png') && !src.includes('.png')) {
+    return src.replace('?', '/png?');
+  }
+
+  if (src.startsWith('http') || src.startsWith('/')) return src;
+  return `/${src}`;
+};
+
 export default function Portfolio() {
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -529,19 +544,13 @@ export default function Portfolio() {
 
                 {/* Image */}
                 <div className="relative h-44 w-full overflow-hidden bg-slate-100/50 rounded-2xl border border-white/40">
-                  {project.images && (Array.isArray(project.images) ? project.images[0] : project.images) ? (
-                    <Image 
-                      src={Array.isArray(project.images) ? project.images[0] : project.images} 
-                      alt={project.title} 
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Terminal size={28} className="text-slate-300" />
-                    </div>
-                  )}
+                  <Image 
+                    src={getValidSrc(project.images ? (Array.isArray(project.images) ? project.images[0] : project.images) : null, project.title)} 
+                    alt={project.title || "Project Image"} 
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
+                  />
                 </div>
 
                 {/* Info */}
@@ -648,45 +657,39 @@ export default function Portfolio() {
                 {/* Image Gallery & Info */}
                 <div className="lg:col-span-2 p-8 lg:border-r border-white/60 space-y-8">
                   {/* Gallery Slider */}
-                  {selectedProject.images && (
-                    <div className="space-y-4">
-                      <div className="relative w-full aspect-video overflow-hidden bg-slate-100/50 border border-white/40 rounded-2xl flex items-center justify-center shadow-inner">
-                        {/* Blurred Background for Portrait Images */}
-                        <div 
-                          className="absolute inset-0 scale-110 blur-2xl opacity-20 pointer-events-none"
-                          style={{
-                            backgroundImage: `url(${Array.isArray(selectedProject.images) 
-                              ? selectedProject.images[selectedProject.currentImageIndex || 0] 
-                              : selectedProject.images})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center'
-                          }}
-                        />
-                        
-                        <AnimatePresence mode="wait">
-                          <motion.div
-                            key={selectedProject.currentImageIndex || 0}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 1.05 }}
-                            transition={{ duration: 0.4 }}
-                            className="relative z-10 w-full h-full p-2"
-                          >
-                            <Image
-                              src={Array.isArray(selectedProject.images) 
-                                ? selectedProject.images[selectedProject.currentImageIndex || 0] 
-                                : selectedProject.images}
-                              alt={selectedProject.title}
-                              fill
-                              className="object-contain"
-                            />
-                          </motion.div>
-                        </AnimatePresence>
-                        
-                      </div>
+                  <div className="space-y-4">
+                    <div className="relative w-full aspect-video overflow-hidden bg-slate-100/50 border border-white/40 rounded-2xl flex items-center justify-center shadow-inner">
+                      {/* Blurred Background for Portrait Images */}
+                      <div 
+                        className="absolute inset-0 scale-110 blur-2xl opacity-20 pointer-events-none"
+                        style={{
+                          backgroundImage: `url(${getValidSrc(selectedProject.images ? (Array.isArray(selectedProject.images) ? selectedProject.images[selectedProject.currentImageIndex || 0] : selectedProject.images) : null, selectedProject.title)})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center'
+                        }}
+                      />
                       
-                      {/* Thumbnails */}
-                      {Array.isArray(selectedProject.images) && selectedProject.images.length > 1 && (
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={selectedProject.currentImageIndex || 0}
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 1.05 }}
+                          transition={{ duration: 0.4 }}
+                          className="relative z-10 w-full h-full p-2"
+                        >
+                          <Image
+                            src={getValidSrc(selectedProject.images ? (Array.isArray(selectedProject.images) ? selectedProject.images[selectedProject.currentImageIndex || 0] : selectedProject.images) : null, selectedProject.title)}
+                            alt={selectedProject.title || "Project image"}
+                            fill
+                            className="object-contain"
+                          />
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
+                    
+                    {/* Thumbnails */}
+                    {Array.isArray(selectedProject.images) && selectedProject.images.length > 1 && (
                         <div className="flex flex-wrap gap-2">
                           {selectedProject.images.map((img: string, i: number) => (
                             <button 
@@ -696,13 +699,12 @@ export default function Portfolio() {
                                 (selectedProject.currentImageIndex || 0) === i ? 'border-cyan-500 ring-2 ring-cyan-500/20 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'
                               }`}
                             >
-                              <Image src={img} fill sizes="64px" className="object-cover" alt="" />
+                              <Image src={getValidSrc(img)} fill sizes="64px" className="object-cover" alt="Thumbnail" />
                             </button>
                           ))}
                         </div>
                       )}
                     </div>
-                  )}
 
                   {/* YouTube */}
                   {selectedProject.youtube && (
