@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ExternalLink, Terminal, Mail, FileDown, Layout, Code2, ArrowUpRight } from "lucide-react";
 import { SiJavascript, SiPython, SiR, SiHtml5, SiCss, SiDotnet, SiReact, SiTailwindcss, SiMysql, SiFirebase, SiAndroidstudio, SiGit } from "react-icons/si";
 import { createClient } from "@supabase/supabase-js";
+import Image from "next/image";
+import dynamic from "next/dynamic";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
@@ -27,7 +29,10 @@ const GithubIcon = ({ size = 24, className = "" }) => (
     <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
 );
-import { GitHubCalendar } from "react-github-calendar";
+const GitHubCalendar = dynamic(
+  () => import('react-github-calendar').then((mod) => mod.GitHubCalendar as React.ComponentType<any>),
+  { ssr: false }
+);
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 15 },
@@ -151,16 +156,26 @@ export default function Portfolio() {
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState<any[]>([]);
+  const [visibleProjectsCount, setVisibleProjectsCount] = useState(6);
   const [activeTab, setActiveTab] = useState<'experience' | 'education'>('experience');
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
 
   useEffect(() => {
     setMounted(true);
     const fetchProjects = async () => {
+      // 1. Use session storage for simple, fast caching
+      const cached = sessionStorage.getItem("portfolio_projects_cache");
+      if (cached) {
+        setProjects(JSON.parse(cached));
+        return;
+      }
+
+      // 2. Fetch from Supabase if no cache exists
       if (!supabase) return;
       const { data, error } = await supabase.from("projects").select("*").order("created_at", { ascending: true });
       if (!error && data) {
         setProjects(data);
+        sessionStorage.setItem("portfolio_projects_cache", JSON.stringify(data));
       }
     };
     fetchProjects();
@@ -494,7 +509,7 @@ export default function Portfolio() {
 
           {/* Project Cards Grid */}
           <div className="px-8 md:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.map((project, idx) => (
+            {projects.slice(0, visibleProjectsCount).map((project, idx) => (
               <div
                 key={idx}
                 onClick={() => setSelectedProject(project)}
@@ -515,10 +530,12 @@ export default function Portfolio() {
                 {/* Image */}
                 <div className="relative h-44 w-full overflow-hidden bg-slate-100/50 rounded-2xl border border-white/40">
                   {project.images && (Array.isArray(project.images) ? project.images[0] : project.images) ? (
-                    <img 
+                    <Image 
                       src={Array.isArray(project.images) ? project.images[0] : project.images} 
                       alt={project.title} 
-                      className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
@@ -573,6 +590,18 @@ export default function Portfolio() {
               </div>
             ))}
           </div>
+
+          {/* Pagination / Load More */}
+          {visibleProjectsCount < projects.length && (
+            <div className="flex justify-center mt-12 w-full">
+              <button 
+                onClick={() => setVisibleProjectsCount(prev => prev + 6)}
+                className="px-8 py-3 rounded-full text-[11px] font-black tracking-widest uppercase bg-white/40 border border-white/60 shadow-[0_5px_15px_rgba(148,187,233,0.1)] hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300"
+              >
+                Load More Projects
+              </button>
+            </div>
+          )}
         </div>
       </motion.section>
 
@@ -635,18 +664,23 @@ export default function Portfolio() {
                         />
                         
                         <AnimatePresence mode="wait">
-                          <motion.img
+                          <motion.div
                             key={selectedProject.currentImageIndex || 0}
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 1.05 }}
                             transition={{ duration: 0.4 }}
-                            src={Array.isArray(selectedProject.images) 
-                              ? selectedProject.images[selectedProject.currentImageIndex || 0] 
-                              : selectedProject.images}
-                            alt={selectedProject.title}
-                            className="relative z-10 w-full h-full object-contain p-2"
-                          />
+                            className="relative z-10 w-full h-full p-2"
+                          >
+                            <Image
+                              src={Array.isArray(selectedProject.images) 
+                                ? selectedProject.images[selectedProject.currentImageIndex || 0] 
+                                : selectedProject.images}
+                              alt={selectedProject.title}
+                              fill
+                              className="object-contain"
+                            />
+                          </motion.div>
                         </AnimatePresence>
                         
                       </div>
@@ -658,11 +692,11 @@ export default function Portfolio() {
                             <button 
                               key={i}
                               onClick={() => setSelectedProject({...selectedProject, currentImageIndex: i})}
-                              className={`w-16 h-16 border-2 transition-all rounded-lg overflow-hidden ${
+                              className={`relative w-16 h-16 border-2 transition-all rounded-lg overflow-hidden ${
                                 (selectedProject.currentImageIndex || 0) === i ? 'border-cyan-500 ring-2 ring-cyan-500/20 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'
                               }`}
                             >
-                              <img src={img} className="w-full h-full object-cover" alt="" />
+                              <Image src={img} fill sizes="64px" className="object-cover" alt="" />
                             </button>
                           ))}
                         </div>
