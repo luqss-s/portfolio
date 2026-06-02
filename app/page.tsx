@@ -77,18 +77,18 @@ const Typewriter = ({ text, delay = 0, className = "" }: { text: string, delay?:
 };
 
 const tools = [
-  { name: "JavaScript", icon: <SiJavascript size={32} /> }, 
-  { name: "Python", icon: <SiPython size={32} /> }, 
-  { name: "C#", icon: <Code2 size={32} /> }, 
-  { name: "R", icon: <SiR size={32} /> }, 
-  { name: "HTML", icon: <SiHtml5 size={32} /> }, 
+  { name: "JavaScript", icon: <SiJavascript size={32} /> },
+  { name: "Python", icon: <SiPython size={32} /> },
+  { name: "C#", icon: <Code2 size={32} /> },
+  { name: "R", icon: <SiR size={32} /> },
+  { name: "HTML", icon: <SiHtml5 size={32} /> },
   { name: "CSS", icon: <SiCss size={32} /> },
-  { name: ".NET", icon: <SiDotnet size={32} /> }, 
-  { name: "React.js", icon: <SiReact size={32} /> }, 
-  { name: "Tailwind", icon: <SiTailwindcss size={32} /> }, 
-  { name: "MySQL", icon: <SiMysql size={32} /> }, 
+  { name: ".NET", icon: <SiDotnet size={32} /> },
+  { name: "React.js", icon: <SiReact size={32} /> },
+  { name: "Tailwind", icon: <SiTailwindcss size={32} /> },
+  { name: "MySQL", icon: <SiMysql size={32} /> },
   { name: "Firebase", icon: <SiFirebase size={32} /> },
-  { name: "Android", icon: <SiAndroidstudio size={32} /> }, 
+  { name: "Android", icon: <SiAndroidstudio size={32} /> },
   { name: "Git", icon: <SiGit size={32} /> }
 ];
 
@@ -133,9 +133,8 @@ const BootLoader = ({ onDone }: { onDone: () => void }) => {
             initial={{ opacity: 0, x: -10 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.2 }}
-            className={`${
-              line?.startsWith('$') ? 'text-white font-bold text-lg' : 'text-zinc-500'
-            }`}
+            className={`${line?.startsWith('$') ? 'text-white font-bold text-lg' : 'text-zinc-500'
+              }`}
           >
             {line?.startsWith('$') ? line : `> ${line}`}
           </motion.p>
@@ -157,7 +156,7 @@ const getValidSrc = (src: any, fallbackTitle?: string): string => {
     const text = encodeURIComponent(fallbackTitle || "Project");
     return `https://placehold.co/800x500/18181b/ffffff/png?font=Roboto&text=${text}`;
   }
-  
+
   // Automatically fix user-provided placehold.co links that are missing the png format
   if (src.includes('placehold.co') && !src.includes('/png') && !src.includes('.png')) {
     return src.replace('?', '/png?');
@@ -199,7 +198,7 @@ export default function Portfolio() {
   // Auto Slideshow Logic
   useEffect(() => {
     if (!selectedProject || !Array.isArray(selectedProject.images) || selectedProject.images.length <= 1) return;
-    
+
     const interval = setInterval(() => {
       setSelectedProject((prev: any) => {
         if (!prev) return null;
@@ -207,7 +206,7 @@ export default function Portfolio() {
         return { ...prev, currentImageIndex: nextIndex };
       });
     }, 4000);
-    
+
     return () => clearInterval(interval);
   }, [selectedProject?.title, selectedProject?.images?.length]);
 
@@ -225,7 +224,7 @@ export default function Portfolio() {
       <AnimatePresence>
         {loading && <BootLoader onDone={() => setLoading(false)} />}
       </AnimatePresence>
-      
+
       {/* Animated Aurora mesh gradient in background */}
       <div className="aurora-container">
         <div className="aurora-blob aurora-blob-1" />
@@ -239,465 +238,459 @@ export default function Portfolio() {
         transition={{ duration: 0.6, delay: 0.1 }}
         className="min-h-screen text-slate-900 selection:bg-cyan-200 selection:text-slate-900 font-sans relative z-10"
       >
-      {/* Floating Glass Navigation */}
-      <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl bg-white/40 backdrop-blur-xl z-50 border border-white/60 shadow-[0_20px_40px_-15px_rgba(148,187,233,0.25)] rounded-3xl">
-        <div className="px-6 md:px-8 py-4 flex flex-row justify-between items-center gap-4">
-          <span className="font-extrabold text-sm tracking-wider text-slate-800 flex items-center gap-2 font-mono">
-            <Terminal size={16} className="text-cyan-600" />
-            ~/luqman-azri
-          </span>
-          <div className="flex items-center gap-4 md:gap-8 text-[11px] font-bold uppercase tracking-wider text-slate-600 font-mono">
-            <a href="#about" className="hover:text-cyan-600 transition-colors">./about</a>
-            <a href="#experience" className="hover:text-cyan-600 transition-colors">./experience</a>
-            <a href="#projects" className="hover:text-cyan-600 transition-colors">./projects</a>
-            <a href="#tools" className="hover:text-cyan-600 transition-colors">./tools</a>
-            <a href="#github" className="hover:text-cyan-600 transition-colors">./github</a>
+        {/* Floating Glass Navigation */}
+        <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl bg-white/40 backdrop-blur-xl z-50 border border-white/60 shadow-[0_20px_40px_-15px_rgba(148,187,233,0.25)] rounded-3xl">
+          <div className="px-6 md:px-8 py-4 flex flex-row justify-between items-center gap-4">
+            <span className="font-extrabold text-sm tracking-wider text-slate-800 flex items-center gap-2 font-mono">
+              <Terminal size={16} className="text-cyan-600" />
+              ~/luqman-azri
+            </span>
+            <div className="flex items-center gap-4 md:gap-8 text-[11px] font-bold uppercase tracking-wider text-slate-600 font-mono">
+              <a href="#about" className="hover:text-cyan-600 transition-colors">./about</a>
+              <a href="#experience" className="hover:text-cyan-600 transition-colors">./experience</a>
+              <a href="#projects" className="hover:text-cyan-600 transition-colors">./projects</a>
+              <a href="#tools" className="hover:text-cyan-600 transition-colors">./tools</a>
+              <a href="#github" className="hover:text-cyan-600 transition-colors">./github</a>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
 
-      {/* Hero Section */}
-      <motion.section 
-        id="about"
-        initial="hidden"
-        animate="visible"
-        variants={staggerContainer}
-        className="w-full min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 pt-32 pb-16 relative overflow-hidden"
-      >
-        {/* Intro text */}
-        <motion.div variants={fadeInUp} className="mb-6 z-10">
-          <p className="text-slate-600 text-lg md:text-2xl leading-relaxed font-sans font-light">
-            I'm a <span className="font-extrabold text-slate-900 border-b-2 border-cyan-400">Fresh Graduate</span> passionate <br className="hidden md:block"/>
-            about crafting intelligent web solutions
-          </p>
-        </motion.div>
+        {/* Hero Section */}
+        <motion.section
+          id="about"
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+          className="w-full min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 pt-32 pb-16 relative overflow-hidden"
+        >
+          {/* Intro text */}
+          <motion.div variants={fadeInUp} className="mb-6 z-10">
+            <p className="text-slate-600 text-lg md:text-2xl leading-relaxed font-sans font-light">
+              I'm a <span className="font-extrabold text-slate-900 border-b-2 border-cyan-400">Fresh Graduate</span> passionate <br className="hidden md:block" />
+              about crafting intelligent web solutions
+            </p>
+          </motion.div>
 
-        {/* Huge Typography */}
-        <motion.div variants={fadeInUp} className="flex flex-col gap-0 relative z-10">
-          {/* Row 1 */}
-          <div className="flex items-baseline overflow-hidden">
-            <motion.span 
-              whileHover={{ color: "#344465" }}
-              className="font-mono text-[22vw] font-black leading-[0.8] text-slate-900 tracking-tighter cursor-default select-none transition-colors duration-300"
-            >
-              LUQMAN
-            </motion.span>
-          </div>
-          
-          {/* Row 2 */}
-          <div className="flex flex-col xl:flex-row xl:items-end gap-12 xl:gap-24 mt-2">
-            <div className="flex overflow-hidden">
-              <motion.span 
+          {/* Huge Typography */}
+          <motion.div variants={fadeInUp} className="flex flex-col gap-0 relative z-10">
+            {/* Row 1 */}
+            <div className="flex items-baseline overflow-hidden">
+              <motion.span
                 whileHover={{ color: "#344465" }}
-                className="font-sans font-black text-[20vw] leading-[0.75] text-slate-900 tracking-tighter uppercase cursor-default select-none transition-colors duration-300"
+                className="font-mono text-[22vw] font-black leading-[0.8] text-slate-900 tracking-tighter cursor-default select-none transition-colors duration-300"
               >
-                AZRI.
+                LUQMAN
               </motion.span>
             </div>
 
-            {/* Bio & Links next to the name */}
-            <motion.div variants={fadeInUp} className="max-w-lg space-y-6 pb-4 xl:pb-12">
-              <p className="text-slate-600 text-sm md:text-base leading-relaxed font-sans font-light">
-                Recent graduate specializing in Intelligence Computing with hands-on experience in full-stack development, machine learning, and system reliability. I specialize in creating <span className="font-semibold text-slate-900">dynamic experiences</span> that leave a lasting impact.
-              </p>
-              <div className="flex flex-wrap items-center gap-6">
-                <a 
-                  href="/Luqman.pdf" 
-                  download
-                  className="group flex items-center justify-center gap-3 px-8 py-4 bg-white/50 backdrop-blur-md border border-white/60 shadow-[0_10px_25px_-5px_rgba(148,187,233,0.2)] text-slate-800 rounded-full font-sans text-xs font-black tracking-widest uppercase hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:shadow-lg transition-all duration-300"
+            {/* Row 2 */}
+            <div className="flex flex-col xl:flex-row xl:items-end gap-12 xl:gap-24 mt-2">
+              <div className="flex overflow-hidden">
+                <motion.span
+                  whileHover={{ color: "#344465" }}
+                  className="font-sans font-black text-[20vw] leading-[0.75] text-slate-900 tracking-tighter uppercase cursor-default select-none transition-colors duration-300"
                 >
-                  <FileDown size={18} />
-                  DOWNLOAD RESUME
-                </a>
-                <div className="flex items-center gap-6">
-                  <a href="https://github.com/luqss-s" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-cyan-600 hover:scale-110 transition-all duration-300">
-                    <GithubIcon size={26} />
-                  </a>
-                  <a href="mailto:luqmanazri0305@gmail.com" className="text-slate-400 hover:text-cyan-600 hover:scale-110 transition-all duration-300">
-                    <Mail size={26} />
-                  </a>
-                </div>
+                  AZRI.
+                </motion.span>
               </div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </motion.section>
 
-      {/* Experience & Education - Floating Glass Card */}
-      <motion.section 
-        id="experience" 
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-full py-16 px-4 md:px-8 lg:px-12"
-      >
-        <div className="w-full bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.3)] rounded-[2.5rem] p-8 md:p-16">
-          
-          {/* Header & Toggle */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
-            <div>
-              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 mb-4">
-                <Typewriter text="BACKGROUND" />
-              </h2>
-              <p className="text-slate-500 text-lg md:text-xl font-light">
-                <Typewriter text="My academic foundation and professional journey." delay={0.2} />
+              {/* Bio & Links next to the name */}
+              <motion.div variants={fadeInUp} className="max-w-lg space-y-6 pb-4 xl:pb-12">
+                <p className="text-slate-600 text-sm md:text-base leading-relaxed font-sans font-light">
+                  Recent graduate specializing in Intelligence Computing with hands-on experience in full-stack development, machine learning, and system reliability. I specialize in creating <span className="font-semibold text-slate-900">dynamic experiences</span> that leave a lasting impact.
+                </p>
+                <div className="flex flex-wrap items-center gap-6">
+                  <a
+                    href="/Luqman.pdf"
+                    download
+                    className="group flex items-center justify-center gap-3 px-8 py-4 bg-white/50 backdrop-blur-md border border-white/60 shadow-[0_10px_25px_-5px_rgba(148,187,233,0.2)] text-slate-800 rounded-full font-sans text-xs font-black tracking-widest uppercase hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:shadow-lg transition-all duration-300"
+                  >
+                    <FileDown size={18} />
+                    DOWNLOAD RESUME
+                  </a>
+                  <div className="flex items-center gap-6">
+                    <a href="https://github.com/luqss-s" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-cyan-600 hover:scale-110 transition-all duration-300">
+                      <GithubIcon size={26} />
+                    </a>
+                    <a href="mailto:luqmanazri0305@gmail.com" className="text-slate-400 hover:text-cyan-600 hover:scale-110 transition-all duration-300">
+                      <Mail size={26} />
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </motion.section>
+
+        {/* Experience & Education - Floating Glass Card */}
+        <motion.section
+          id="experience"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full py-16 px-4 md:px-8 lg:px-12"
+        >
+          <div className="w-full bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.3)] rounded-[2.5rem] p-8 md:p-16">
+
+            {/* Header & Toggle */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+              <div>
+                <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 mb-4">
+                  <Typewriter text="BACKGROUND" />
+                </h2>
+                <p className="text-slate-500 text-lg md:text-xl font-light">
+                  <Typewriter text="My academic foundation and professional journey." delay={0.2} />
+                </p>
+              </div>
+
+              <div className="flex bg-slate-200/40 border border-white/60 p-1 rounded-full relative w-max backdrop-blur-md shadow-inner">
+                <button
+                  onClick={() => setActiveTab('experience')}
+                  className={`relative z-10 px-8 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-colors duration-300 ${activeTab === 'experience' ? 'text-white' : 'text-slate-500 hover:text-slate-900'}`}
+                >
+                  Experience
+                </button>
+                <button
+                  onClick={() => setActiveTab('education')}
+                  className={`relative z-10 px-8 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-colors duration-300 ${activeTab === 'education' ? 'text-white' : 'text-slate-500 hover:text-slate-900'}`}
+                >
+                  Education
+                </button>
+                {/* Animated Pill Background */}
+                <motion.div
+                  className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-slate-900 rounded-full"
+                  initial={false}
+                  animate={{ x: activeTab === 'experience' ? '4px' : 'calc(100% + 4px)' }}
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              </div>
+            </div>
+
+            {/* Content Area */}
+            <div className="w-full min-h-[400px] relative">
+              <AnimatePresence mode="wait">
+                {activeTab === 'experience' ? (
+                  <motion.div
+                    key="exp"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className="space-y-12"
+                  >
+                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-8">
+                      <div>
+                        <h4 className="text-2xl md:text-3xl font-extrabold text-slate-900">
+                          <Typewriter text="Software Engineer Intern" />
+                        </h4>
+                        <div className="text-slate-500 text-lg mt-2 font-light">
+                          <Typewriter text="Venture GES Manufacturing Services" delay={0.4} />
+                        </div>
+                      </div>
+                      <div className="text-[10px] text-slate-800 font-extrabold tracking-widest uppercase border border-slate-300/80 bg-white/40 backdrop-blur-sm px-6 py-3 rounded-full whitespace-nowrap w-fit shadow-sm">
+                        MAR 2024 — OCT 2024
+                      </div>
+                    </div>
+                    <ul className="space-y-6 text-slate-600 text-sm md:text-base leading-relaxed max-w-4xl font-light">
+                      {[
+                        "Developed and debugged C#-based LogCraftParser application to process PCB data, improving error reporting with detailed logs including line number, model name, station name, and serial number.",
+                        "Designed Test Equipment Qualification Web application using ASP.NET, C#, AJAX, Telerik, and MySQL; designed frontend & built backend modules for ICT, FCT, Equipment Validation, and Edit Profile.",
+                        "Built WhatsApp Automation system using AutoIt to enable real-time production floor notifications."
+                      ].map((text, i) => (
+                        <li key={i} className="flex items-start gap-4">
+                          <span className="text-cyan-500 font-extrabold">→</span>
+                          <Typewriter text={text} delay={0.6 + (i * 0.2)} />
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="edu"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                    className="space-y-12"
+                  >
+                    <div className="space-y-16">
+                      {/* Degree */}
+                      <div>
+                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-6 mb-6">
+                          <div>
+                            <h4 className="text-2xl md:text-3xl font-extrabold text-slate-900">
+                              <Typewriter text="Bachelor of Computer Science (Intelligence Computing)" />
+                            </h4>
+                            <div className="text-slate-500 text-lg mt-2 font-light">
+                              <Typewriter text="Universiti Sains Malaysia, Pulau Pinang" delay={0.4} />
+                            </div>
+                          </div>
+                          <div className="text-[10px] text-slate-800 font-extrabold tracking-widest uppercase border border-slate-300/80 bg-white/40 backdrop-blur-sm px-6 py-3 rounded-full whitespace-nowrap w-fit shadow-sm">
+                            2021 — 2025
+                          </div>
+                        </div>
+                        <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed max-w-4xl font-light">
+
+                          <li className="flex items-start gap-4">
+                            <span className="text-cyan-500 font-extrabold">→</span>
+                            <Typewriter text="Dean's List: Semester 7 (GPA 3.61) & Semester 8 (GPA 3.90)" delay={0.8} />
+                          </li>
+                        </div>
+                      </div>
+
+                      {/* Matriculation */}
+                      <div>
+                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-6 mb-6">
+                          <div>
+                            <h4 className="text-2xl md:text-3xl font-extrabold text-slate-900">
+                              <Typewriter text="Malaysian Matriculation Programme (Science)" />
+                            </h4>
+                            <div className="text-slate-500 text-lg mt-2 font-light">
+                              <Typewriter text="Johore Matriculation College, Tangkak" delay={0.4} />
+                            </div>
+                          </div>
+                          <div className="text-[10px] text-slate-800 font-extrabold tracking-widest uppercase border border-slate-300/80 bg-white/40 backdrop-blur-sm px-6 py-3 rounded-full whitespace-nowrap w-fit shadow-sm">
+                            2020 — 2021
+                          </div>
+                        </div>
+                        <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed max-w-4xl font-light">
+                          <li className="flex items-start gap-4">
+                            <span className="text-cyan-500 font-extrabold">→</span>
+                            <Typewriter text="CGPA: 3.83" delay={0.6} />
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* Tools & Languages - Floating Glass Marquee */}
+        <motion.section
+          id="tools"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full py-16 px-4 md:px-8 lg:px-12"
+        >
+          <div className="w-full bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.3)] rounded-[2.5rem] py-16 overflow-hidden">
+            <div className="flex flex-col items-center mb-16 px-6">
+              <h2 className="text-3xl md:text-5xl font-black font-sans uppercase tracking-tighter text-slate-900 mb-4">Tools &amp; Languages</h2>
+              <p className="text-slate-500 font-sans font-light text-center max-w-xl text-sm md:text-base">
+                Showcasing my expertise in building scalable, secure, and high-performance applications.
               </p>
             </div>
-            
-            <div className="flex bg-slate-200/40 border border-white/60 p-1 rounded-full relative w-max backdrop-blur-md shadow-inner">
-              <button 
-                onClick={() => setActiveTab('experience')}
-                className={`relative z-10 px-8 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-colors duration-300 ${activeTab === 'experience' ? 'text-white' : 'text-slate-500 hover:text-slate-900'}`}
-              >
-                Experience
-              </button>
-              <button 
-                onClick={() => setActiveTab('education')}
-                className={`relative z-10 px-8 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-colors duration-300 ${activeTab === 'education' ? 'text-white' : 'text-slate-500 hover:text-slate-900'}`}
-              >
-                Education
-              </button>
-              {/* Animated Pill Background */}
-              <motion.div 
-                className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-slate-900 rounded-full"
-                initial={false}
-                animate={{ x: activeTab === 'experience' ? '4px' : 'calc(100% + 4px)' }}
-                transition={{ type: "spring", stiffness: 400, damping: 30 }}
-              />
+
+            <div className="relative w-full flex overflow-hidden group [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+              <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
+                {[...tools, ...tools].map((tool, idx) => (
+                  <div key={idx} className="flex flex-col items-center justify-center gap-4 mx-6">
+                    <div className="w-24 h-24 bg-white/50 border border-white/70 flex items-center justify-center text-slate-400 hover:text-cyan-600 hover:border-cyan-400 hover:bg-white/80 transition-all rounded-2xl shadow-sm hover:shadow-md hover:scale-105 duration-300">
+                      {tool.icon}
+                    </div>
+                    <span className="text-[10px] font-extrabold tracking-widest uppercase text-slate-500">{tool.name}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
- 
-          {/* Content Area */}
-          <div className="w-full min-h-[400px] relative">
-            <AnimatePresence mode="wait">
-              {activeTab === 'experience' ? (
-                <motion.div 
-                  key="exp"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="space-y-12"
+        </motion.section>
+
+        {/* Projects - Floating Glass Grid */}
+        <motion.section
+          id="projects"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full py-16 px-4 md:px-8 lg:px-12"
+        >
+          <div className="w-full bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.3)] rounded-[2.5rem] py-16 md:py-20">
+            <div className="px-8 md:px-16 mb-16">
+              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 mb-4">Projects</h2>
+              <p className="text-slate-500 font-sans font-light text-lg md:text-xl">
+                A selection of my most impactful work.
+              </p>
+            </div>
+
+            {/* Project Cards Grid */}
+            <div className="px-8 md:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.slice(0, visibleProjectsCount).map((project, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => setSelectedProject(project)}
+                  className="group bg-white/20 border border-white/50 backdrop-blur-md rounded-3xl p-6 cursor-pointer hover:bg-white/50 hover:border-cyan-300 hover:shadow-[0_20px_40px_rgba(148,187,233,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-5 shadow-sm"
                 >
-                  <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-8">
-                    <div>
-                      <h4 className="text-2xl md:text-3xl font-extrabold text-slate-900">
-                        <Typewriter text="Software Engineer Intern" />
-                      </h4>
-                      <div className="text-slate-500 text-lg mt-2 font-light">
-                        <Typewriter text="Venture GES Manufacturing Services" delay={0.4} />
-                      </div>
-                    </div>
-                    <div className="text-[10px] text-slate-800 font-extrabold tracking-widest uppercase border border-slate-300/80 bg-white/40 backdrop-blur-sm px-6 py-3 rounded-full whitespace-nowrap w-fit shadow-sm">
-                      MAR 2024 — OCT 2024
-                    </div>
+                  {/* Header */}
+                  <div className="flex items-start justify-between">
+                    <span className={`text-[9px] font-extrabold tracking-widest uppercase px-3 py-1 border rounded-full backdrop-blur-sm ${project.status === 'live'
+                      ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20 shadow-[0_2px_10px_rgba(16,185,129,0.1)]'
+                      : 'bg-slate-200/50 text-slate-400 border-slate-300/30'
+                      }`}>
+                      {project.status === 'live' ? '● LIVE' : '○ OFFLINE'}
+                    </span>
+                    <ArrowUpRight size={16} className="text-slate-400 group-hover:text-cyan-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300" />
                   </div>
-                  <ul className="space-y-6 text-slate-600 text-sm md:text-base leading-relaxed max-w-4xl font-light">
-                    {[
-                      "Developed and debugged C#-based LogCraftParser application to process PCB data, improving error reporting with detailed logs including line number, model name, station name, and serial number.",
-                      "Designed Test Equipment Qualification Web application using ASP.NET, C#, AJAX, Telerik, and MySQL; designed frontend & built backend modules for ICT, FCT, Equipment Validation, and Edit Profile.",
-                      "Built WhatsApp Automation system using AutoIt to enable real-time production floor notifications."
-                    ].map((text, i) => (
-                      <li key={i} className="flex items-start gap-4">
-                        <span className="text-cyan-500 font-extrabold">→</span>
-                        <Typewriter text={text} delay={0.6 + (i * 0.2)} />
-                      </li>
+
+                  {/* Image */}
+                  <div className="relative h-44 w-full overflow-hidden bg-slate-100/50 rounded-2xl border border-white/40">
+                    <Image
+                      src={getValidSrc(project.images ? (Array.isArray(project.images) ? project.images[0] : project.images) : null, project.title)}
+                      alt={project.title || "Project Image"}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                    />
+                  </div>
+
+                  {/* Info */}
+                  <div className="flex flex-col gap-2.5 flex-grow">
+                    <p className="text-[9px] text-slate-400 font-mono tracking-wider font-semibold uppercase">{project.role}</p>
+                    <h3 className="text-base font-extrabold text-slate-800 leading-snug group-hover:text-cyan-600 transition-colors duration-300">{project.title}</h3>
+                    <p className="text-slate-500 text-xs leading-relaxed line-clamp-3 font-light">{project.description}</p>
+                  </div>
+
+                  {/* Tech pills */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {(project.tech || []).slice(0, 4).map((t: string, i: number) => (
+                      <span key={i} className="text-[8px] font-extrabold text-slate-600 bg-white/40 border border-white/60 px-2 py-1 tracking-wider uppercase rounded-md backdrop-blur-sm">
+                        {t}
+                      </span>
                     ))}
-                  </ul>
-                </motion.div>
-              ) : (
-                <motion.div 
-                  key="edu"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="space-y-12"
-                >
-                  <div className="space-y-16">
-                    {/* Degree */}
-                    <div>
-                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-6 mb-6">
-                        <div>
-                          <h4 className="text-2xl md:text-3xl font-extrabold text-slate-900">
-                            <Typewriter text="Bachelor of Computer Science (Intelligence Computing)" />
-                          </h4>
-                          <div className="text-slate-500 text-lg mt-2 font-light">
-                            <Typewriter text="Universiti Sains Malaysia, Pulau Pinang" delay={0.4} />
-                          </div>
-                        </div>
-                        <div className="text-[10px] text-slate-800 font-extrabold tracking-widest uppercase border border-slate-300/80 bg-white/40 backdrop-blur-sm px-6 py-3 rounded-full whitespace-nowrap w-fit shadow-sm">
-                          2021 — 2025
-                        </div>
-                      </div>
-                      <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed max-w-4xl font-light">
-                        <li className="flex items-start gap-4">
-                          <span className="text-cyan-500 font-extrabold">→</span>
-                          <Typewriter text="CGPA: 3.26" delay={0.6} />
-                        </li>
-                        <li className="flex items-start gap-4">
-                          <span className="text-cyan-500 font-extrabold">→</span>
-                          <Typewriter text="Dean's List: Semester 7 (GPA 3.61) & Semester 8 (GPA 3.90)" delay={0.8} />
-                        </li>
-                      </div>
-                    </div>
- 
-                    {/* Matriculation */}
-                    <div>
-                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-6 mb-6">
-                        <div>
-                          <h4 className="text-2xl md:text-3xl font-extrabold text-slate-900">
-                            <Typewriter text="Malaysian Matriculation Programme (Science)" />
-                          </h4>
-                          <div className="text-slate-500 text-lg mt-2 font-light">
-                            <Typewriter text="Johore Matriculation College, Tangkak" delay={0.4} />
-                          </div>
-                        </div>
-                        <div className="text-[10px] text-slate-800 font-extrabold tracking-widest uppercase border border-slate-300/80 bg-white/40 backdrop-blur-sm px-6 py-3 rounded-full whitespace-nowrap w-fit shadow-sm">
-                          2020 — 2021
-                        </div>
-                      </div>
-                      <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed max-w-4xl font-light">
-                        <li className="flex items-start gap-4">
-                          <span className="text-cyan-500 font-extrabold">→</span>
-                          <Typewriter text="CGPA: 3.83" delay={0.6} />
-                        </li>
-                      </div>
-                    </div>
+                    {project.tech && project.tech.length > 4 && (
+                      <span className="text-[8px] font-extrabold text-slate-400 bg-white/40 border border-white/60 px-2 py-1 tracking-wider uppercase rounded-md backdrop-blur-sm">+{project.tech.length - 4}</span>
+                    )}
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-      </motion.section>
 
-      {/* Tools & Languages - Floating Glass Marquee */}
-      <motion.section 
-        id="tools" 
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-full py-16 px-4 md:px-8 lg:px-12"
-      >
-        <div className="w-full bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.3)] rounded-[2.5rem] py-16 overflow-hidden">
-          <div className="flex flex-col items-center mb-16 px-6">
-            <h2 className="text-3xl md:text-5xl font-black font-sans uppercase tracking-tighter text-slate-900 mb-4">Tools &amp; Languages</h2>
-            <p className="text-slate-500 font-sans font-light text-center max-w-xl text-sm md:text-base">
-              Showcasing my expertise in building scalable, secure, and high-performance applications.
-            </p>
-          </div>
-
-          <div className="relative w-full flex overflow-hidden group [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-            <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
-              {[...tools, ...tools].map((tool, idx) => (
-                <div key={idx} className="flex flex-col items-center justify-center gap-4 mx-6">
-                  <div className="w-24 h-24 bg-white/50 border border-white/70 flex items-center justify-center text-slate-400 hover:text-cyan-600 hover:border-cyan-400 hover:bg-white/80 transition-all rounded-2xl shadow-sm hover:shadow-md hover:scale-105 duration-300">
-                    {tool.icon}
+                  {/* Action Buttons */}
+                  <div className="flex gap-2 pt-4 border-t border-white/40">
+                    <button
+                      onClick={(e) => { e.stopPropagation(); setSelectedProject(project); }}
+                      className="flex-1 py-2 text-[9px] font-extrabold tracking-widest uppercase border border-slate-300 text-slate-600 bg-white/40 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 rounded-full"
+                    >
+                      Details
+                    </button>
+                    {project.live ? (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex-1 py-2 text-[9px] font-extrabold tracking-widest uppercase bg-cyan-600 text-white hover:bg-cyan-700 transition-all duration-300 flex items-center justify-center gap-2 rounded-full shadow-sm shadow-cyan-600/10"
+                      >
+                        <ExternalLink size={11} /> Visit
+                      </a>
+                    ) : (
+                      <span className="flex-1 py-2 text-[9px] font-extrabold tracking-widest uppercase border border-slate-200/50 text-slate-400 bg-slate-200/20 flex items-center justify-center rounded-full">
+                        OFFLINE
+                      </span>
+                    )}
                   </div>
-                  <span className="text-[10px] font-extrabold tracking-widest uppercase text-slate-500">{tool.name}</span>
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </motion.section>
 
-      {/* Projects - Floating Glass Grid */}
-      <motion.section 
-        id="projects" 
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-full py-16 px-4 md:px-8 lg:px-12"
-      >
-        <div className="w-full bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.3)] rounded-[2.5rem] py-16 md:py-20">
-          <div className="px-8 md:px-16 mb-16">
-            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 mb-4">Projects</h2>
-            <p className="text-slate-500 font-sans font-light text-lg md:text-xl">
-              A selection of my most impactful work.
-            </p>
-          </div>
-
-          {/* Project Cards Grid */}
-          <div className="px-8 md:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {projects.slice(0, visibleProjectsCount).map((project, idx) => (
-              <div
-                key={idx}
-                onClick={() => setSelectedProject(project)}
-                className="group bg-white/20 border border-white/50 backdrop-blur-md rounded-3xl p-6 cursor-pointer hover:bg-white/50 hover:border-cyan-300 hover:shadow-[0_20px_40px_rgba(148,187,233,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-5 shadow-sm"
-              >
-                {/* Header */}
-                <div className="flex items-start justify-between">
-                  <span className={`text-[9px] font-extrabold tracking-widest uppercase px-3 py-1 border rounded-full backdrop-blur-sm ${
-                    project.status === 'live'
-                      ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20 shadow-[0_2px_10px_rgba(16,185,129,0.1)]'
-                      : 'bg-slate-200/50 text-slate-400 border-slate-300/30'
-                  }`}>
-                    {project.status === 'live' ? '● LIVE' : '○ OFFLINE'}
-                  </span>
-                  <ArrowUpRight size={16} className="text-slate-400 group-hover:text-cyan-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300" />
-                </div>
-
-                {/* Image */}
-                <div className="relative h-44 w-full overflow-hidden bg-slate-100/50 rounded-2xl border border-white/40">
-                  <Image 
-                    src={getValidSrc(project.images ? (Array.isArray(project.images) ? project.images[0] : project.images) : null, project.title)} 
-                    alt={project.title || "Project Image"} 
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500" 
-                  />
-                </div>
-
-                {/* Info */}
-                <div className="flex flex-col gap-2.5 flex-grow">
-                  <p className="text-[9px] text-slate-400 font-mono tracking-wider font-semibold uppercase">{project.role}</p>
-                  <h3 className="text-base font-extrabold text-slate-800 leading-snug group-hover:text-cyan-600 transition-colors duration-300">{project.title}</h3>
-                  <p className="text-slate-500 text-xs leading-relaxed line-clamp-3 font-light">{project.description}</p>
-                </div>
-
-                {/* Tech pills */}
-                <div className="flex flex-wrap gap-1.5">
-                  {(project.tech || []).slice(0, 4).map((t: string, i: number) => (
-                    <span key={i} className="text-[8px] font-extrabold text-slate-600 bg-white/40 border border-white/60 px-2 py-1 tracking-wider uppercase rounded-md backdrop-blur-sm">
-                      {t}
-                    </span>
-                  ))}
-                  {project.tech && project.tech.length > 4 && (
-                    <span className="text-[8px] font-extrabold text-slate-400 bg-white/40 border border-white/60 px-2 py-1 tracking-wider uppercase rounded-md backdrop-blur-sm">+{project.tech.length - 4}</span>
-                  )}
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex gap-2 pt-4 border-t border-white/40">
-                  <button
-                    onClick={(e) => { e.stopPropagation(); setSelectedProject(project); }}
-                    className="flex-1 py-2 text-[9px] font-extrabold tracking-widest uppercase border border-slate-300 text-slate-600 bg-white/40 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 rounded-full"
-                  >
-                    Details
-                  </button>
-                  {project.live ? (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      className="flex-1 py-2 text-[9px] font-extrabold tracking-widest uppercase bg-cyan-600 text-white hover:bg-cyan-700 transition-all duration-300 flex items-center justify-center gap-2 rounded-full shadow-sm shadow-cyan-600/10"
-                    >
-                      <ExternalLink size={11} /> Visit
-                    </a>
-                  ) : (
-                    <span className="flex-1 py-2 text-[9px] font-extrabold tracking-widest uppercase border border-slate-200/50 text-slate-400 bg-slate-200/20 flex items-center justify-center rounded-full">
-                      OFFLINE
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Pagination / Load More */}
-          {visibleProjectsCount < projects.length && (
-            <div className="flex justify-center mt-12 w-full">
-              <button 
-                onClick={() => setVisibleProjectsCount(prev => prev + 6)}
-                className="px-8 py-3 rounded-full text-[11px] font-black tracking-widest uppercase bg-white/40 border border-white/60 shadow-[0_5px_15px_rgba(148,187,233,0.1)] hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300"
-              >
-                Load More Projects
-              </button>
-            </div>
-          )}
-        </div>
-      </motion.section>
-
-      {/* Project Detail Modal */}
-      <AnimatePresence>
-        {selectedProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 md:p-6"
-            onClick={() => setSelectedProject(null)}
-          >
-            <motion.div
-              initial={{ y: 30, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 30, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              onClick={(e) => e.stopPropagation()}
-              className="w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-white/70 backdrop-blur-2xl border border-white/60 shadow-[0_50px_100px_-20px_rgba(148,187,233,0.4)] rounded-3xl flex flex-col"
-            >
-              {/* Modal Header */}
-              <div className="flex items-start justify-between gap-6 p-8 border-b border-white/60">
-                <div className="flex-1">
-                  <div className="flex items-center gap-4 mb-3">
-                    <span className={`text-[9px] font-extrabold tracking-widest uppercase px-3 py-1 border rounded-full backdrop-blur-sm ${
-                      selectedProject.status === 'live' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-slate-200/50 text-slate-400 border-slate-300/30'
-                    }`}>
-                      {selectedProject.status === 'live' ? '● LIVE' : '○ OFFLINE'}
-                    </span>
-                    <span className="text-[10px] text-slate-400 font-mono tracking-widest uppercase font-semibold">{selectedProject.role}</span>
-                  </div>
-                  <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900">{selectedProject.title}</h2>
-                </div>
+            {/* Pagination / Load More */}
+            {visibleProjectsCount < projects.length && (
+              <div className="flex justify-center mt-12 w-full">
                 <button
-                  onClick={() => setSelectedProject(null)}
-                  className="flex-shrink-0 w-10 h-10 border border-slate-300 bg-white/40 hover:bg-slate-900 hover:text-white rounded-full flex items-center justify-center text-slate-800 transition-all duration-300 shadow-sm"
+                  onClick={() => setVisibleProjectsCount(prev => prev + 6)}
+                  className="px-8 py-3 rounded-full text-[11px] font-black tracking-widest uppercase bg-white/40 border border-white/60 shadow-[0_5px_15px_rgba(148,187,233,0.1)] hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300"
                 >
-                  ✕
+                  Load More Projects
                 </button>
               </div>
+            )}
+          </div>
+        </motion.section>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 flex-1">
-                {/* Image Gallery & Info */}
-                <div className="lg:col-span-2 p-8 lg:border-r border-white/60 space-y-8">
-                  {/* Gallery Slider */}
-                  <div className="space-y-4">
-                    <div className="relative w-full aspect-video overflow-hidden bg-slate-100/50 border border-white/40 rounded-2xl flex items-center justify-center shadow-inner">
-                      {/* Blurred Background for Portrait Images */}
-                      <div 
-                        className="absolute inset-0 scale-110 blur-2xl opacity-20 pointer-events-none"
-                        style={{
-                          backgroundImage: `url(${getValidSrc(selectedProject.images ? (Array.isArray(selectedProject.images) ? selectedProject.images[selectedProject.currentImageIndex || 0] : selectedProject.images) : null, selectedProject.title)})`,
-                          backgroundSize: 'cover',
-                          backgroundPosition: 'center'
-                        }}
-                      />
-                      
-                      <AnimatePresence mode="wait">
-                        <motion.div
-                          key={selectedProject.currentImageIndex || 0}
-                          initial={{ opacity: 0, scale: 0.95 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          exit={{ opacity: 0, scale: 1.05 }}
-                          transition={{ duration: 0.4 }}
-                          className="relative z-10 w-full h-full p-2"
-                        >
-                          <Image
-                            src={getValidSrc(selectedProject.images ? (Array.isArray(selectedProject.images) ? selectedProject.images[selectedProject.currentImageIndex || 0] : selectedProject.images) : null, selectedProject.title)}
-                            alt={selectedProject.title || "Project image"}
-                            fill
-                            className="object-contain"
-                          />
-                        </motion.div>
-                      </AnimatePresence>
+        {/* Project Detail Modal */}
+        <AnimatePresence>
+          {selectedProject && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 md:p-6"
+              onClick={() => setSelectedProject(null)}
+            >
+              <motion.div
+                initial={{ y: 30, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 30, opacity: 0 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                onClick={(e) => e.stopPropagation()}
+                className="w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-white/70 backdrop-blur-2xl border border-white/60 shadow-[0_50px_100px_-20px_rgba(148,187,233,0.4)] rounded-3xl flex flex-col"
+              >
+                {/* Modal Header */}
+                <div className="flex items-start justify-between gap-6 p-8 border-b border-white/60">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-4 mb-3">
+                      <span className={`text-[9px] font-extrabold tracking-widest uppercase px-3 py-1 border rounded-full backdrop-blur-sm ${selectedProject.status === 'live' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-slate-200/50 text-slate-400 border-slate-300/30'
+                        }`}>
+                        {selectedProject.status === 'live' ? '● LIVE' : '○ OFFLINE'}
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-mono tracking-widest uppercase font-semibold">{selectedProject.role}</span>
                     </div>
-                    
-                    {/* Thumbnails */}
-                    {Array.isArray(selectedProject.images) && selectedProject.images.length > 1 && (
+                    <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900">{selectedProject.title}</h2>
+                  </div>
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className="flex-shrink-0 w-10 h-10 border border-slate-300 bg-white/40 hover:bg-slate-900 hover:text-white rounded-full flex items-center justify-center text-slate-800 transition-all duration-300 shadow-sm"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 flex-1">
+                  {/* Image Gallery & Info */}
+                  <div className="lg:col-span-2 p-8 lg:border-r border-white/60 space-y-8">
+                    {/* Gallery Slider */}
+                    <div className="space-y-4">
+                      <div className="relative w-full aspect-video overflow-hidden bg-slate-100/50 border border-white/40 rounded-2xl flex items-center justify-center shadow-inner">
+                        {/* Blurred Background for Portrait Images */}
+                        <div
+                          className="absolute inset-0 scale-110 blur-2xl opacity-20 pointer-events-none"
+                          style={{
+                            backgroundImage: `url(${getValidSrc(selectedProject.images ? (Array.isArray(selectedProject.images) ? selectedProject.images[selectedProject.currentImageIndex || 0] : selectedProject.images) : null, selectedProject.title)})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center'
+                          }}
+                        />
+
+                        <AnimatePresence mode="wait">
+                          <motion.div
+                            key={selectedProject.currentImageIndex || 0}
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 1.05 }}
+                            transition={{ duration: 0.4 }}
+                            className="relative z-10 w-full h-full p-2"
+                          >
+                            <Image
+                              src={getValidSrc(selectedProject.images ? (Array.isArray(selectedProject.images) ? selectedProject.images[selectedProject.currentImageIndex || 0] : selectedProject.images) : null, selectedProject.title)}
+                              alt={selectedProject.title || "Project image"}
+                              fill
+                              className="object-contain"
+                            />
+                          </motion.div>
+                        </AnimatePresence>
+                      </div>
+
+                      {/* Thumbnails */}
+                      {Array.isArray(selectedProject.images) && selectedProject.images.length > 1 && (
                         <div className="flex flex-wrap gap-2">
                           {selectedProject.images.map((img: string, i: number) => (
-                            <button 
+                            <button
                               key={i}
-                              onClick={() => setSelectedProject({...selectedProject, currentImageIndex: i})}
-                              className={`relative w-16 h-16 border-2 transition-all rounded-lg overflow-hidden ${
-                                (selectedProject.currentImageIndex || 0) === i ? 'border-cyan-500 ring-2 ring-cyan-500/20 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'
-                              }`}
+                              onClick={() => setSelectedProject({ ...selectedProject, currentImageIndex: i })}
+                              className={`relative w-16 h-16 border-2 transition-all rounded-lg overflow-hidden ${(selectedProject.currentImageIndex || 0) === i ? 'border-cyan-500 ring-2 ring-cyan-500/20 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'
+                                }`}
                             >
                               <Image src={getValidSrc(img)} fill sizes="64px" className="object-cover" alt="Thumbnail" />
                             </button>
@@ -706,113 +699,113 @@ export default function Portfolio() {
                       )}
                     </div>
 
-                  {/* YouTube */}
-                  {selectedProject.youtube && (
-                    <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-md border border-white/40">
-                      <iframe
-                        src={`https://www.youtube.com/embed/${getYoutubeId(selectedProject.youtube)}`}
-                        title={selectedProject.title}
-                        className="w-full h-full"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    </div>
-                  )}
+                    {/* YouTube */}
+                    {selectedProject.youtube && (
+                      <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-md border border-white/40">
+                        <iframe
+                          src={`https://www.youtube.com/embed/${getYoutubeId(selectedProject.youtube)}`}
+                          title={selectedProject.title}
+                          className="w-full h-full"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    )}
 
-                  {/* Description */}
-                  <div className="space-y-3">
-                    <h4 className="text-[10px] font-extrabold text-cyan-600 font-mono tracking-widest uppercase">// About this project</h4>
-                    <p className="text-slate-600 text-sm md:text-base leading-relaxed font-light">{selectedProject.description}</p>
-                  </div>
-                </div>
-
-                {/* Right: Tech + Links */}
-                <div className="p-8 space-y-8">
-                  <div className="space-y-4">
-                    <h4 className="text-[10px] font-extrabold text-cyan-600 font-mono tracking-widest uppercase">// Tech Stack</h4>
-                    <div className="flex flex-wrap gap-1.5">
-                      {(selectedProject.tech || []).map((t: string, i: number) => (
-                        <span key={i} className="text-[9px] font-extrabold text-slate-700 bg-white/60 border border-white/80 px-3 py-1.5 tracking-wider uppercase rounded-md shadow-sm">
-                          {t}
-                        </span>
-                      ))}
+                    {/* Description */}
+                    <div className="space-y-3">
+                      <h4 className="text-[10px] font-extrabold text-cyan-600 font-mono tracking-widest uppercase">// About this project</h4>
+                      <p className="text-slate-600 text-sm md:text-base leading-relaxed font-light">{selectedProject.description}</p>
                     </div>
                   </div>
 
-                  <div className="space-y-3 pt-6 border-t border-white/60">
-                    {selectedProject.github && (
-                      <a
-                        href={selectedProject.github}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center justify-center gap-3 w-full py-3 text-[10px] font-extrabold tracking-widest uppercase border border-slate-300 text-slate-700 bg-white/40 hover:bg-slate-900 hover:text-white hover:border-slate-900 rounded-full transition-all duration-300 shadow-sm"
-                      >
-                        <Code2 size={15} /> VIEW CODE
-                      </a>
-                    )}
-                    {selectedProject.live && (
-                      <a
-                        href={selectedProject.live}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center justify-center gap-3 w-full py-3 bg-cyan-600 text-white text-[10px] font-extrabold tracking-widest uppercase hover:bg-cyan-700 rounded-full transition-all duration-300 shadow-md shadow-cyan-600/10"
-                      >
-                        <ExternalLink size={15} /> VIEW LIVE
-                      </a>
-                    )}
+                  {/* Right: Tech + Links */}
+                  <div className="p-8 space-y-8">
+                    <div className="space-y-4">
+                      <h4 className="text-[10px] font-extrabold text-cyan-600 font-mono tracking-widest uppercase">// Tech Stack</h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {(selectedProject.tech || []).map((t: string, i: number) => (
+                          <span key={i} className="text-[9px] font-extrabold text-slate-700 bg-white/60 border border-white/80 px-3 py-1.5 tracking-wider uppercase rounded-md shadow-sm">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="space-y-3 pt-6 border-t border-white/60">
+                      {selectedProject.github && (
+                        <a
+                          href={selectedProject.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center justify-center gap-3 w-full py-3 text-[10px] font-extrabold tracking-widest uppercase border border-slate-300 text-slate-700 bg-white/40 hover:bg-slate-900 hover:text-white hover:border-slate-900 rounded-full transition-all duration-300 shadow-sm"
+                        >
+                          <Code2 size={15} /> VIEW CODE
+                        </a>
+                      )}
+                      {selectedProject.live && (
+                        <a
+                          href={selectedProject.live}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center justify-center gap-3 w-full py-3 bg-cyan-600 text-white text-[10px] font-extrabold tracking-widest uppercase hover:bg-cyan-700 rounded-full transition-all duration-300 shadow-md shadow-cyan-600/10"
+                        >
+                          <ExternalLink size={15} /> VIEW LIVE
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
 
 
-      {/* GitHub Contributions - Floating Glass Card */}
-      <motion.section 
-        id="github" 
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-        className="w-full py-16 px-4 md:px-8 lg:px-12"
-      >
-        <div className="w-full bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.3)] rounded-[2.5rem] py-16 px-6 md:px-12 flex flex-col">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 mb-4">Contributions</h2>
-            <p className="text-slate-500 font-sans font-light text-lg md:text-xl">
-              My open source activity on GitHub.
-            </p>
+        {/* GitHub Contributions - Floating Glass Card */}
+        <motion.section
+          id="github"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full py-16 px-4 md:px-8 lg:px-12"
+        >
+          <div className="w-full bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.3)] rounded-[2.5rem] py-16 px-6 md:px-12 flex flex-col">
+            <div className="mb-16">
+              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 mb-4">Contributions</h2>
+              <p className="text-slate-500 font-sans font-light text-lg md:text-xl">
+                My open source activity on GitHub.
+              </p>
+            </div>
+            <div className="overflow-x-auto flex justify-center w-full">
+              <GitHubCalendar
+                username="luqss-s"
+                colorScheme="light"
+                theme={{
+                  light: ['#ebedf0', '#d1dbe8', '#9cb1cc', '#607a9e', '#344465'],
+                  dark: ['#1e293b', '#334155', '#475569', '#64748b', '#cbd5e1'],
+                }}
+                fontSize={14}
+                blockSize={16}
+                blockMargin={5}
+              />
+            </div>
           </div>
-          <div className="overflow-x-auto flex justify-center w-full">
-            <GitHubCalendar 
-              username="luqss-s" 
-              colorScheme="light"
-              theme={{
-                light: ['#ebedf0', '#d1dbe8', '#9cb1cc', '#607a9e', '#344465'],
-                dark: ['#1e293b', '#334155', '#475569', '#64748b', '#cbd5e1'],
-              }}
-              fontSize={14}
-              blockSize={16}
-              blockMargin={5}
-            />
+        </motion.section>
+
+
+
+        {/* Footer */}
+        <footer className="border-t border-white/40 mt-16 px-4 md:px-8 lg:px-12 w-full">
+          <div className="px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-slate-500 font-medium">
+            <div className="flex items-center gap-2 font-mono">
+              <Terminal size={14} className="text-cyan-600" />
+              <span>sys.exit(0)</span>
+            </div>
+            <span>© {new Date().getFullYear()} LUQMAN AZRI</span>
           </div>
-        </div>
-      </motion.section>
-
-
-
-      {/* Footer */}
-      <footer className="border-t border-white/40 mt-16 px-4 md:px-8 lg:px-12 w-full">
-        <div className="px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-slate-500 font-medium">
-          <div className="flex items-center gap-2 font-mono">
-            <Terminal size={14} className="text-cyan-600" />
-            <span>sys.exit(0)</span>
-          </div>
-          <span>© {new Date().getFullYear()} LUQMAN AZRI</span>
-        </div>
-      </footer>
+        </footer>
       </motion.div>
     </>
   );

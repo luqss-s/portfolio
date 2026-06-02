@@ -19,11 +19,10 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Luqman Azri | Software Engineer Portfolio",
-  description: "Portfolio of Luqman Azri, a Software Engineer and Computer Science Graduate. Explore my projects, skills, and professional experience.",
+  title: "Luqman Azri | Portfolio",
+  description: "Portfolio of Luqman Azri, a Computer Science Graduate. Explore my projects, skills, and professional experience.",
   keywords: [
     "Luqman Azri",
-    "Software Engineer",
     "Frontend Developer",
     "Full Stack Developer",
     "Web Developer",
