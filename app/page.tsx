@@ -162,8 +162,8 @@ const getValidSrc = (src: any, fallbackTitle?: string): string => {
     return src.replace('?', '/png?');
   }
 
-  if (src.startsWith('http') || src.startsWith('/')) return src;
-  return `/${src}`;
+  const resolved = (src.startsWith('http') || src.startsWith('/')) ? src : `/${src}`;
+  return encodeURI(resolved);
 };
 
 export default function Portfolio() {
@@ -177,16 +177,15 @@ export default function Portfolio() {
   useEffect(() => {
     setMounted(true);
     const fetchProjects = async () => {
-      // 1. Use session storage for simple, fast caching
+      // 1. Use session storage for simple, fast initial render
       const cached = sessionStorage.getItem("portfolio_projects_cache");
       if (cached) {
         setProjects(JSON.parse(cached));
-        return;
       }
 
-      // 2. Fetch from Supabase if no cache exists
+      // 2. Always fetch from Supabase to get the latest data and update cache/state
       if (!supabase) return;
-      const { data, error } = await supabase.from("projects").select("*").order("created_at", { ascending: true });
+      const { data, error } = await supabase.from("projects").select("*").order("created_at", { ascending: false });
       if (!error && data) {
         setProjects(data);
         sessionStorage.setItem("portfolio_projects_cache", JSON.stringify(data));
