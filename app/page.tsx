@@ -166,6 +166,72 @@ const getValidSrc = (src: any, fallbackTitle?: string): string => {
   return encodeURI(resolved);
 };
 
+// ─── Live Preview Image (Microlink Screenshot API) ──────────────────────────
+const LivePreviewImage = ({ liveUrl, fallbackSrc, alt, className = "", fill, sizes, priority = false }: {
+  liveUrl: string;
+  fallbackSrc: string;
+  alt: string;
+  className?: string;
+  fill?: boolean;
+  sizes?: string;
+  priority?: boolean;
+}) => {
+  const [screenshotUrl, setScreenshotUrl] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [failed, setFailed] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    setFailed(false);
+    setScreenshotUrl(null);
+
+    fetch(`/api/screenshot?url=${encodeURIComponent(liveUrl)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (cancelled) return;
+        if (data?.screenshotUrl) {
+          setScreenshotUrl(data.screenshotUrl);
+        } else {
+          setFailed(true);
+        }
+        setLoading(false);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setFailed(true);
+          setLoading(false);
+        }
+      });
+
+    return () => { cancelled = true; };
+  }, [liveUrl]);
+
+  if (loading) {
+    return (
+      <div className={`${className} flex items-center justify-center bg-slate-100/50`}>
+        <div className="w-6 h-6 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (failed || !screenshotUrl) {
+    return <Image src={fallbackSrc} alt={alt} fill={fill} sizes={sizes} className={className} priority={priority} />;
+  }
+
+  return (
+    <Image
+      src={screenshotUrl}
+      alt={alt}
+      fill={fill}
+      sizes={sizes}
+      className={className}
+      priority={priority}
+      onError={() => setFailed(true)}
+    />
+  );
+};
+
 export default function Portfolio() {
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -173,6 +239,7 @@ export default function Portfolio() {
   const [visibleProjectsCount, setVisibleProjectsCount] = useState(6);
   const [activeTab, setActiveTab] = useState<'experience' | 'education'>('experience');
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
+  const [modalPreviewTab, setModalPreviewTab] = useState<'screenshots' | 'live'>('screenshots');
 
   useEffect(() => {
     setMounted(true);
@@ -522,7 +589,7 @@ export default function Portfolio() {
               {projects.slice(0, visibleProjectsCount).map((project, idx) => (
                 <div
                   key={idx}
-                  onClick={() => setSelectedProject(project)}
+                  onClick={() => { setSelectedProject(project); setModalPreviewTab('screenshots'); }}
                   className="group bg-white/20 border border-white/50 backdrop-blur-md rounded-3xl p-6 cursor-pointer hover:bg-white/50 hover:border-cyan-300 hover:shadow-[0_20px_40px_rgba(148,187,233,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-5 shadow-sm"
                 >
                   {/* Header */}
@@ -536,15 +603,26 @@ export default function Portfolio() {
                     <ArrowUpRight size={16} className="text-slate-400 group-hover:text-cyan-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300" />
                   </div>
 
-                  {/* Image */}
+                  {/* Image – Live screenshot via Microlink if live URL exists */}
                   <div className="relative h-44 w-full overflow-hidden bg-slate-100/50 rounded-2xl border border-white/40">
-                    <Image
-                      src={getValidSrc(project.images ? (Array.isArray(project.images) ? project.images[0] : project.images) : null, project.title)}
-                      alt={project.title || "Project Image"}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                    />
+                    {project.live ? (
+                      <LivePreviewImage
+                        liveUrl={project.live}
+                        fallbackSrc={getValidSrc(project.images ? (Array.isArray(project.images) ? project.images[0] : project.images) : null, project.title)}
+                        alt={project.title || "Project Image"}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                      />
+                    ) : (
+                      <Image
+                        src={getValidSrc(project.images ? (Array.isArray(project.images) ? project.images[0] : project.images) : null, project.title)}
+                        alt={project.title || "Project Image"}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                      />
+                    )}
                   </div>
 
                   {/* Info */}
@@ -569,7 +647,7 @@ export default function Portfolio() {
                   {/* Action Buttons */}
                   <div className="flex gap-2 pt-4 border-t border-white/40">
                     <button
-                      onClick={(e) => { e.stopPropagation(); setSelectedProject(project); }}
+                      onClick={(e) => { e.stopPropagation(); setSelectedProject(project); setModalPreviewTab('screenshots'); }}
                       className="flex-1 py-2 text-[9px] font-extrabold tracking-widest uppercase border border-slate-300 text-slate-600 bg-white/40 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 rounded-full"
                     >
                       Details
@@ -624,10 +702,10 @@ export default function Portfolio() {
                 exit={{ y: 30, opacity: 0 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                 onClick={(e) => e.stopPropagation()}
-                className="w-full max-w-5xl max-h-[90vh] overflow-y-auto bg-white/70 backdrop-blur-2xl border border-white/60 shadow-[0_50px_100px_-20px_rgba(148,187,233,0.4)] rounded-3xl flex flex-col"
+                className="w-full max-w-7xl max-h-[95vh] overflow-y-auto bg-white/70 backdrop-blur-2xl border border-white/60 shadow-[0_50px_100px_-20px_rgba(148,187,233,0.4)] rounded-3xl flex flex-col"
               >
                 {/* Modal Header */}
-                <div className="flex items-start justify-between gap-6 p-8 border-b border-white/60">
+                <div className="flex items-start justify-between gap-6 p-8 md:p-10 border-b border-white/60">
                   <div className="flex-1">
                     <div className="flex items-center gap-4 mb-3">
                       <span className={`text-[9px] font-extrabold tracking-widest uppercase px-3 py-1 border rounded-full backdrop-blur-sm ${selectedProject.status === 'live' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-slate-200/50 text-slate-400 border-slate-300/30'
@@ -636,67 +714,115 @@ export default function Portfolio() {
                       </span>
                       <span className="text-[10px] text-slate-400 font-mono tracking-widest uppercase font-semibold">{selectedProject.role}</span>
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900">{selectedProject.title}</h2>
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">{selectedProject.title}</h2>
                   </div>
                   <button
                     onClick={() => setSelectedProject(null)}
-                    className="flex-shrink-0 w-10 h-10 border border-slate-300 bg-white/40 hover:bg-slate-900 hover:text-white rounded-full flex items-center justify-center text-slate-800 transition-all duration-300 shadow-sm"
+                    className="flex-shrink-0 w-12 h-12 border border-slate-300 bg-white/40 hover:bg-slate-900 hover:text-white rounded-full flex items-center justify-center text-slate-800 transition-all duration-300 shadow-sm"
                   >
                     ✕
                   </button>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 flex-1">
+                <div className="grid grid-cols-1 lg:grid-cols-4 flex-1">
                   {/* Image Gallery & Info */}
-                  <div className="lg:col-span-2 p-8 lg:border-r border-white/60 space-y-8">
-                    {/* Gallery Slider */}
-                    <div className="space-y-4">
-                      <div className="relative w-full aspect-video overflow-hidden bg-slate-100/50 border border-white/40 rounded-2xl flex items-center justify-center shadow-inner">
-                        {/* Blurred Background for Portrait Images */}
-                        <div
-                          className="absolute inset-0 scale-110 blur-2xl opacity-20 pointer-events-none"
-                          style={{
-                            backgroundImage: `url(${getValidSrc(selectedProject.images ? (Array.isArray(selectedProject.images) ? selectedProject.images[selectedProject.currentImageIndex || 0] : selectedProject.images) : null, selectedProject.title)})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center'
-                          }}
+                  <div className="lg:col-span-3 p-8 md:p-10 lg:border-r border-white/60 space-y-8">
+                    {/* Tab toggle – only show when project has a live URL */}
+                    {selectedProject.live && (
+                      <div className="flex bg-slate-200/40 border border-white/60 p-1 rounded-full relative w-max backdrop-blur-md shadow-inner">
+                        <button
+                          onClick={() => setModalPreviewTab('screenshots')}
+                          className={`relative z-10 px-8 py-2.5 rounded-full text-[10px] font-bold tracking-widest uppercase transition-colors duration-300 ${
+                            modalPreviewTab === 'screenshots' ? 'text-white' : 'text-slate-500 hover:text-slate-900'
+                          }`}
+                        >
+                          Screenshots
+                        </button>
+                        <button
+                          onClick={() => setModalPreviewTab('live')}
+                          className={`relative z-10 px-8 py-2.5 rounded-full text-[10px] font-bold tracking-widest uppercase transition-colors duration-300 ${
+                            modalPreviewTab === 'live' ? 'text-white' : 'text-slate-500 hover:text-slate-900'
+                          }`}
+                        >
+                          Live Preview
+                        </button>
+                        <motion.div
+                          className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-slate-900 rounded-full"
+                          layout
+                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                          style={{ left: modalPreviewTab === 'screenshots' ? '4px' : 'calc(50% + 4px)' }}
                         />
-
-                        <AnimatePresence mode="wait">
-                          <motion.div
-                            key={selectedProject.currentImageIndex || 0}
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 1.05 }}
-                            transition={{ duration: 0.4 }}
-                            className="relative z-10 w-full h-full p-2"
-                          >
-                            <Image
-                              src={getValidSrc(selectedProject.images ? (Array.isArray(selectedProject.images) ? selectedProject.images[selectedProject.currentImageIndex || 0] : selectedProject.images) : null, selectedProject.title)}
-                              alt={selectedProject.title || "Project image"}
-                              fill
-                              className="object-contain"
-                            />
-                          </motion.div>
-                        </AnimatePresence>
                       </div>
+                    )}
 
-                      {/* Thumbnails */}
-                      {Array.isArray(selectedProject.images) && selectedProject.images.length > 1 && (
-                        <div className="flex flex-wrap gap-2">
-                          {selectedProject.images.map((img: string, i: number) => (
-                            <button
-                              key={i}
-                              onClick={() => setSelectedProject({ ...selectedProject, currentImageIndex: i })}
-                              className={`relative w-16 h-16 border-2 transition-all rounded-lg overflow-hidden ${(selectedProject.currentImageIndex || 0) === i ? 'border-cyan-500 ring-2 ring-cyan-500/20 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'
-                                }`}
+                    {/* Screenshots Tab */}
+                    {modalPreviewTab === 'screenshots' && (
+                      <div className="space-y-4">
+                        <div className="relative w-full aspect-video overflow-hidden bg-slate-100/50 border border-white/40 rounded-2xl flex items-center justify-center shadow-inner">
+                          {/* Blurred Background for Portrait Images */}
+                          <div
+                            className="absolute inset-0 scale-110 blur-2xl opacity-20 pointer-events-none"
+                            style={{
+                              backgroundImage: `url(${getValidSrc(selectedProject.images ? (Array.isArray(selectedProject.images) ? selectedProject.images[selectedProject.currentImageIndex || 0] : selectedProject.images) : null, selectedProject.title)})`,
+                              backgroundSize: 'cover',
+                              backgroundPosition: 'center'
+                            }}
+                          />
+
+                          <AnimatePresence mode="wait">
+                            <motion.div
+                              key={selectedProject.currentImageIndex || 0}
+                              initial={{ opacity: 0, scale: 0.95 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0, scale: 1.05 }}
+                              transition={{ duration: 0.4 }}
+                              className="relative z-10 w-full h-full p-2"
                             >
-                              <Image src={getValidSrc(img)} fill sizes="64px" className="object-cover" alt="Thumbnail" />
-                            </button>
-                          ))}
+                              <Image
+                                src={getValidSrc(selectedProject.images ? (Array.isArray(selectedProject.images) ? selectedProject.images[selectedProject.currentImageIndex || 0] : selectedProject.images) : null, selectedProject.title)}
+                                alt={selectedProject.title || "Project image"}
+                                fill
+                                className="object-contain"
+                              />
+                            </motion.div>
+                          </AnimatePresence>
                         </div>
-                      )}
-                    </div>
+
+                        {/* Thumbnails */}
+                        {Array.isArray(selectedProject.images) && selectedProject.images.length > 1 && (
+                          <div className="flex flex-wrap gap-3">
+                            {selectedProject.images.map((img: string, i: number) => (
+                              <button
+                                key={i}
+                                onClick={() => setSelectedProject({ ...selectedProject, currentImageIndex: i })}
+                                className={`relative w-20 h-20 border-2 transition-all rounded-lg overflow-hidden ${(selectedProject.currentImageIndex || 0) === i ? 'border-cyan-500 ring-2 ring-cyan-500/20 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'
+                                  }`}
+                              >
+                                <Image src={getValidSrc(img)} fill sizes="80px" className="object-cover" alt="Thumbnail" />
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Live Preview Tab */}
+                    {modalPreviewTab === 'live' && selectedProject.live && (
+                      <div className="space-y-2">
+                        <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/40 bg-white/30 shadow-inner">
+                          <iframe
+                            src={selectedProject.live}
+                            title={`${selectedProject.title} live preview`}
+                            className="w-full h-full"
+                            sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                            loading="lazy"
+                          />
+                        </div>
+                        <p className="text-[9px] text-slate-400 font-mono text-center">
+                          Interactive preview — some sites may block iframe embedding
+                        </p>
+                      </div>
+                    )}
 
                     {/* YouTube */}
                     {selectedProject.youtube && (
@@ -713,18 +839,18 @@ export default function Portfolio() {
 
                     {/* Description */}
                     <div className="space-y-3">
-                      <h4 className="text-[10px] font-extrabold text-cyan-600 font-mono tracking-widest uppercase">// About this project</h4>
-                      <p className="text-slate-600 text-sm md:text-base leading-relaxed font-light">{selectedProject.description}</p>
+                      <h4 className="text-[11px] font-extrabold text-cyan-600 font-mono tracking-widest uppercase">// About this project</h4>
+                      <p className="text-slate-600 text-sm md:text-lg leading-relaxed font-light">{selectedProject.description}</p>
                     </div>
                   </div>
 
                   {/* Right: Tech + Links */}
-                  <div className="p-8 space-y-8">
+                  <div className="p-8 md:p-10 space-y-8">
                     <div className="space-y-4">
-                      <h4 className="text-[10px] font-extrabold text-cyan-600 font-mono tracking-widest uppercase">// Tech Stack</h4>
-                      <div className="flex flex-wrap gap-1.5">
+                      <h4 className="text-[11px] font-extrabold text-cyan-600 font-mono tracking-widest uppercase">// Tech Stack</h4>
+                      <div className="flex flex-wrap gap-2">
                         {(selectedProject.tech || []).map((t: string, i: number) => (
-                          <span key={i} className="text-[9px] font-extrabold text-slate-700 bg-white/60 border border-white/80 px-3 py-1.5 tracking-wider uppercase rounded-md shadow-sm">
+                          <span key={i} className="text-[10px] font-extrabold text-slate-700 bg-white/60 border border-white/80 px-3 py-1.5 tracking-wider uppercase rounded-md shadow-sm">
                             {t}
                           </span>
                         ))}
@@ -737,9 +863,9 @@ export default function Portfolio() {
                           href={selectedProject.github}
                           target="_blank"
                           rel="noreferrer"
-                          className="flex items-center justify-center gap-3 w-full py-3 text-[10px] font-extrabold tracking-widest uppercase border border-slate-300 text-slate-700 bg-white/40 hover:bg-slate-900 hover:text-white hover:border-slate-900 rounded-full transition-all duration-300 shadow-sm"
+                          className="flex items-center justify-center gap-3 w-full py-4 text-[11px] font-extrabold tracking-widest uppercase border border-slate-300 text-slate-700 bg-white/40 hover:bg-slate-900 hover:text-white hover:border-slate-900 rounded-full transition-all duration-300 shadow-sm"
                         >
-                          <Code2 size={15} /> VIEW CODE
+                          <Code2 size={16} /> VIEW CODE
                         </a>
                       )}
                       {selectedProject.live && (
@@ -747,9 +873,9 @@ export default function Portfolio() {
                           href={selectedProject.live}
                           target="_blank"
                           rel="noreferrer"
-                          className="flex items-center justify-center gap-3 w-full py-3 bg-cyan-600 text-white text-[10px] font-extrabold tracking-widest uppercase hover:bg-cyan-700 rounded-full transition-all duration-300 shadow-md shadow-cyan-600/10"
+                          className="flex items-center justify-center gap-3 w-full py-4 bg-cyan-600 text-white text-[11px] font-extrabold tracking-widest uppercase hover:bg-cyan-700 rounded-full transition-all duration-300 shadow-md shadow-cyan-600/10"
                         >
-                          <ExternalLink size={15} /> VIEW LIVE
+                          <ExternalLink size={16} /> VIEW LIVE
                         </a>
                       )}
                     </div>
