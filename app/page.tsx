@@ -7,6 +7,7 @@ import { SiJavascript, SiPython, SiR, SiHtml5, SiCss, SiDotnet, SiReact, SiTailw
 import { createClient } from "@supabase/supabase-js";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { MeshGradient } from "@paper-design/shaders-react";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
@@ -291,21 +292,23 @@ export default function Portfolio() {
         {loading && <BootLoader onDone={() => setLoading(false)} />}
       </AnimatePresence>
 
-      {/* Animated Aurora mesh gradient in background */}
-      <div className="aurora-container">
-        <div className="aurora-blob aurora-blob-1" />
-        <div className="aurora-blob aurora-blob-2" />
-        <div className="aurora-blob aurora-blob-3" />
+      {/* Mesh Gradient Background */}
+      <div className="fixed inset-0 z-[-20] overflow-hidden bg-black pointer-events-none">
+        <MeshGradient
+          className="w-full h-full absolute inset-0"
+          colors={["#000000", "#293650", "#003554", "#004b75"]}
+          speed={0.5}
+        />
       </div>
 
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: loading ? 0 : 1 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="min-h-screen text-slate-900 selection:bg-cyan-200 selection:text-slate-900 font-sans relative z-10"
+        className="min-h-screen text-slate-100 selection:bg-cyan-500 selection:text-slate-900 font-sans relative z-10"
       >
         {/* Floating Glass Navigation */}
-        <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl bg-white/40 backdrop-blur-xl z-50 border border-white/60 shadow-[0_20px_40px_-15px_rgba(148,187,233,0.25)] rounded-3xl">
+        <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl bg-white/75 backdrop-blur-2xl z-50 border border-white/60 shadow-[0_20px_40px_-15px_rgba(148,187,233,0.15)] rounded-3xl">
           <div className="px-6 md:px-8 py-4 flex flex-row justify-between items-center gap-4">
             <span className="font-extrabold text-sm tracking-wider text-slate-800 flex items-center gap-2 font-mono">
               <Terminal size={16} className="text-cyan-600" />
@@ -331,8 +334,8 @@ export default function Portfolio() {
         >
           {/* Intro text */}
           <motion.div variants={fadeInUp} className="mb-6 z-10">
-            <p className="text-slate-600 text-lg md:text-2xl leading-relaxed font-sans font-light">
-              I'm a <span className="font-extrabold text-slate-900 border-b-2 border-cyan-400">Fresh Graduate</span> passionate <br className="hidden md:block" />
+            <p className="text-slate-200 text-lg md:text-2xl leading-relaxed font-sans font-light drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+              I'm a <span className="font-extrabold text-white border-b-2 border-cyan-400">Fresh Graduate</span> passionate <br className="hidden md:block" />
               about crafting intelligent web solutions
             </p>
           </motion.div>
@@ -342,8 +345,8 @@ export default function Portfolio() {
             {/* Row 1 */}
             <div className="flex items-baseline overflow-hidden">
               <motion.span
-                whileHover={{ color: "#344465" }}
-                className="font-mono text-[22vw] font-black leading-[0.8] text-slate-900 tracking-tighter cursor-default select-none transition-colors duration-300"
+                whileHover={{ color: "#caf0f8" }}
+                className="font-mono text-[22vw] font-black leading-[0.8] text-white mix-blend-difference tracking-tighter cursor-default select-none transition-colors duration-300"
               >
                 LUQMAN
               </motion.span>
@@ -353,8 +356,8 @@ export default function Portfolio() {
             <div className="flex flex-col xl:flex-row xl:items-end gap-12 xl:gap-24 mt-2">
               <div className="flex overflow-hidden">
                 <motion.span
-                  whileHover={{ color: "#344465" }}
-                  className="font-sans font-black text-[20vw] leading-[0.75] text-slate-900 tracking-tighter uppercase cursor-default select-none transition-colors duration-300"
+                  whileHover={{ color: "#caf0f8" }}
+                  className="font-sans font-black text-[20vw] leading-[0.75] text-white mix-blend-difference tracking-tighter uppercase cursor-default select-none transition-colors duration-300"
                 >
                   AZRI.
                 </motion.span>
@@ -362,23 +365,23 @@ export default function Portfolio() {
 
               {/* Bio & Links next to the name */}
               <motion.div variants={fadeInUp} className="max-w-lg space-y-6 pb-4 xl:pb-12">
-                <p className="text-slate-600 text-sm md:text-base leading-relaxed font-sans font-light">
-                  Recent graduate specializing in Intelligence Computing with hands-on experience in full-stack development, machine learning, and system reliability. I specialize in creating <span className="font-semibold text-slate-900">dynamic experiences</span> that leave a lasting impact.
+                <p className="text-slate-200 text-sm md:text-base leading-relaxed font-sans font-light drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+                  Recent graduate specializing in Intelligence Computing with hands-on experience in full-stack development, machine learning, and system reliability. I specialize in creating <span className="font-semibold text-white">dynamic experiences</span> that leave a lasting impact.
                 </p>
                 <div className="flex flex-wrap items-center gap-6">
                   <a
                     href="/Luqman.pdf"
                     download
-                    className="group flex items-center justify-center gap-3 px-8 py-4 bg-white/50 backdrop-blur-md border border-white/60 shadow-[0_10px_25px_-5px_rgba(148,187,233,0.2)] text-slate-800 rounded-full font-sans text-xs font-black tracking-widest uppercase hover:bg-slate-900 hover:text-white hover:border-slate-900 hover:shadow-lg transition-all duration-300"
+                    className="group flex items-center justify-center gap-3 px-8 py-4 bg-zinc-800/50 backdrop-blur-md border border-zinc-700/60 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)] text-slate-200 rounded-full font-sans text-xs font-black tracking-widest uppercase hover:bg-slate-100 hover:text-slate-900 hover:border-slate-100 hover:shadow-lg transition-all duration-300"
                   >
                     <FileDown size={18} />
                     DOWNLOAD RESUME
                   </a>
                   <div className="flex items-center gap-6">
-                    <a href="https://github.com/luqss-s" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-cyan-600 hover:scale-110 transition-all duration-300">
+                    <a href="https://github.com/luqss-s" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-cyan-400 hover:scale-110 transition-all duration-300">
                       <GithubIcon size={26} />
                     </a>
-                    <a href="mailto:luqmanazri0305@gmail.com" className="text-slate-400 hover:text-cyan-600 hover:scale-110 transition-all duration-300">
+                    <a href="mailto:luqmanazri0305@gmail.com" className="text-slate-400 hover:text-cyan-400 hover:scale-110 transition-all duration-300">
                       <Mail size={26} />
                     </a>
                   </div>
@@ -397,12 +400,12 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.3)] rounded-[2.5rem] p-8 md:p-16">
+          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-[2.5rem] p-8 md:p-16">
 
             {/* Header & Toggle */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
               <div>
-                <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 mb-4">
+                <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mix-blend-difference mb-4">
                   <Typewriter text="BACKGROUND" />
                 </h2>
                 <p className="text-slate-500 text-lg md:text-xl font-light">
@@ -544,9 +547,9 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.3)] rounded-[2.5rem] py-16 overflow-hidden">
+          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-[2.5rem] py-16 overflow-hidden">
             <div className="flex flex-col items-center mb-16 px-6">
-              <h2 className="text-3xl md:text-5xl font-black font-sans uppercase tracking-tighter text-slate-900 mb-4">Tools &amp; Languages</h2>
+              <h2 className="text-3xl md:text-5xl font-black font-sans uppercase tracking-tighter text-white mix-blend-difference mb-4">Tools &amp; Languages</h2>
               <p className="text-slate-500 font-sans font-light text-center max-w-xl text-sm md:text-base">
                 Showcasing my expertise in building scalable, secure, and high-performance applications.
               </p>
@@ -576,9 +579,9 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.3)] rounded-[2.5rem] py-16 md:py-20">
+          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-[2.5rem] py-16 md:py-20">
             <div className="px-8 md:px-16 mb-16">
-              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 mb-4">Projects</h2>
+              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mix-blend-difference mb-4">Projects</h2>
               <p className="text-slate-500 font-sans font-light text-lg md:text-xl">
                 A selection of my most impactful work.
               </p>
@@ -896,9 +899,9 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.3)] rounded-[2.5rem] py-16 px-6 md:px-12 flex flex-col">
+          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-[2.5rem] py-16 px-6 md:px-12 flex flex-col">
             <div className="mb-16">
-              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-slate-900 mb-4">Contributions</h2>
+              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mix-blend-difference mb-4">Contributions</h2>
               <p className="text-slate-500 font-sans font-light text-lg md:text-xl">
                 My open source activity on GitHub.
               </p>
