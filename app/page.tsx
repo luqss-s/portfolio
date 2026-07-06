@@ -77,6 +77,71 @@ const Typewriter = ({ text, delay = 0, className = "" }: { text: string, delay?:
   );
 };
 
+const ScrambleText = ({ text, delay = 0, trigger = true }: { text: string, delay?: number, trigger?: boolean }) => {
+  const [displayText, setDisplayText] = useState(text);
+  const [scrambleCount, setScrambleCount] = useState(0);
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+?=";
+
+  useEffect(() => {
+    if (!trigger) return;
+
+    let timer: NodeJS.Timeout;
+    let iteration = 0;
+    const intervalTime = 30;
+    const targetLength = text.length;
+
+    // Start by fully scrambling the text on trigger
+    setDisplayText(
+      text
+        .split("")
+        .map(char => (char === " " ? " " : chars[Math.floor(Math.random() * chars.length)]))
+        .join("")
+    );
+
+    const startScrambling = () => {
+      timer = setInterval(() => {
+        setDisplayText(
+          text
+            .split("")
+            .map((char, index) => {
+              if (char === " ") return " ";
+              if (index < iteration) {
+                return text[index];
+              }
+              return chars[Math.floor(Math.random() * chars.length)];
+            })
+            .join("")
+        );
+
+        if (iteration >= targetLength) {
+          clearInterval(timer);
+        }
+
+        iteration += 1 / 3; // Controls how fast it resolves
+      }, intervalTime);
+    };
+
+    // Hover trigger (scrambleCount > 0) starts immediately without entry delay
+    const activeDelay = scrambleCount === 0 ? delay * 1000 : 0;
+    const delayTimer = setTimeout(startScrambling, activeDelay);
+
+    return () => {
+      clearTimeout(delayTimer);
+      clearInterval(timer);
+    };
+  }, [text, delay, trigger, scrambleCount]);
+
+  const handleMouseEnter = () => {
+    setScrambleCount(prev => prev + 1);
+  };
+
+  return (
+    <span onMouseEnter={handleMouseEnter} className="cursor-default select-none">
+      {displayText}
+    </span>
+  );
+};
+
 const tools = [
   { name: "JavaScript", icon: <SiJavascript size={32} /> },
   { name: "Python", icon: <SiPython size={32} /> },
@@ -380,7 +445,7 @@ export default function Portfolio() {
                 whileHover={{ color: "#caf0f8" }}
                 className="font-mono text-[14vw] sm:text-[16vw] md:text-[22vw] font-black leading-[0.8] text-white mix-blend-difference tracking-tighter cursor-default select-none transition-colors duration-300"
               >
-                LUQMAN
+                <ScrambleText text="LUQMAN" trigger={!loading} delay={0.2} />
               </motion.span>
             </div>
 
@@ -391,7 +456,7 @@ export default function Portfolio() {
                   whileHover={{ color: "#caf0f8" }}
                   className="font-sans font-black text-[12vw] sm:text-[14vw] md:text-[20vw] leading-[0.75] text-white mix-blend-difference tracking-tighter uppercase cursor-default select-none transition-colors duration-300"
                 >
-                  AZRI.
+                  <ScrambleText text="AZRI." trigger={!loading} delay={0.5} />
                 </motion.span>
               </div>
 
