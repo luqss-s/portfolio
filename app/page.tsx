@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, Terminal, Mail, FileDown, Layout, Code2, ArrowUpRight } from "lucide-react";
+import { ExternalLink, Terminal, Mail, FileDown, Layout, Code2, ArrowUpRight, Menu, X } from "lucide-react";
 import { SiJavascript, SiPython, SiR, SiHtml5, SiCss, SiDotnet, SiReact, SiTailwindcss, SiMysql, SiFirebase, SiAndroidstudio, SiGit } from "react-icons/si";
 import { createClient } from "@supabase/supabase-js";
 import Image from "next/image";
@@ -241,6 +241,7 @@ export default function Portfolio() {
   const [activeTab, setActiveTab] = useState<'experience' | 'education'>('experience');
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [modalPreviewTab, setModalPreviewTab] = useState<'screenshots' | 'live'>('screenshots');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -308,20 +309,51 @@ export default function Portfolio() {
         className="min-h-screen text-slate-100 selection:bg-cyan-500 selection:text-slate-900 font-sans relative z-10"
       >
         {/* Floating Glass Navigation */}
-        <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl bg-white/75 backdrop-blur-2xl z-50 border border-white/60 shadow-[0_20px_40px_-15px_rgba(148,187,233,0.15)] rounded-3xl">
+        <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl bg-white/75 backdrop-blur-2xl z-50 border border-white/60 shadow-[0_20px_40px_-15px_rgba(148,187,233,0.15)] rounded-3xl overflow-hidden">
           <div className="px-6 md:px-8 py-4 flex flex-row justify-between items-center gap-4">
             <span className="font-extrabold text-sm tracking-wider text-slate-800 flex items-center gap-2 font-mono">
               <Terminal size={16} className="text-cyan-600" />
               ~/luqman-azri
             </span>
-            <div className="flex items-center gap-4 md:gap-8 text-[11px] font-bold uppercase tracking-wider text-slate-600 font-mono">
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-4 md:gap-8 text-[11px] font-bold uppercase tracking-wider text-slate-600 font-mono">
               <a href="#about" className="hover:text-cyan-600 transition-colors">./about</a>
               <a href="#experience" className="hover:text-cyan-600 transition-colors">./experience</a>
               <a href="#projects" className="hover:text-cyan-600 transition-colors">./projects</a>
               <a href="#tools" className="hover:text-cyan-600 transition-colors">./tools</a>
               <a href="#github" className="hover:text-cyan-600 transition-colors">./github</a>
             </div>
+            {/* Mobile Menu Button */}
+            <div className="flex md:hidden">
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-slate-600 hover:text-cyan-600 focus:outline-none transition-colors p-1"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
           </div>
+          {/* Mobile Navigation Panel */}
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                className="md:hidden border-t border-slate-100/30 bg-white/70 backdrop-blur-2xl"
+              >
+                <div className="px-6 py-4 flex flex-col gap-4 text-[11px] font-bold uppercase tracking-wider text-slate-600 font-mono">
+                  <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:text-cyan-600 transition-colors py-1">./about</a>
+                  <a href="#experience" onClick={() => setMobileMenuOpen(false)} className="hover:text-cyan-600 transition-colors py-1">./experience</a>
+                  <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="hover:text-cyan-600 transition-colors py-1">./projects</a>
+                  <a href="#tools" onClick={() => setMobileMenuOpen(false)} className="hover:text-cyan-600 transition-colors py-1">./tools</a>
+                  <a href="#github" onClick={() => setMobileMenuOpen(false)} className="hover:text-cyan-600 transition-colors py-1">./github</a>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </nav>
 
         {/* Hero Section */}
@@ -346,7 +378,7 @@ export default function Portfolio() {
             <div className="flex items-baseline overflow-hidden">
               <motion.span
                 whileHover={{ color: "#caf0f8" }}
-                className="font-mono text-[22vw] font-black leading-[0.8] text-white mix-blend-difference tracking-tighter cursor-default select-none transition-colors duration-300"
+                className="font-mono text-[14vw] sm:text-[16vw] md:text-[22vw] font-black leading-[0.8] text-white mix-blend-difference tracking-tighter cursor-default select-none transition-colors duration-300"
               >
                 LUQMAN
               </motion.span>
@@ -357,7 +389,7 @@ export default function Portfolio() {
               <div className="flex overflow-hidden">
                 <motion.span
                   whileHover={{ color: "#caf0f8" }}
-                  className="font-sans font-black text-[20vw] leading-[0.75] text-white mix-blend-difference tracking-tighter uppercase cursor-default select-none transition-colors duration-300"
+                  className="font-sans font-black text-[12vw] sm:text-[14vw] md:text-[20vw] leading-[0.75] text-white mix-blend-difference tracking-tighter uppercase cursor-default select-none transition-colors duration-300"
                 >
                   AZRI.
                 </motion.span>
@@ -400,7 +432,7 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-[2.5rem] p-8 md:p-16">
+          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-3xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-16">
 
             {/* Header & Toggle */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
@@ -547,8 +579,8 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-[2.5rem] py-16 overflow-hidden">
-            <div className="flex flex-col items-center mb-16 px-6">
+          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-3xl md:rounded-[2.5rem] py-10 md:py-16 overflow-hidden">
+            <div className="flex flex-col items-center mb-10 md:mb-16 px-6">
               <h2 className="text-3xl md:text-5xl font-black font-sans uppercase tracking-tighter text-white mix-blend-difference mb-4">Tools &amp; Languages</h2>
               <p className="text-slate-500 font-sans font-light text-center max-w-xl text-sm md:text-base">
                 Showcasing my expertise in building scalable, secure, and high-performance applications.
@@ -579,8 +611,8 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-[2.5rem] py-16 md:py-20">
-            <div className="px-8 md:px-16 mb-16">
+          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-3xl md:rounded-[2.5rem] py-10 md:py-20">
+            <div className="px-4 sm:px-8 md:px-16 mb-10 md:mb-16">
               <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mix-blend-difference mb-4">Projects</h2>
               <p className="text-slate-500 font-sans font-light text-lg md:text-xl">
                 A selection of my most impactful work.
@@ -588,12 +620,12 @@ export default function Portfolio() {
             </div>
 
             {/* Project Cards Grid */}
-            <div className="px-8 md:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="px-4 sm:px-8 md:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {projects.slice(0, visibleProjectsCount).map((project, idx) => (
                 <div
                   key={idx}
                   onClick={() => { setSelectedProject(project); setModalPreviewTab('screenshots'); }}
-                  className="group bg-white/20 border border-white/50 backdrop-blur-md rounded-3xl p-6 cursor-pointer hover:bg-white/50 hover:border-cyan-300 hover:shadow-[0_20px_40px_rgba(148,187,233,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-5 shadow-sm"
+                  className="group bg-white/20 border border-white/50 backdrop-blur-md rounded-3xl p-4 sm:p-6 cursor-pointer hover:bg-white/50 hover:border-cyan-300 hover:shadow-[0_20px_40px_rgba(148,187,233,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-5 shadow-sm"
                 >
                   {/* Header */}
                   <div className="flex items-start justify-between">
@@ -708,7 +740,7 @@ export default function Portfolio() {
                 className="w-full max-w-7xl max-h-[95vh] overflow-y-auto bg-white/70 backdrop-blur-2xl border border-white/60 shadow-[0_50px_100px_-20px_rgba(148,187,233,0.4)] rounded-3xl flex flex-col"
               >
                 {/* Modal Header */}
-                <div className="flex items-start justify-between gap-6 p-8 md:p-10 border-b border-white/60">
+                <div className="flex items-start justify-between gap-6 p-5 sm:p-8 md:p-10 border-b border-white/60">
                   <div className="flex-1">
                     <div className="flex items-center gap-4 mb-3">
                       <span className={`text-[9px] font-extrabold tracking-widest uppercase px-3 py-1 border rounded-full backdrop-blur-sm ${selectedProject.status === 'live' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-slate-200/50 text-slate-400 border-slate-300/30'
@@ -717,11 +749,11 @@ export default function Portfolio() {
                       </span>
                       <span className="text-[10px] text-slate-400 font-mono tracking-widest uppercase font-semibold">{selectedProject.role}</span>
                     </div>
-                    <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900">{selectedProject.title}</h2>
+                    <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900">{selectedProject.title}</h2>
                   </div>
                   <button
                     onClick={() => setSelectedProject(null)}
-                    className="flex-shrink-0 w-12 h-12 border border-slate-300 bg-white/40 hover:bg-slate-900 hover:text-white rounded-full flex items-center justify-center text-slate-800 transition-all duration-300 shadow-sm"
+                    className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 border border-slate-300 bg-white/40 hover:bg-slate-900 hover:text-white rounded-full flex items-center justify-center text-slate-800 transition-all duration-300 shadow-sm"
                   >
                     ✕
                   </button>
@@ -729,7 +761,7 @@ export default function Portfolio() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-4 flex-1">
                   {/* Image Gallery & Info */}
-                  <div className="lg:col-span-3 p-8 md:p-10 lg:border-r border-white/60 space-y-8">
+                  <div className="lg:col-span-3 p-5 sm:p-8 md:p-10 lg:border-r border-white/60 space-y-8">
                     {/* Tab toggle – only show when project has a live URL */}
                     {selectedProject.live && (
                       <div className="flex bg-slate-200/40 border border-white/60 p-1 rounded-full relative w-max backdrop-blur-md shadow-inner">
@@ -848,7 +880,7 @@ export default function Portfolio() {
                   </div>
 
                   {/* Right: Tech + Links */}
-                  <div className="p-8 md:p-10 space-y-8">
+                  <div className="p-5 sm:p-8 md:p-10 space-y-8">
                     <div className="space-y-4">
                       <h4 className="text-[11px] font-extrabold text-cyan-600 font-mono tracking-widest uppercase">// Tech Stack</h4>
                       <div className="flex flex-wrap gap-2">
@@ -899,14 +931,14 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-[2.5rem] py-16 px-6 md:px-12 flex flex-col">
-            <div className="mb-16">
+          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-3xl md:rounded-[2.5rem] py-10 px-4 sm:px-8 md:px-12 flex flex-col">
+            <div className="mb-10 md:mb-16">
               <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mix-blend-difference mb-4">Contributions</h2>
               <p className="text-slate-500 font-sans font-light text-lg md:text-xl">
                 My open source activity on GitHub.
               </p>
             </div>
-            <div className="overflow-x-auto flex justify-center w-full">
+            <div className="overflow-x-auto flex justify-start md:justify-center w-full">
               <GitHubCalendar
                 username="luqss-s"
                 colorScheme="light"
