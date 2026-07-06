@@ -362,11 +362,11 @@ export default function Portfolio() {
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="w-full min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 pt-32 pb-16 relative overflow-hidden"
+          className="w-full min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24 pt-28 pb-10 md:pt-32 md:pb-16 relative overflow-hidden"
         >
           {/* Intro text */}
           <motion.div variants={fadeInUp} className="mb-6 z-10">
-            <p className="text-slate-200 text-lg md:text-2xl leading-relaxed font-sans font-light drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+            <p className="text-slate-200 text-sm sm:text-lg md:text-2xl leading-relaxed font-sans font-light drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
               I'm a <span className="font-extrabold text-white border-b-2 border-cyan-400">Fresh Graduate</span> passionate <br className="hidden md:block" />
               about crafting intelligent web solutions
             </p>
@@ -385,7 +385,7 @@ export default function Portfolio() {
             </div>
 
             {/* Row 2 */}
-            <div className="flex flex-col xl:flex-row xl:items-end gap-12 xl:gap-24 mt-2">
+            <div className="flex flex-col xl:flex-row xl:items-end gap-6 xl:gap-24 mt-2">
               <div className="flex overflow-hidden">
                 <motion.span
                   whileHover={{ color: "#caf0f8" }}
@@ -396,15 +396,15 @@ export default function Portfolio() {
               </div>
 
               {/* Bio & Links next to the name */}
-              <motion.div variants={fadeInUp} className="max-w-lg space-y-6 pb-4 xl:pb-12">
-                <p className="text-slate-200 text-sm md:text-base leading-relaxed font-sans font-light drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+              <motion.div variants={fadeInUp} className="max-w-lg space-y-4 md:space-y-6 pb-4 xl:pb-12">
+                <p className="text-slate-200 text-xs sm:text-sm md:text-base leading-relaxed font-sans font-light drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                   Recent graduate specializing in Intelligence Computing with hands-on experience in full-stack development, machine learning, and system reliability. I specialize in creating <span className="font-semibold text-white">dynamic experiences</span> that leave a lasting impact.
                 </p>
-                <div className="flex flex-wrap items-center gap-6">
+                <div className="flex flex-wrap items-center gap-4 md:gap-6">
                   <a
                     href="/Luqman.pdf"
                     download
-                    className="group flex items-center justify-center gap-3 px-8 py-4 bg-zinc-800/50 backdrop-blur-md border border-zinc-700/60 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)] text-slate-200 rounded-full font-sans text-xs font-black tracking-widest uppercase hover:bg-slate-100 hover:text-slate-900 hover:border-slate-100 hover:shadow-lg transition-all duration-300"
+                    className="group flex items-center justify-center gap-3 px-6 py-3 md:px-8 md:py-4 bg-zinc-800/50 backdrop-blur-md border border-zinc-700/60 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.3)] text-slate-200 rounded-full font-sans text-[10px] md:text-xs font-black tracking-widest uppercase hover:bg-slate-100 hover:text-slate-900 hover:border-slate-100 hover:shadow-lg transition-all duration-300"
                   >
                     <FileDown size={18} />
                     DOWNLOAD RESUME
@@ -435,7 +435,7 @@ export default function Portfolio() {
           <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-3xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-16">
 
             {/* Header & Toggle */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-8 md:mb-16">
               <div>
                 <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mix-blend-difference mb-4">
                   <Typewriter text="BACKGROUND" />
@@ -478,14 +478,14 @@ export default function Portfolio() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="space-y-12"
+                    className="space-y-6 md:space-y-12"
                   >
-                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-8">
+                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-4 md:pb-8">
                       <div>
-                        <h4 className="text-2xl md:text-3xl font-extrabold text-slate-900">
+                        <h4 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-slate-900">
                           <Typewriter text="Software Engineer Intern" />
                         </h4>
-                        <div className="text-slate-500 text-lg mt-2 font-light">
+                        <div className="text-slate-500 text-sm sm:text-base md:text-lg mt-1 md:mt-2 font-light">
                           <Typewriter text="Venture GES Manufacturing Services" delay={0.4} />
                         </div>
                       </div>
@@ -493,7 +493,7 @@ export default function Portfolio() {
                         MAR 2024 — OCT 2024
                       </div>
                     </div>
-                    <ul className="space-y-6 text-slate-600 text-sm md:text-base leading-relaxed max-w-4xl font-light">
+                    <ul className="space-y-3 md:space-y-6 text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed max-w-4xl font-light">
                       {[
                         "Developed and debugged C#-based LogCraftParser application to process PCB data, improving error reporting with detailed logs including line number, model name, station name, and serial number.",
                         "Designed Test Equipment Qualification Web application using ASP.NET, C#, AJAX, Telerik, and MySQL; designed frontend & built backend modules for ICT, FCT, Equipment Validation, and Edit Profile.",
@@ -513,17 +513,17 @@ export default function Portfolio() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className="space-y-12"
+                    className="space-y-6 md:space-y-12"
                   >
-                    <div className="space-y-16">
+                    <div className="space-y-8 md:space-y-16">
                       {/* Degree */}
                       <div>
-                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-6 mb-6">
+                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-3 mb-3 md:pb-6 md:mb-6">
                           <div>
-                            <h4 className="text-2xl md:text-3xl font-extrabold text-slate-900">
+                            <h4 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-slate-900">
                               <Typewriter text="Bachelor of Computer Science (Intelligence Computing)" />
                             </h4>
-                            <div className="text-slate-500 text-lg mt-2 font-light">
+                            <div className="text-slate-500 text-sm sm:text-base md:text-lg mt-1 md:mt-2 font-light">
                               <Typewriter text="Universiti Sains Malaysia, Pulau Pinang" delay={0.4} />
                             </div>
                           </div>
@@ -531,7 +531,7 @@ export default function Portfolio() {
                             2021 — 2025
                           </div>
                         </div>
-                        <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed max-w-4xl font-light">
+                        <div className="space-y-2 md:space-y-4 text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed max-w-4xl font-light">
 
                           <li className="flex items-start gap-4">
                             <span className="text-cyan-500 font-extrabold">→</span>
@@ -542,12 +542,12 @@ export default function Portfolio() {
 
                       {/* Matriculation */}
                       <div>
-                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-6 mb-6">
+                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-3 mb-3 md:pb-6 md:mb-6">
                           <div>
-                            <h4 className="text-2xl md:text-3xl font-extrabold text-slate-900">
+                            <h4 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-slate-900">
                               <Typewriter text="Malaysian Matriculation Programme (Science)" />
                             </h4>
-                            <div className="text-slate-500 text-lg mt-2 font-light">
+                            <div className="text-slate-500 text-sm sm:text-base md:text-lg mt-1 md:mt-2 font-light">
                               <Typewriter text="Johore Matriculation College, Tangkak" delay={0.4} />
                             </div>
                           </div>
@@ -555,7 +555,7 @@ export default function Portfolio() {
                             2020 — 2021
                           </div>
                         </div>
-                        <div className="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed max-w-4xl font-light">
+                        <div className="space-y-2 md:space-y-4 text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed max-w-4xl font-light">
                           <li className="flex items-start gap-4">
                             <span className="text-cyan-500 font-extrabold">→</span>
                             <Typewriter text="CGPA: 3.83" delay={0.6} />
@@ -611,21 +611,21 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-3xl md:rounded-[2.5rem] py-10 md:py-20">
-            <div className="px-4 sm:px-8 md:px-16 mb-10 md:mb-16">
+          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-3xl md:rounded-[2.5rem] py-10 md:py-20 overflow-hidden">
+            <div className="px-6 sm:px-8 md:px-16 mb-10 md:mb-16">
               <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mix-blend-difference mb-4">Projects</h2>
               <p className="text-slate-500 font-sans font-light text-lg md:text-xl">
                 A selection of my most impactful work.
               </p>
             </div>
 
-            {/* Project Cards Grid */}
-            <div className="px-4 sm:px-8 md:px-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Project Cards Carousel on Mobile, Grid on Desktop */}
+            <div className="px-6 sm:px-8 md:px-16 flex flex-row overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 snap-x snap-mandatory no-scrollbar pb-6 md:pb-0">
               {projects.slice(0, visibleProjectsCount).map((project, idx) => (
                 <div
                   key={idx}
                   onClick={() => { setSelectedProject(project); setModalPreviewTab('screenshots'); }}
-                  className="group bg-white/20 border border-white/50 backdrop-blur-md rounded-3xl p-4 sm:p-6 cursor-pointer hover:bg-white/50 hover:border-cyan-300 hover:shadow-[0_20px_40px_rgba(148,187,233,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-5 shadow-sm"
+                  className="group bg-white/20 border border-white/50 backdrop-blur-md rounded-3xl p-4 sm:p-6 cursor-pointer hover:bg-white/50 hover:border-cyan-300 hover:shadow-[0_20px_40px_rgba(148,187,233,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-5 shadow-sm w-[82vw] sm:w-[350px] md:w-auto shrink-0 md:shrink snap-center"
                 >
                   {/* Header */}
                   <div className="flex items-start justify-between">
@@ -639,7 +639,7 @@ export default function Portfolio() {
                   </div>
 
                   {/* Image – Live screenshot via Microlink if live URL exists */}
-                  <div className="relative h-44 w-full overflow-hidden bg-slate-100/50 rounded-2xl border border-white/40">
+                  <div className="relative h-36 sm:h-44 w-full overflow-hidden bg-slate-100/50 rounded-2xl border border-white/40">
                     {project.live ? (
                       <LivePreviewImage
                         liveUrl={project.live}
@@ -663,8 +663,8 @@ export default function Portfolio() {
                   {/* Info */}
                   <div className="flex flex-col gap-2.5 flex-grow">
                     <p className="text-[9px] text-slate-400 font-mono tracking-wider font-semibold uppercase">{project.role}</p>
-                    <h3 className="text-base font-extrabold text-slate-800 leading-snug group-hover:text-cyan-600 transition-colors duration-300">{project.title}</h3>
-                    <p className="text-slate-500 text-xs leading-relaxed line-clamp-3 font-light">{project.description}</p>
+                    <h3 className="text-sm sm:text-base font-extrabold text-slate-800 leading-snug group-hover:text-cyan-600 transition-colors duration-300">{project.title}</h3>
+                    <p className="text-slate-500 text-[11px] sm:text-xs leading-relaxed line-clamp-3 font-light">{project.description}</p>
                   </div>
 
                   {/* Tech pills */}
@@ -683,7 +683,7 @@ export default function Portfolio() {
                   <div className="flex gap-2 pt-4 border-t border-white/40">
                     <button
                       onClick={(e) => { e.stopPropagation(); setSelectedProject(project); setModalPreviewTab('screenshots'); }}
-                      className="flex-1 py-2 text-[9px] font-extrabold tracking-widest uppercase border border-slate-300 text-slate-600 bg-white/40 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 rounded-full"
+                      className="flex-1 py-1.5 md:py-2 text-[8px] sm:text-[9px] font-extrabold tracking-widest uppercase border border-slate-300 text-slate-700 bg-white/40 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 rounded-full"
                     >
                       Details
                     </button>
@@ -693,12 +693,12 @@ export default function Portfolio() {
                         target="_blank"
                         rel="noreferrer"
                         onClick={(e) => e.stopPropagation()}
-                        className="flex-1 py-2 text-[9px] font-extrabold tracking-widest uppercase bg-cyan-600 text-white hover:bg-cyan-700 transition-all duration-300 flex items-center justify-center gap-2 rounded-full shadow-sm shadow-cyan-600/10"
+                        className="flex-1 py-1.5 md:py-2 text-[8px] sm:text-[9px] font-extrabold tracking-widest uppercase bg-cyan-600 text-white hover:bg-cyan-700 transition-all duration-300 flex items-center justify-center gap-2 rounded-full shadow-sm shadow-cyan-600/10"
                       >
                         <ExternalLink size={11} /> Visit
                       </a>
                     ) : (
-                      <span className="flex-1 py-2 text-[9px] font-extrabold tracking-widest uppercase border border-slate-200/50 text-slate-400 bg-slate-200/20 flex items-center justify-center rounded-full">
+                      <span className="flex-1 py-1.5 md:py-2 text-[8px] sm:text-[9px] font-extrabold tracking-widest uppercase border border-slate-200/50 text-slate-400 bg-slate-200/20 flex items-center justify-center rounded-full">
                         OFFLINE
                       </span>
                     )}
@@ -929,12 +929,12 @@ export default function Portfolio() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-full py-16 px-4 md:px-8 lg:px-12"
+          className="w-full py-10 md:py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-3xl md:rounded-[2.5rem] py-10 px-4 sm:px-8 md:px-12 flex flex-col">
-            <div className="mb-10 md:mb-16">
-              <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mix-blend-difference mb-4">Contributions</h2>
-              <p className="text-slate-500 font-sans font-light text-lg md:text-xl">
+          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-3xl md:rounded-[2.5rem] py-6 sm:py-10 px-4 sm:px-8 md:px-12 flex flex-col">
+            <div className="mb-6 md:mb-16">
+              <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mix-blend-difference mb-4">Contributions</h2>
+              <p className="text-slate-500 font-sans font-light text-sm md:text-xl">
                 My open source activity on GitHub.
               </p>
             </div>
