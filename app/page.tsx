@@ -8,6 +8,8 @@ import { createClient } from "@supabase/supabase-js";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { MeshGradient } from "@paper-design/shaders-react";
+import CursorTrail from "../components/ui/cursor-trail";
+import ExpandOnHover from "../components/ui/expand-cards";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
@@ -362,7 +364,7 @@ export default function Portfolio() {
       <div className="fixed inset-0 z-[-20] overflow-hidden bg-black pointer-events-none">
         <MeshGradient
           className="w-full h-full absolute inset-0"
-          colors={["#000000", "#293650", "#003554", "#004b75"]}
+          colors={["#000000", "#1f2022", "#89c2d9", "#61a5c2"]}
           speed={0.5}
         />
       </div>
@@ -371,28 +373,29 @@ export default function Portfolio() {
         initial={{ opacity: 0 }}
         animate={{ opacity: loading ? 0 : 1 }}
         transition={{ duration: 0.6, delay: 0.1 }}
-        className="min-h-screen text-slate-100 selection:bg-cyan-500 selection:text-slate-900 font-sans relative z-10"
+        className="min-h-screen text-zinc-100 selection:bg-cyan-500/30 selection:text-cyan-200 font-sans relative z-10"
       >
+        <CursorTrail />
         {/* Floating Glass Navigation */}
-        <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl bg-white/75 backdrop-blur-2xl z-50 border border-white/60 shadow-[0_20px_40px_-15px_rgba(148,187,233,0.15)] rounded-3xl overflow-hidden">
+        <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl bg-zinc-950/45 backdrop-blur-2xl z-50 border border-zinc-800/40 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] rounded-3xl overflow-hidden">
           <div className="px-6 md:px-8 py-4 flex flex-row justify-between items-center gap-4">
-            <span className="font-extrabold text-sm tracking-wider text-slate-800 flex items-center gap-2 font-mono">
-              <Terminal size={16} className="text-cyan-600" />
+            <span className="font-extrabold text-sm tracking-wider text-zinc-200 flex items-center gap-2 font-mono">
+              <Terminal size={16} className="text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
               ~/luqman-azri
             </span>
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-4 md:gap-8 text-[11px] font-bold uppercase tracking-wider text-slate-600 font-mono">
-              <a href="#about" className="hover:text-cyan-600 transition-colors">./about</a>
-              <a href="#experience" className="hover:text-cyan-600 transition-colors">./experience</a>
-              <a href="#projects" className="hover:text-cyan-600 transition-colors">./projects</a>
-              <a href="#tools" className="hover:text-cyan-600 transition-colors">./tools</a>
-              <a href="#github" className="hover:text-cyan-600 transition-colors">./github</a>
+            <div className="hidden md:flex items-center gap-4 md:gap-8 text-[11px] font-bold uppercase tracking-wider text-zinc-400 font-mono">
+              <a href="#about" className="hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.4)] transition-colors">./about</a>
+              <a href="#experience" className="hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.4)] transition-colors">./experience</a>
+              <a href="#projects" className="hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.4)] transition-colors">./projects</a>
+              <a href="#tools" className="hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.4)] transition-colors">./tools</a>
+              <a href="#github" className="hover:text-white hover:drop-shadow-[0_0_6px_rgba(255,255,255,0.4)] transition-colors">./github</a>
             </div>
             {/* Mobile Menu Button */}
             <div className="flex md:hidden">
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="text-slate-600 hover:text-cyan-600 focus:outline-none transition-colors p-1"
+                className="text-zinc-400 hover:text-white focus:outline-none transition-colors p-1"
                 aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -407,14 +410,14 @@ export default function Portfolio() {
                 animate={{ height: "auto", opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.25, ease: "easeInOut" }}
-                className="md:hidden border-t border-slate-100/30 bg-white/70 backdrop-blur-2xl"
+                className="md:hidden border-t border-zinc-800/40 bg-zinc-950/70 backdrop-blur-2xl"
               >
-                <div className="px-6 py-4 flex flex-col gap-4 text-[11px] font-bold uppercase tracking-wider text-slate-600 font-mono">
-                  <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:text-cyan-600 transition-colors py-1">./about</a>
-                  <a href="#experience" onClick={() => setMobileMenuOpen(false)} className="hover:text-cyan-600 transition-colors py-1">./experience</a>
-                  <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="hover:text-cyan-600 transition-colors py-1">./projects</a>
-                  <a href="#tools" onClick={() => setMobileMenuOpen(false)} className="hover:text-cyan-600 transition-colors py-1">./tools</a>
-                  <a href="#github" onClick={() => setMobileMenuOpen(false)} className="hover:text-cyan-600 transition-colors py-1">./github</a>
+                <div className="px-6 py-4 flex flex-col gap-4 text-[11px] font-bold uppercase tracking-wider text-zinc-400 font-mono">
+                  <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition-colors py-1">./about</a>
+                  <a href="#experience" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition-colors py-1">./experience</a>
+                  <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition-colors py-1">./projects</a>
+                  <a href="#tools" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition-colors py-1">./tools</a>
+                  <a href="#github" onClick={() => setMobileMenuOpen(false)} className="hover:text-white transition-colors py-1">./github</a>
                 </div>
               </motion.div>
             )}
@@ -431,8 +434,8 @@ export default function Portfolio() {
         >
           {/* Intro text */}
           <motion.div variants={fadeInUp} className="mb-6 z-10">
-            <p className="text-slate-200 text-sm sm:text-lg md:text-2xl leading-relaxed font-sans font-light drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
-              I'm a <span className="font-extrabold text-white border-b-2 border-cyan-400">Fresh Graduate</span> passionate <br className="hidden md:block" />
+            <p className="text-zinc-300 text-sm sm:text-lg md:text-2xl leading-relaxed font-serif italic font-light drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+              I'm a <span className="font-sans not-italic font-extrabold text-white border-b-2 border-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.4)]">Fresh Graduate</span> passionate <br className="hidden md:block" />
               about crafting intelligent web solutions
             </p>
           </motion.div>
@@ -462,7 +465,7 @@ export default function Portfolio() {
 
               {/* Bio & Links next to the name */}
               <motion.div variants={fadeInUp} className="max-w-lg space-y-4 md:space-y-6 pb-4 xl:pb-12">
-                <p className="text-slate-200 text-xs sm:text-sm md:text-base leading-relaxed font-sans font-light drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
+                <p className="text-zinc-300 text-xs sm:text-sm md:text-base leading-relaxed font-sans font-light drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]">
                   Recent graduate specializing in Intelligence Computing with hands-on experience in full-stack development, machine learning, and system reliability. I specialize in creating <span className="font-semibold text-white">dynamic experiences</span> that leave a lasting impact.
                 </p>
                 <div className="flex flex-wrap items-center gap-4 md:gap-6">
@@ -497,7 +500,7 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-3xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-16">
+          <div className="w-full bg-zinc-950/45 backdrop-blur-2xl border border-zinc-800/40 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] rounded-3xl md:rounded-[2.5rem] p-5 sm:p-8 md:p-16">
 
             {/* Header & Toggle */}
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-8 md:mb-16">
@@ -505,27 +508,27 @@ export default function Portfolio() {
                 <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mix-blend-difference mb-4">
                   <Typewriter text="BACKGROUND" />
                 </h2>
-                <p className="text-slate-500 text-lg md:text-xl font-light">
+                <p className="text-zinc-400 text-lg md:text-xl font-serif italic font-light">
                   <Typewriter text="My academic foundation and professional journey." delay={0.2} />
                 </p>
               </div>
 
-              <div className="flex bg-slate-200/40 border border-white/60 p-1 rounded-full relative w-max backdrop-blur-md shadow-inner">
+              <div className="flex bg-zinc-900/40 border border-zinc-850/60 p-1 rounded-full relative w-max backdrop-blur-md shadow-inner">
                 <button
                   onClick={() => setActiveTab('experience')}
-                  className={`relative z-10 px-8 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-colors duration-300 ${activeTab === 'experience' ? 'text-white' : 'text-slate-500 hover:text-slate-900'}`}
+                  className={`relative z-10 px-8 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-colors duration-300 ${activeTab === 'experience' ? 'text-white font-black' : 'text-zinc-400 hover:text-white'}`}
                 >
                   Experience
                 </button>
                 <button
                   onClick={() => setActiveTab('education')}
-                  className={`relative z-10 px-8 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-colors duration-300 ${activeTab === 'education' ? 'text-white' : 'text-slate-500 hover:text-slate-900'}`}
+                  className={`relative z-10 px-8 py-3 rounded-full text-[11px] font-bold tracking-widest uppercase transition-colors duration-300 ${activeTab === 'education' ? 'text-white font-black' : 'text-zinc-400 hover:text-white'}`}
                 >
                   Education
                 </button>
                 {/* Animated Pill Background */}
                 <motion.div
-                  className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-slate-900 rounded-full"
+                  className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-zinc-800 rounded-full border border-zinc-700/60"
                   initial={false}
                   animate={{ x: activeTab === 'experience' ? '4px' : 'calc(100% + 4px)' }}
                   transition={{ type: "spring", stiffness: 400, damping: 30 }}
@@ -545,27 +548,27 @@ export default function Portfolio() {
                     transition={{ duration: 0.3 }}
                     className="space-y-6 md:space-y-12"
                   >
-                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-4 md:pb-8">
+                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-zinc-800/60 pb-4 md:pb-8">
                       <div>
-                        <h4 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-slate-900">
+                        <h4 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-zinc-100">
                           <Typewriter text="Software Engineer Intern" />
                         </h4>
-                        <div className="text-slate-500 text-sm sm:text-base md:text-lg mt-1 md:mt-2 font-light">
+                        <div className="text-zinc-400 text-sm sm:text-base md:text-lg mt-1 md:mt-2 font-light">
                           <Typewriter text="Venture GES Manufacturing Services" delay={0.4} />
                         </div>
                       </div>
-                      <div className="text-[10px] text-slate-800 font-extrabold tracking-widest uppercase border border-slate-300/80 bg-white/40 backdrop-blur-sm px-6 py-3 rounded-full whitespace-nowrap w-fit shadow-sm">
+                      <div className="text-[10px] text-zinc-300 font-extrabold tracking-widest uppercase border border-zinc-800 bg-zinc-900/40 backdrop-blur-sm px-6 py-3 rounded-full whitespace-nowrap w-fit shadow-md">
                         MAR 2024 — OCT 2024
                       </div>
                     </div>
-                    <ul className="space-y-3 md:space-y-6 text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed max-w-4xl font-light">
+                    <ul className="space-y-3 md:space-y-6 text-zinc-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-4xl font-light">
                       {[
                         "Developed and debugged C#-based LogCraftParser application to process PCB data, improving error reporting with detailed logs including line number, model name, station name, and serial number.",
                         "Designed Test Equipment Qualification Web application using ASP.NET, C#, AJAX, Telerik, and MySQL; designed frontend & built backend modules for ICT, FCT, Equipment Validation, and Edit Profile.",
                         "Built WhatsApp Automation system using AutoIt to enable real-time production floor notifications."
                       ].map((text, i) => (
                         <li key={i} className="flex items-start gap-4">
-                          <span className="text-cyan-500 font-extrabold">→</span>
+                          <span className="text-cyan-400 font-extrabold drop-shadow-[0_0_4px_rgba(34,211,238,0.5)]">→</span>
                           <Typewriter text={text} delay={0.6 + (i * 0.2)} />
                         </li>
                       ))}
@@ -583,23 +586,23 @@ export default function Portfolio() {
                     <div className="space-y-8 md:space-y-16">
                       {/* Degree */}
                       <div>
-                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-3 mb-3 md:pb-6 md:mb-6">
+                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-zinc-800/60 pb-3 mb-3 md:pb-6 md:mb-6">
                           <div>
-                            <h4 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-slate-900">
+                            <h4 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-zinc-100">
                               <Typewriter text="Bachelor of Computer Science (Intelligence Computing)" />
                             </h4>
-                            <div className="text-slate-500 text-sm sm:text-base md:text-lg mt-1 md:mt-2 font-light">
+                            <div className="text-zinc-400 text-sm sm:text-base md:text-lg mt-1 md:mt-2 font-light">
                               <Typewriter text="Universiti Sains Malaysia, Pulau Pinang" delay={0.4} />
                             </div>
                           </div>
-                          <div className="text-[10px] text-slate-800 font-extrabold tracking-widest uppercase border border-slate-300/80 bg-white/40 backdrop-blur-sm px-6 py-3 rounded-full whitespace-nowrap w-fit shadow-sm">
+                          <div className="text-[10px] text-zinc-300 font-extrabold tracking-widest uppercase border border-zinc-800 bg-zinc-900/40 backdrop-blur-sm px-6 py-3 rounded-full whitespace-nowrap w-fit shadow-md">
                             2021 — 2025
                           </div>
                         </div>
-                        <div className="space-y-2 md:space-y-4 text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed max-w-4xl font-light">
+                        <div className="space-y-2 md:space-y-4 text-zinc-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-4xl font-light">
 
                           <li className="flex items-start gap-4">
-                            <span className="text-cyan-500 font-extrabold">→</span>
+                            <span className="text-cyan-400 font-extrabold drop-shadow-[0_0_4px_rgba(34,211,238,0.5)]">→</span>
                             <Typewriter text="Dean's List: Semester 7 (GPA 3.61) & Semester 8 (GPA 3.90)" delay={0.8} />
                           </li>
                         </div>
@@ -607,22 +610,22 @@ export default function Portfolio() {
 
                       {/* Matriculation */}
                       <div>
-                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-white/50 pb-3 mb-3 md:pb-6 md:mb-6">
+                        <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 border-b border-zinc-800/60 pb-3 mb-3 md:pb-6 md:mb-6">
                           <div>
-                            <h4 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-slate-900">
+                            <h4 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-zinc-100">
                               <Typewriter text="Malaysian Matriculation Programme (Science)" />
                             </h4>
-                            <div className="text-slate-500 text-sm sm:text-base md:text-lg mt-1 md:mt-2 font-light">
+                            <div className="text-zinc-400 text-sm sm:text-base md:text-lg mt-1 md:mt-2 font-light">
                               <Typewriter text="Johore Matriculation College, Tangkak" delay={0.4} />
                             </div>
                           </div>
-                          <div className="text-[10px] text-slate-800 font-extrabold tracking-widest uppercase border border-slate-300/80 bg-white/40 backdrop-blur-sm px-6 py-3 rounded-full whitespace-nowrap w-fit shadow-sm">
+                          <div className="text-[10px] text-zinc-300 font-extrabold tracking-widest uppercase border border-zinc-800 bg-zinc-900/40 backdrop-blur-sm px-6 py-3 rounded-full whitespace-nowrap w-fit shadow-md">
                             2020 — 2021
                           </div>
                         </div>
-                        <div className="space-y-2 md:space-y-4 text-slate-600 text-xs sm:text-sm md:text-base leading-relaxed max-w-4xl font-light">
+                        <div className="space-y-2 md:space-y-4 text-zinc-300 text-xs sm:text-sm md:text-base leading-relaxed max-w-4xl font-light">
                           <li className="flex items-start gap-4">
-                            <span className="text-cyan-500 font-extrabold">→</span>
+                            <span className="text-cyan-400 font-extrabold drop-shadow-[0_0_4px_rgba(34,211,238,0.5)]">→</span>
                             <Typewriter text="CGPA: 3.83" delay={0.6} />
                           </li>
                         </div>
@@ -644,10 +647,10 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-3xl md:rounded-[2.5rem] py-10 md:py-16 overflow-hidden">
+          <div className="w-full bg-zinc-950/45 backdrop-blur-2xl border border-zinc-800/40 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] rounded-3xl md:rounded-[2.5rem] py-10 md:py-16 overflow-hidden">
             <div className="flex flex-col items-center mb-10 md:mb-16 px-6">
               <h2 className="text-3xl md:text-5xl font-black font-sans uppercase tracking-tighter text-white mix-blend-difference mb-4">Tools &amp; Languages</h2>
-              <p className="text-slate-500 font-sans font-light text-center max-w-xl text-sm md:text-base">
+              <p className="text-zinc-400 font-serif italic font-light text-center max-w-xl text-sm md:text-base">
                 Showcasing my expertise in building scalable, secure, and high-performance applications.
               </p>
             </div>
@@ -656,10 +659,10 @@ export default function Portfolio() {
               <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
                 {[...tools, ...tools].map((tool, idx) => (
                   <div key={idx} className="flex flex-col items-center justify-center gap-4 mx-6">
-                    <div className="w-24 h-24 bg-white/50 border border-white/70 flex items-center justify-center text-slate-400 hover:text-cyan-600 hover:border-cyan-400 hover:bg-white/80 transition-all rounded-2xl shadow-sm hover:shadow-md hover:scale-105 duration-300">
+                    <div className="w-24 h-24 bg-zinc-900/30 border border-zinc-800/60 flex items-center justify-center text-zinc-400 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-zinc-800/50 transition-all rounded-2xl shadow-sm hover:shadow-md hover:scale-105 duration-300">
                       {tool.icon}
                     </div>
-                    <span className="text-[10px] font-extrabold tracking-widest uppercase text-slate-500">{tool.name}</span>
+                    <span className="text-[10px] font-extrabold tracking-widest uppercase text-zinc-400">{tool.name}</span>
                   </div>
                 ))}
               </div>
@@ -676,10 +679,10 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-3xl md:rounded-[2.5rem] py-10 md:py-20 overflow-hidden">
+          <div className="w-full bg-zinc-950/45 backdrop-blur-2xl border border-zinc-800/40 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] rounded-3xl md:rounded-[2.5rem] py-10 md:py-20 overflow-hidden">
             <div className="px-6 sm:px-8 md:px-16 mb-10 md:mb-16">
               <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mix-blend-difference mb-4">Projects</h2>
-              <p className="text-slate-500 font-sans font-light text-lg md:text-xl">
+              <p className="text-zinc-400 font-serif italic font-light text-lg md:text-xl">
                 A selection of my most impactful work.
               </p>
             </div>
@@ -690,21 +693,21 @@ export default function Portfolio() {
                 <div
                   key={idx}
                   onClick={() => { setSelectedProject(project); setModalPreviewTab('screenshots'); }}
-                  className="group bg-white/20 border border-white/50 backdrop-blur-md rounded-3xl p-4 sm:p-6 cursor-pointer hover:bg-white/50 hover:border-cyan-300 hover:shadow-[0_20px_40px_rgba(148,187,233,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-5 shadow-sm w-[82vw] sm:w-[350px] md:w-auto shrink-0 md:shrink snap-center"
+                  className="group bg-zinc-900/30 border border-zinc-800/50 backdrop-blur-md rounded-3xl p-4 sm:p-6 cursor-pointer hover:bg-zinc-800/30 hover:border-cyan-500/45 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-5 shadow-sm w-[82vw] sm:w-[350px] md:w-auto shrink-0 md:shrink snap-center"
                 >
                   {/* Header */}
                   <div className="flex items-start justify-between">
                     <span className={`text-[9px] font-extrabold tracking-widest uppercase px-3 py-1 border rounded-full backdrop-blur-sm ${project.status === 'live'
-                      ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20 shadow-[0_2px_10px_rgba(16,185,129,0.1)]'
-                      : 'bg-slate-200/50 text-slate-400 border-slate-300/30'
+                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 shadow-[0_2px_10px_rgba(16,185,129,0.2)]'
+                      : 'bg-zinc-900/50 text-zinc-500 border-zinc-800/30'
                       }`}>
                       {project.status === 'live' ? '● LIVE' : '○ OFFLINE'}
                     </span>
-                    <ArrowUpRight size={16} className="text-slate-400 group-hover:text-cyan-500 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300" />
+                    <ArrowUpRight size={16} className="text-zinc-400 group-hover:text-cyan-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300" />
                   </div>
 
                   {/* Image – Live screenshot via Microlink if live URL exists */}
-                  <div className="relative h-36 sm:h-44 w-full overflow-hidden bg-slate-100/50 rounded-2xl border border-white/40">
+                  <div className="relative h-36 sm:h-44 w-full overflow-hidden bg-zinc-900/50 rounded-2xl border border-zinc-800/40">
                     {project.live ? (
                       <LivePreviewImage
                         liveUrl={project.live}
@@ -727,28 +730,28 @@ export default function Portfolio() {
 
                   {/* Info */}
                   <div className="flex flex-col gap-2.5 flex-grow">
-                    <p className="text-[9px] text-slate-400 font-mono tracking-wider font-semibold uppercase">{project.role}</p>
-                    <h3 className="text-sm sm:text-base font-extrabold text-slate-800 leading-snug group-hover:text-cyan-600 transition-colors duration-300">{project.title}</h3>
-                    <p className="text-slate-500 text-[11px] sm:text-xs leading-relaxed line-clamp-3 font-light">{project.description}</p>
+                    <p className="text-[9px] text-zinc-400 font-mono tracking-wider font-semibold uppercase">{project.role}</p>
+                    <h3 className="text-sm sm:text-base font-extrabold text-zinc-100 leading-snug group-hover:text-cyan-400 transition-colors duration-300">{project.title}</h3>
+                    <p className="text-zinc-400 text-[11px] sm:text-xs leading-relaxed line-clamp-3 font-light">{project.description}</p>
                   </div>
 
                   {/* Tech pills */}
                   <div className="flex flex-wrap gap-1.5">
                     {(project.tech || []).slice(0, 4).map((t: string, i: number) => (
-                      <span key={i} className="text-[8px] font-extrabold text-slate-600 bg-white/40 border border-white/60 px-2 py-1 tracking-wider uppercase rounded-md backdrop-blur-sm">
+                      <span key={i} className="text-[8px] font-extrabold text-zinc-300 bg-zinc-900/40 border border-zinc-800/60 px-2 py-1 tracking-wider uppercase rounded-md backdrop-blur-sm">
                         {t}
                       </span>
                     ))}
                     {project.tech && project.tech.length > 4 && (
-                      <span className="text-[8px] font-extrabold text-slate-400 bg-white/40 border border-white/60 px-2 py-1 tracking-wider uppercase rounded-md backdrop-blur-sm">+{project.tech.length - 4}</span>
+                      <span className="text-[8px] font-extrabold text-zinc-500 bg-zinc-900/40 border border-zinc-800/60 px-2 py-1 tracking-wider uppercase rounded-md backdrop-blur-sm">+{project.tech.length - 4}</span>
                     )}
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex gap-2 pt-4 border-t border-white/40">
+                  <div className="flex gap-2 pt-4 border-t border-zinc-800/40">
                     <button
                       onClick={(e) => { e.stopPropagation(); setSelectedProject(project); setModalPreviewTab('screenshots'); }}
-                      className="flex-1 py-1.5 md:py-2 text-[8px] sm:text-[9px] font-extrabold tracking-widest uppercase border border-slate-300 text-slate-700 bg-white/40 hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300 rounded-full"
+                      className="flex-1 py-1.5 md:py-2 text-[8px] sm:text-[9px] font-extrabold tracking-widest uppercase border border-zinc-700 text-zinc-300 bg-zinc-900/40 hover:bg-white hover:text-black hover:border-white transition-all duration-300 rounded-full"
                     >
                       Details
                     </button>
@@ -763,7 +766,7 @@ export default function Portfolio() {
                         <ExternalLink size={11} /> Visit
                       </a>
                     ) : (
-                      <span className="flex-1 py-1.5 md:py-2 text-[8px] sm:text-[9px] font-extrabold tracking-widest uppercase border border-slate-200/50 text-slate-400 bg-slate-200/20 flex items-center justify-center rounded-full">
+                      <span className="flex-1 py-1.5 md:py-2 text-[8px] sm:text-[9px] font-extrabold tracking-widest uppercase border border-zinc-800/50 text-zinc-500 bg-zinc-900/20 flex items-center justify-center rounded-full">
                         OFFLINE
                       </span>
                     )}
@@ -777,10 +780,28 @@ export default function Portfolio() {
               <div className="flex justify-center mt-12 w-full">
                 <button
                   onClick={() => setVisibleProjectsCount(prev => prev + 6)}
-                  className="px-8 py-3 rounded-full text-[11px] font-black tracking-widest uppercase bg-white/40 border border-white/60 shadow-[0_5px_15px_rgba(148,187,233,0.1)] hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all duration-300"
+                  className="px-8 py-3 rounded-full text-[11px] font-black tracking-widest uppercase bg-zinc-900/40 border border-zinc-800/60 shadow-[0_5px_15px_rgba(0,0,0,0.3)] hover:bg-white hover:text-black hover:border-white transition-all duration-300"
                 >
                   Load More Projects
                 </button>
+              </div>
+            )}
+
+            {/* Expandable Project Screenshots Showcase */}
+            {projects && projects.length > 0 && (
+              <div className="mt-36 px-3 sm:px-6 md:px-8">
+                <ExpandOnHover
+                  projects={projects.map((p: any) => ({
+                    id: p.id,
+                    title: p.title,
+                    image: getValidSrc(p.images ? (Array.isArray(p.images) ? p.images[0] : p.images) : null, p.title),
+                    role: p.role || "Developer",
+                    onSelect: () => {
+                      setSelectedProject(p);
+                      setModalPreviewTab("screenshots");
+                    }
+                  }))}
+                />
               </div>
             )}
           </div>
@@ -793,7 +814,7 @@ export default function Portfolio() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4 md:p-6"
+              className="fixed inset-0 z-50 bg-slate-955/70 backdrop-blur-md flex items-center justify-center p-4 md:p-6"
               onClick={() => setSelectedProject(null)}
             >
               <motion.div
@@ -802,23 +823,23 @@ export default function Portfolio() {
                 exit={{ y: 30, opacity: 0 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                 onClick={(e) => e.stopPropagation()}
-                className="w-full max-w-7xl max-h-[95vh] overflow-y-auto bg-white/70 backdrop-blur-2xl border border-white/60 shadow-[0_50px_100px_-20px_rgba(148,187,233,0.4)] rounded-3xl flex flex-col"
+                className="w-full max-w-7xl max-h-[95vh] overflow-y-auto bg-zinc-950/80 backdrop-blur-2xl border border-zinc-800/80 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)] rounded-3xl flex flex-col"
               >
                 {/* Modal Header */}
-                <div className="flex items-start justify-between gap-6 p-5 sm:p-8 md:p-10 border-b border-white/60">
+                <div className="flex items-start justify-between gap-6 p-5 sm:p-8 md:p-10 border-b border-zinc-800/60">
                   <div className="flex-1">
                     <div className="flex items-center gap-4 mb-3">
-                      <span className={`text-[9px] font-extrabold tracking-widest uppercase px-3 py-1 border rounded-full backdrop-blur-sm ${selectedProject.status === 'live' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' : 'bg-slate-200/50 text-slate-400 border-slate-300/30'
+                      <span className={`text-[9px] font-extrabold tracking-widest uppercase px-3 py-1 border rounded-full backdrop-blur-sm ${selectedProject.status === 'live' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-zinc-900/50 text-zinc-500 border-zinc-800/30'
                         }`}>
                         {selectedProject.status === 'live' ? '● LIVE' : '○ OFFLINE'}
                       </span>
-                      <span className="text-[10px] text-slate-400 font-mono tracking-widest uppercase font-semibold">{selectedProject.role}</span>
+                      <span className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase font-semibold">{selectedProject.role}</span>
                     </div>
-                    <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900">{selectedProject.title}</h2>
+                    <h2 className="text-2xl md:text-4xl font-extrabold text-zinc-100">{selectedProject.title}</h2>
                   </div>
                   <button
                     onClick={() => setSelectedProject(null)}
-                    className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 border border-slate-300 bg-white/40 hover:bg-slate-900 hover:text-white rounded-full flex items-center justify-center text-slate-800 transition-all duration-300 shadow-sm"
+                    className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 border border-zinc-800 bg-zinc-900/40 hover:bg-white hover:text-black rounded-full flex items-center justify-center text-zinc-350 transition-all duration-300 shadow-md"
                   >
                     ✕
                   </button>
@@ -826,28 +847,26 @@ export default function Portfolio() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-4 flex-1">
                   {/* Image Gallery & Info */}
-                  <div className="lg:col-span-3 p-5 sm:p-8 md:p-10 lg:border-r border-white/60 space-y-8">
+                  <div className="lg:col-span-3 p-5 sm:p-8 md:p-10 lg:border-r border-zinc-800/60 space-y-8">
                     {/* Tab toggle – only show when project has a live URL */}
                     {selectedProject.live && (
-                      <div className="flex bg-slate-200/40 border border-white/60 p-1 rounded-full relative w-max backdrop-blur-md shadow-inner">
+                      <div className="flex bg-zinc-900/40 border border-zinc-800/60 p-1 rounded-full relative w-max backdrop-blur-md shadow-inner">
                         <button
                           onClick={() => setModalPreviewTab('screenshots')}
-                          className={`relative z-10 px-8 py-2.5 rounded-full text-[10px] font-bold tracking-widest uppercase transition-colors duration-300 ${
-                            modalPreviewTab === 'screenshots' ? 'text-white' : 'text-slate-500 hover:text-slate-900'
-                          }`}
+                          className={`relative z-10 px-8 py-2.5 rounded-full text-[10px] font-bold tracking-widest uppercase transition-colors duration-300 ${modalPreviewTab === 'screenshots' ? 'text-white font-black' : 'text-zinc-400 hover:text-white'
+                            }`}
                         >
                           Screenshots
                         </button>
                         <button
                           onClick={() => setModalPreviewTab('live')}
-                          className={`relative z-10 px-8 py-2.5 rounded-full text-[10px] font-bold tracking-widest uppercase transition-colors duration-300 ${
-                            modalPreviewTab === 'live' ? 'text-white' : 'text-slate-500 hover:text-slate-900'
-                          }`}
+                          className={`relative z-10 px-8 py-2.5 rounded-full text-[10px] font-bold tracking-widest uppercase transition-colors duration-300 ${modalPreviewTab === 'live' ? 'text-white font-black' : 'text-zinc-400 hover:text-white'
+                            }`}
                         >
                           Live Preview
                         </button>
                         <motion.div
-                          className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-slate-900 rounded-full"
+                          className="absolute top-1 bottom-1 w-[calc(50%-4px)] bg-zinc-800 rounded-full border border-zinc-700/60"
                           layout
                           transition={{ type: "spring", stiffness: 400, damping: 30 }}
                           style={{ left: modalPreviewTab === 'screenshots' ? '4px' : 'calc(50% + 4px)' }}
@@ -858,7 +877,7 @@ export default function Portfolio() {
                     {/* Screenshots Tab */}
                     {modalPreviewTab === 'screenshots' && (
                       <div className="space-y-4">
-                        <div className="relative w-full aspect-video overflow-hidden bg-slate-100/50 border border-white/40 rounded-2xl flex items-center justify-center shadow-inner">
+                        <div className="relative w-full aspect-video overflow-hidden bg-zinc-900/50 border border-zinc-800/40 rounded-2xl flex items-center justify-center shadow-inner">
                           {/* Blurred Background for Portrait Images */}
                           <div
                             className="absolute inset-0 scale-110 blur-2xl opacity-20 pointer-events-none"
@@ -895,7 +914,7 @@ export default function Portfolio() {
                               <button
                                 key={i}
                                 onClick={() => setSelectedProject({ ...selectedProject, currentImageIndex: i })}
-                                className={`relative w-20 h-20 border-2 transition-all rounded-lg overflow-hidden ${(selectedProject.currentImageIndex || 0) === i ? 'border-cyan-500 ring-2 ring-cyan-500/20 opacity-100' : 'border-transparent opacity-50 hover:opacity-80'
+                                className={`relative w-20 h-20 border-2 transition-all rounded-lg overflow-hidden ${(selectedProject.currentImageIndex || 0) === i ? 'border-cyan-400 ring-2 ring-cyan-400/20 opacity-100' : 'border-transparent opacity-40 hover:opacity-80'
                                   }`}
                               >
                                 <Image src={getValidSrc(img)} fill sizes="80px" className="object-cover" alt="Thumbnail" />
@@ -909,7 +928,7 @@ export default function Portfolio() {
                     {/* Live Preview Tab */}
                     {modalPreviewTab === 'live' && selectedProject.live && (
                       <div className="space-y-2">
-                        <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-white/40 bg-white/30 shadow-inner">
+                        <div className="relative w-full aspect-video rounded-2xl overflow-hidden border border-zinc-800/40 bg-zinc-900/30 shadow-inner">
                           <iframe
                             src={selectedProject.live}
                             title={`${selectedProject.title} live preview`}
@@ -918,7 +937,7 @@ export default function Portfolio() {
                             loading="lazy"
                           />
                         </div>
-                        <p className="text-[9px] text-slate-400 font-mono text-center">
+                        <p className="text-[9px] text-zinc-500 font-mono text-center">
                           Interactive preview — some sites may block iframe embedding
                         </p>
                       </div>
@@ -926,7 +945,7 @@ export default function Portfolio() {
 
                     {/* YouTube */}
                     {selectedProject.youtube && (
-                      <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-md border border-white/40">
+                      <div className="w-full aspect-video rounded-2xl overflow-hidden shadow-md border border-zinc-800/40">
                         <iframe
                           src={`https://www.youtube.com/embed/${getYoutubeId(selectedProject.youtube)}`}
                           title={selectedProject.title}
@@ -939,31 +958,31 @@ export default function Portfolio() {
 
                     {/* Description */}
                     <div className="space-y-3">
-                      <h4 className="text-[11px] font-extrabold text-cyan-600 font-mono tracking-widest uppercase">// About this project</h4>
-                      <p className="text-slate-600 text-sm md:text-lg leading-relaxed font-light">{selectedProject.description}</p>
+                      <h4 className="text-[11px] font-extrabold text-cyan-400 font-mono tracking-widest uppercase">// About this project</h4>
+                      <p className="text-zinc-300 text-sm md:text-lg leading-relaxed font-light">{selectedProject.description}</p>
                     </div>
                   </div>
 
                   {/* Right: Tech + Links */}
                   <div className="p-5 sm:p-8 md:p-10 space-y-8">
                     <div className="space-y-4">
-                      <h4 className="text-[11px] font-extrabold text-cyan-600 font-mono tracking-widest uppercase">// Tech Stack</h4>
+                      <h4 className="text-[11px] font-extrabold text-cyan-400 font-mono tracking-widest uppercase">// Tech Stack</h4>
                       <div className="flex flex-wrap gap-2">
                         {(selectedProject.tech || []).map((t: string, i: number) => (
-                          <span key={i} className="text-[10px] font-extrabold text-slate-700 bg-white/60 border border-white/80 px-3 py-1.5 tracking-wider uppercase rounded-md shadow-sm">
+                          <span key={i} className="text-[10px] font-extrabold text-zinc-300 bg-zinc-900/60 border border-zinc-800/80 px-3 py-1.5 tracking-wider uppercase rounded-md shadow-md">
                             {t}
                           </span>
                         ))}
                       </div>
                     </div>
 
-                    <div className="space-y-3 pt-6 border-t border-white/60">
+                    <div className="space-y-3 pt-6 border-t border-zinc-800/60">
                       {selectedProject.github && (
                         <a
                           href={selectedProject.github}
                           target="_blank"
                           rel="noreferrer"
-                          className="flex items-center justify-center gap-3 w-full py-4 text-[11px] font-extrabold tracking-widest uppercase border border-slate-300 text-slate-700 bg-white/40 hover:bg-slate-900 hover:text-white hover:border-slate-900 rounded-full transition-all duration-300 shadow-sm"
+                          className="flex items-center justify-center gap-3 w-full py-4 text-[11px] font-extrabold tracking-widest uppercase border border-zinc-800 text-zinc-300 bg-zinc-900/40 hover:bg-white hover:text-black hover:border-white rounded-full transition-all duration-300 shadow-md"
                         >
                           <Code2 size={16} /> VIEW CODE
                         </a>
@@ -996,20 +1015,19 @@ export default function Portfolio() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="w-full py-10 md:py-16 px-4 md:px-8 lg:px-12"
         >
-          <div className="w-full bg-white/75 backdrop-blur-2xl border border-white/60 shadow-[0_30px_60px_-15px_rgba(148,187,233,0.2)] rounded-3xl md:rounded-[2.5rem] py-6 sm:py-10 px-4 sm:px-8 md:px-12 flex flex-col">
+          <div className="w-full bg-zinc-950/45 backdrop-blur-2xl border border-zinc-800/40 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] rounded-3xl md:rounded-[2.5rem] py-6 sm:py-10 px-4 sm:px-8 md:px-12 flex flex-col">
             <div className="mb-6 md:mb-16">
               <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mix-blend-difference mb-4">Contributions</h2>
-              <p className="text-slate-500 font-sans font-light text-sm md:text-xl">
+              <p className="text-zinc-400 font-serif italic font-light text-sm md:text-xl">
                 My open source activity on GitHub.
               </p>
             </div>
             <div className="overflow-x-auto flex justify-start md:justify-center w-full">
               <GitHubCalendar
                 username="luqss-s"
-                colorScheme="light"
+                colorScheme="dark"
                 theme={{
-                  light: ['#ebedf0', '#d1dbe8', '#9cb1cc', '#607a9e', '#344465'],
-                  dark: ['#1e293b', '#334155', '#475569', '#64748b', '#cbd5e1'],
+                  dark: ['#18181b', '#0e7490', '#06b6d4', '#22d3ee', '#67e8f9'],
                 }}
                 fontSize={14}
                 blockSize={16}
@@ -1022,10 +1040,10 @@ export default function Portfolio() {
 
 
         {/* Footer */}
-        <footer className="border-t border-white/40 mt-16 px-4 md:px-8 lg:px-12 w-full">
-          <div className="px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-slate-500 font-medium">
+        <footer className="border-t border-zinc-800/40 mt-16 px-4 md:px-8 lg:px-12 w-full">
+          <div className="px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-zinc-500 font-medium">
             <div className="flex items-center gap-2 font-mono">
-              <Terminal size={14} className="text-cyan-600" />
+              <Terminal size={14} className="text-cyan-400" />
               <span>sys.exit(0)</span>
             </div>
             <span>© {new Date().getFullYear()} LUQMAN AZRI</span>
