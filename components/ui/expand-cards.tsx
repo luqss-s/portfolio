@@ -47,19 +47,20 @@ const ExpandOnHover = ({ projects }: ExpandOnHoverProps) => {
     <div className="w-full bg-zinc-950/20 border border-zinc-900/60 rounded-3xl md:rounded-[2.5rem] py-8 px-2.5 md:py-10 md:px-6 backdrop-blur-md shadow-inner">
 
 
-      <div className="flex w-full items-center justify-center py-2">
-        <div className="flex w-full items-center justify-center gap-2 md:gap-3">
+      <div className="flex w-full items-center justify-start md:justify-center overflow-x-auto md:overflow-visible no-scrollbar py-2">
+        <div className="flex min-w-full md:w-full items-center justify-start md:justify-center gap-2 md:gap-3">
           {items.map((project, idx) => {
             const isExpanded = idx === expandedIndex;
 
             return (
               <div
                 key={project.id || idx}
-                className="relative cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl border border-zinc-800/40 hover:border-zinc-700/60 shadow-lg transition-all duration-500 ease-in-out"
+                className={`relative cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl border border-zinc-800/40 hover:border-zinc-700/60 shadow-lg transition-all duration-500 ease-in-out shrink-0
+                  ${isExpanded 
+                    ? 'w-[62vw] sm:w-[50vw] md:w-auto md:grow-[8] md:basis-0' 
+                    : 'w-[13vw] sm:w-[10vw] md:w-auto md:grow-[1] md:basis-0'
+                  }`}
                 style={{
-                  flexGrow: isExpanded ? 8 : 1,
-                  flexBasis: "0%",
-                  minWidth: isExpanded ? "12rem" : "3.2rem",
                   height: "clamp(20rem, 50vh, 32rem)",
                 }}
                 onMouseEnter={() => setExpandedIndex(idx)}
