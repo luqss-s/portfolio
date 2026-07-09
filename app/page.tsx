@@ -970,13 +970,34 @@ function MainPortfolioContent() {
               </p>
             </div>
 
-            {/* Project Cards Carousel on Mobile, Grid on Desktop */}
+            {/* Bento Project Grid — Carousel on Mobile, Asymmetric Grid on Desktop */}
             <div className="px-6 sm:px-8 md:px-16 flex flex-row overflow-x-auto md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 snap-x snap-mandatory no-scrollbar pb-6 md:pb-0">
-              {projects.slice(0, visibleProjectsCount).map((project, idx) => (
+              {projects.slice(0, visibleProjectsCount).map((project, idx) => {
+                // Detect Android project by title/role to give it vertical layout
+                const isAndroid = project.title?.toLowerCase().includes("android") || project.role?.toLowerCase().includes("android");
+                // Bento layout pattern — different cards get different spans
+                const bentoPattern = [
+                  isAndroid ? "lg:col-span-1 lg:row-span-2" : "lg:col-span-2",  // 0: Featured hero OR Android vertical
+                  "lg:col-span-1",              // 1: Normal
+                  "lg:col-span-1",              // 2: Normal
+                  "lg:col-span-2",              // 3: Wide banner (2 cols)
+                  isAndroid ? "lg:col-span-2" : "lg:col-span-1 lg:row-span-2",  // 4: Tall OR if Android already used, swap to wide
+                  "lg:col-span-1",              // 5: Normal
+                  "lg:col-span-1",              // 6: Normal
+                  "lg:col-span-2",              // 7: Wide (2 cols)
+                  "lg:col-span-1",              // 8: Normal
+                ];
+                const span = bentoPattern[idx] || "";
+                const isFeatured = idx === 0 && !isAndroid;
+                const isTall = span.includes("row-span-2");
+                const isWide = span.includes("col-span-2") && !isFeatured;
+                const isFullWidth = span === "lg:col-span-3";
+
+                return (
                 <div
                   key={idx}
                   onClick={() => { setSelectedProject(project); setModalPreviewTab('screenshots'); }}
-                  className="group bg-white/70 border border-zinc-200/50 backdrop-blur-md rounded-3xl p-4 sm:p-6 cursor-pointer hover:bg-white hover:border-cyan-500/45 hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-5 shadow-sm w-[82vw] sm:w-[350px] md:w-auto shrink-0 md:shrink snap-center"
+                  className={`group bg-white/70 border border-zinc-200/50 backdrop-blur-md rounded-3xl p-4 sm:p-6 cursor-pointer hover:bg-white hover:border-cyan-500/45 hover:shadow-[0_20px_40px_rgba(0,0,0,0.15)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col gap-5 shadow-sm w-[82vw] sm:w-[350px] md:w-auto shrink-0 md:shrink snap-center ${span}`}
                 >
                   {/* Header */}
                   <div className="flex items-start justify-between">
@@ -989,8 +1010,8 @@ function MainPortfolioContent() {
                     <ArrowUpRight size={16} className="text-zinc-500 group-hover:text-cyan-600 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-all duration-300" />
                   </div>
 
-                  {/* Image – Live screenshot via Microlink if live URL exists */}
-                  <div className="relative h-36 sm:h-44 w-full overflow-hidden bg-zinc-900/50 rounded-2xl border border-zinc-800/40">
+                  {/* Image – taller for featured/wide, taller still for tall */}
+                  <div className={`relative w-full overflow-hidden bg-zinc-900/50 rounded-2xl border border-zinc-800/40 ${isFeatured ? 'h-52 sm:h-64' : isTall ? 'h-72 sm:h-96' : isWide ? 'h-44 sm:h-52' : 'h-36 sm:h-44'}`}>
                     {project.live ? (
                       <LivePreviewImage
                         liveUrl={project.live}
@@ -1009,24 +1030,40 @@ function MainPortfolioContent() {
                         className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
                       />
                     )}
+                    {/* Badge overlay — Featured or Android vertical */}
+                    {isFeatured && (
+                      <div className="absolute top-2 right-2 z-10 px-2.5 py-1 bg-cyan-600/90 text-white text-[7px] font-black tracking-widest uppercase rounded-full shadow-lg backdrop-blur-sm border border-cyan-400/30">
+                        ✦ Featured
+                      </div>
+                    )}
+                    {isAndroid && !isFeatured && (
+                      <div className="absolute top-2 right-2 z-10 px-2.5 py-1 bg-emerald-600/90 text-white text-[7px] font-black tracking-widest uppercase rounded-full shadow-lg backdrop-blur-sm border border-emerald-400/30 flex items-center gap-1">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 16.435a1.673 1.673 0 1 0 1.673-1.673 1.674 1.674 0 0 0-1.673 1.673Zm-8.587-1.673a1.673 1.673 0 1 0 1.673 1.673 1.674 1.674 0 0 0-1.673-1.673Zm9.962-5.851 1.7-2.945a.413.413 0 0 0-.151-.565.413.413 0 0 0-.565.152l-1.71 2.962a10.262 10.262 0 0 0-7.944 0L8.24 5.552a.418.418 0 0 0-.716.413l1.7 2.945a10.12 10.12 0 0 0-4.546 4.543l-2.486 1.383a.418.418 0 0 0 .209.777h.161l2.066-1.149a10.244 10.244 0 0 0 9.961 0l2.066 1.149h.16a.418.418 0 0 0 .209-.777l-2.485-1.383a10.119 10.119 0 0 0-4.546-4.543Z"/></svg>
+                        Vertical
+                      </div>
+                    )}
                   </div>
 
                   {/* Info */}
                   <div className="flex flex-col gap-2.5 flex-grow">
                     <p className="text-[9px] text-zinc-500 font-mono tracking-wider font-semibold uppercase">{project.role}</p>
-                    <h3 className="text-sm sm:text-base font-extrabold text-zinc-950 leading-snug group-hover:text-cyan-600 transition-colors duration-300">{project.title}</h3>
-                    <p className="text-zinc-600 text-[11px] sm:text-xs leading-relaxed line-clamp-3 font-light">{project.description}</p>
+                    <h3 className={`font-extrabold text-zinc-950 leading-snug group-hover:text-cyan-600 transition-colors duration-300 ${isFeatured ? 'text-lg sm:text-xl' : isTall ? 'text-base sm:text-lg' : 'text-sm sm:text-base'}`}>
+                      {project.title}
+                    </h3>
+                    <p className={`text-zinc-600 leading-relaxed font-light ${isFeatured ? 'text-xs sm:text-sm line-clamp-4' : isTall ? 'text-xs sm:text-sm line-clamp-5' : 'text-[11px] sm:text-xs line-clamp-3'}`}>
+                      {project.description}
+                    </p>
                   </div>
 
-                  {/* Tech pills */}
+                  {/* Tech pills — show more on featured/tall */}
                   <div className="flex flex-wrap gap-1.5">
-                    {(project.tech || []).slice(0, 4).map((t: string, i: number) => (
+                    {(project.tech || []).slice(0, isFeatured || isTall ? 6 : 4).map((t: string, i: number) => (
                       <span key={i} className="text-[8px] font-extrabold text-zinc-700 bg-zinc-200/50 border border-zinc-300/40 px-2 py-1 tracking-wider uppercase rounded-md">
                         {t}
                       </span>
                     ))}
-                    {project.tech && project.tech.length > 4 && (
-                      <span className="text-[8px] font-extrabold text-zinc-500 bg-zinc-200/50 border border-zinc-300/40 px-2 py-1 tracking-wider uppercase rounded-md">+{project.tech.length - 4}</span>
+                    {project.tech && project.tech.length > (isFeatured || isTall ? 6 : 4) && (
+                      <span className="text-[8px] font-extrabold text-zinc-500 bg-zinc-200/50 border border-zinc-300/40 px-2 py-1 tracking-wider uppercase rounded-md">+{project.tech.length - (isFeatured || isTall ? 6 : 4)}</span>
                     )}
                   </div>
 
@@ -1055,7 +1092,8 @@ function MainPortfolioContent() {
                     )}
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* Pagination / Load More */}
