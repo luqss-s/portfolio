@@ -559,7 +559,7 @@ function MainPortfolioContent() {
       >
         <MeshGradient
           className="w-full h-full absolute inset-0"
-          colors={["#000000", "#121212", "#27272a", "#3f3f46"]}
+          colors={["#000000", "#111111", "#1a2744", "#3f3f46"]}
           speed={0.5}
         />
       </motion.div>
@@ -1372,10 +1372,6 @@ function MainPortfolioContent() {
                     GITHUB
                     <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-zinc-950 group-hover:w-full transition-all duration-300" />
                   </a>
-                  <a href="https://linkedin.com/in/luqman-azri" target="_blank" rel="noreferrer" className="hover:text-zinc-950 transition-colors duration-300 relative group">
-                    LINKEDIN
-                    <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-zinc-950 group-hover:w-full transition-all duration-300" />
-                  </a>
                 </div>
               </div>
             </div>
@@ -1399,6 +1395,46 @@ function MainPortfolioContent() {
 }
 
 function EducationSection() {
+  const [activeCard, setActiveCard] = useState(0);
+  const totalCards = 2;
+
+  const cards = [
+    {
+      tag: "Degree",
+      title: "Bachelor of Computer Science",
+      subtitle: "Universiti Sains Malaysia, Pulau Pinang",
+      description: "Specialized in Intelligence Computing. Focused on machine learning, artificial intelligence, database systems, and advanced full-stack web architectures. Gained hands-on experience through project-based coursework.",
+      highlights: [
+        "Intelligence Computing",
+        "Machine Learning & AI",
+        "Semester 7 Dean's List",
+        "Semester 8 Dean's List",
+      ],
+      image: "/usm.jpg",
+      imageAlt: "Universiti Sains Malaysia Campus",
+      period: "2021 — 2025 · 4 YEARS",
+    },
+    {
+      tag: "Science",
+      title: "Matriculation Programme",
+      subtitle: "Johore Matriculation College, Tangkak",
+      description: "Completed rigorous pre-university physical science program with a strong focus on mathematics, computer science, and physics, establishing a solid quantitative base for higher education.",
+      highlights: [
+        "Physical Sciences Stream",
+        "Advanced Mathematics",
+        "Analytical Physics",
+        "CGPA 3.83 Academic Honors",
+      ],
+      image: "/kmj.jpg",
+      imageAlt: "Johore Matriculation College",
+      period: "2020 — 2021 · 1 YEAR",
+    },
+  ];
+
+  const goTo = (index: number) => {
+    setActiveCard(Math.max(0, Math.min(index, totalCards - 1)));
+  };
+
   return (
     <motion.div
       key="edu"
@@ -1408,156 +1444,107 @@ function EducationSection() {
       transition={{ duration: 0.4 }}
       className="flex flex-col w-full mx-auto"
     >
-      {/* Education Card 1: Degree */}
-      <div className="py-0 w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.5 }}
-          className="overflow-hidden border border-zinc-700/40 rounded-[2.5rem] shadow-2xl flex flex-col md:grid md:grid-cols-12 min-h-[650px] w-full"
-        >
-          {/* Left Side: Content */}
-          <div className="md:col-span-7 bg-[#f4f4f1] text-zinc-900 p-8 sm:p-10 md:p-14 flex flex-col justify-between gap-8">
-            <div>
-              <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-zinc-500">
-                <span>Academic Path</span>
-                <span className="bg-zinc-200 text-zinc-800 text-[9px] font-bold px-2 py-0.5 rounded-full">Degree</span>
+      {/* Card Display */}
+      <div className="relative w-full">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCard}
+            initial={{ opacity: 0, x: 60 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -60 }}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
+            className="overflow-hidden border border-zinc-700/40 rounded-[2.5rem] shadow-2xl flex flex-col md:grid md:grid-cols-12 min-h-[650px] w-full"
+          >
+            {/* Left Side: Content */}
+            <div className="md:col-span-7 bg-[#f4f4f1] text-zinc-900 p-8 sm:p-10 md:p-14 flex flex-col justify-between gap-8">
+              <div>
+                <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-zinc-500">
+                  <span>Academic Path</span>
+                  <span className="bg-zinc-200 text-zinc-800 text-[9px] font-bold px-2 py-0.5 rounded-full">{cards[activeCard].tag}</span>
+                </div>
+
+                <h3 className="font-sans font-black text-3xl sm:text-4xl md:text-5xl text-zinc-950 tracking-tighter mt-4 leading-none uppercase">
+                  {cards[activeCard].title}
+                </h3>
+
+                <p className="font-sans font-bold text-[11px] md:text-xs text-zinc-700 tracking-wider mt-3 uppercase">
+                  {cards[activeCard].subtitle}
+                </p>
+
+                <p className="text-zinc-600 text-xs sm:text-sm md:text-base leading-relaxed font-light mt-8 max-w-xl">
+                  {cards[activeCard].description}
+                </p>
               </div>
 
-              <h3 className="font-sans font-black text-3xl sm:text-4xl md:text-5xl text-zinc-950 tracking-tighter mt-4 leading-none uppercase">
-                Bachelor of Computer Science
-              </h3>
+              <div>
+                <div className="border-t border-zinc-300 w-full my-6" />
+                <p className="font-mono text-[9px] text-zinc-400 tracking-widest uppercase mb-4 font-semibold">Highlights</p>
 
-              <p className="font-sans font-bold text-[11px] md:text-xs text-zinc-700 tracking-wider mt-3 uppercase">
-                Universiti Sains Malaysia, Pulau Pinang
-              </p>
-
-              <p className="text-zinc-600 text-xs sm:text-sm md:text-base leading-relaxed font-light mt-8 max-w-xl">
-                Specialized in Intelligence Computing. Focused on machine learning, artificial intelligence, database systems, and advanced full-stack web architectures. Gained hands-on experience through project-based coursework.
-              </p>
-            </div>
-
-            <div>
-              <div className="border-t border-zinc-300 w-full my-6" />
-              <p className="font-mono text-[9px] text-zinc-400 tracking-widest uppercase mb-4 font-semibold">Highlights</p>
-
-              <div className="grid grid-cols-2 gap-x-6 gap-y-4 text-left">
-                <div className="flex items-center">
-                  <span className="font-mono text-[10px] text-zinc-400 mr-2">01</span>
-                  <span className="font-sans text-[11px] md:text-xs font-bold text-zinc-800 uppercase tracking-wider">Intelligence Computing</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="font-mono text-[10px] text-zinc-400 mr-2">02</span>
-                  <span className="font-sans text-[11px] md:text-xs font-bold text-zinc-800 uppercase tracking-wider">Machine Learning & AI</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="font-mono text-[10px] text-zinc-400 mr-2">03</span>
-                  <span className="font-sans text-[11px] md:text-xs font-bold text-zinc-800 uppercase tracking-wider">Semester 7 Dean's List</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="font-mono text-[10px] text-zinc-400 mr-2">04</span>
-                  <span className="font-sans text-[11px] md:text-xs font-bold text-zinc-800 uppercase tracking-wider">Semester 8 Dean's List</span>
+                <div className="grid grid-cols-2 gap-x-6 gap-y-4 text-left">
+                  {cards[activeCard].highlights.map((h, i) => (
+                    <div key={i} className="flex items-center">
+                      <span className="font-mono text-[10px] text-zinc-400 mr-2">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="font-sans text-[11px] md:text-xs font-bold text-zinc-800 uppercase tracking-wider">{h}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Right Side: Image */}
-          <div className="md:col-span-5 relative min-h-[300px] md:min-h-full overflow-hidden bg-zinc-950">
-            <Image
-              src="/usm.jpg"
-              alt="Universiti Sains Malaysia Campus"
-              fill
-              className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 z-10 pointer-events-none" />
+            {/* Right Side: Image */}
+            <div className="md:col-span-5 relative min-h-[300px] md:min-h-full overflow-hidden bg-zinc-950">
+              <Image
+                src={cards[activeCard].image}
+                alt={cards[activeCard].imageAlt}
+                fill
+                className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 z-10 pointer-events-none" />
 
-            <span className="absolute top-6 right-8 font-sans font-black text-5xl md:text-7xl text-white/90 tracking-tighter z-20">
-              01
-            </span>
-
-            <div className="absolute bottom-6 left-8 font-mono text-[10px] md:text-xs text-white/90 tracking-widest uppercase z-20">
-              2021 — 2025 · 4 YEARS
+              <div className="absolute bottom-6 left-8 font-mono text-[10px] md:text-xs text-white/90 tracking-widest uppercase z-20">
+                {cards[activeCard].period}
+              </div>
             </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Left Arrow */}
+        {activeCard > 0 && (
+          <button
+            onClick={() => goTo(activeCard - 1)}
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-11 h-11 md:w-13 md:h-13 flex items-center justify-center rounded-full bg-zinc-900/70 backdrop-blur-md border border-zinc-700/50 text-zinc-200 hover:bg-zinc-800 hover:text-white hover:border-zinc-500 shadow-lg transition-all duration-200"
+            aria-label="Previous"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+        )}
+
+        {/* Right Arrow */}
+        {activeCard < totalCards - 1 && (
+          <button
+            onClick={() => goTo(activeCard + 1)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-11 h-11 md:w-13 md:h-13 flex items-center justify-center rounded-full bg-zinc-900/70 backdrop-blur-md border border-zinc-700/50 text-zinc-200 hover:bg-zinc-800 hover:text-white hover:border-zinc-500 shadow-lg transition-all duration-200"
+            aria-label="Next"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        )}
       </div>
 
-      {/* Education Card 2: Matriculation */}
-      <div className="py-20 w-full">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="overflow-hidden border border-zinc-700/40 rounded-[2.5rem] shadow-2xl flex flex-col md:grid md:grid-cols-12 min-h-[650px] w-full"
-        >
-          {/* Left Side: Content */}
-          <div className="md:col-span-7 bg-[#f4f4f1] text-zinc-900 p-8 sm:p-10 md:p-14 flex flex-col justify-between gap-8">
-            <div>
-              <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-zinc-500">
-                <span>Academic Path</span>
-                <span className="bg-zinc-200 text-zinc-800 text-[9px] font-bold px-2 py-0.5 rounded-full">Science</span>
-              </div>
-
-              <h3 className="font-sans font-black text-3xl sm:text-4xl md:text-5xl text-zinc-950 tracking-tighter mt-4 leading-none uppercase">
-                Matriculation Programme
-              </h3>
-
-              <p className="font-sans font-bold text-[11px] md:text-xs text-zinc-700 tracking-wider mt-3 uppercase">
-                Johore Matriculation College, Tangkak
-              </p>
-
-              <p className="text-zinc-600 text-xs sm:text-sm md:text-base leading-relaxed font-light mt-8 max-w-xl">
-                Completed rigorous pre-university physical science program with a strong focus on mathematics, computer science, and physics, establishing a solid quantitative base for higher education.
-              </p>
-            </div>
-
-            <div>
-              <div className="border-t border-zinc-300 w-full my-6" />
-              <p className="font-mono text-[9px] text-zinc-400 tracking-widest uppercase mb-4 font-semibold">Highlights</p>
-
-              <div className="grid grid-cols-2 gap-x-6 gap-y-4 text-left">
-                <div className="flex items-center">
-                  <span className="font-mono text-[10px] text-zinc-400 mr-2">01</span>
-                  <span className="font-sans text-[11px] md:text-xs font-bold text-zinc-800 uppercase tracking-wider">Physical Sciences Stream</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="font-mono text-[10px] text-zinc-400 mr-2">02</span>
-                  <span className="font-sans text-[11px] md:text-xs font-bold text-zinc-800 uppercase tracking-wider">Advanced Mathematics</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="font-mono text-[10px] text-zinc-400 mr-2">03</span>
-                  <span className="font-sans text-[11px] md:text-xs font-bold text-zinc-800 uppercase tracking-wider">Analytical Physics</span>
-                </div>
-                <div className="flex items-center">
-                  <span className="font-mono text-[10px] text-zinc-400 mr-2">04</span>
-                  <span className="font-sans text-[11px] md:text-xs font-bold text-zinc-800 uppercase tracking-wider">CGPA 3.83 Academic Honors</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Side: Image */}
-          <div className="md:col-span-5 relative min-h-[300px] md:min-h-full overflow-hidden bg-zinc-950">
-            <Image
-              src="/kmj.jpg"
-              alt="Johore Matriculation College"
-              fill
-              className="object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-out"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/35 z-10 pointer-events-none" />
-
-            <span className="absolute top-6 right-8 font-sans font-black text-5xl md:text-7xl text-white/90 tracking-tighter z-20">
-              02
-            </span>
-
-            <div className="absolute bottom-6 left-8 font-mono text-[10px] md:text-xs text-white/90 tracking-widest uppercase z-20">
-              2020 — 2021 · 1 YEAR
-            </div>
-          </div>
-        </motion.div>
+      {/* Dot Indicators (Hero style, no numbers) */}
+      <div className="flex items-center justify-center gap-3 mt-8">
+        {cards.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => goTo(idx)}
+            className={`rounded-full transition-all duration-300 ${
+              activeCard === idx
+                ? "w-10 h-2.5 bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.4)]"
+                : "w-2.5 h-2.5 bg-zinc-600 hover:bg-zinc-400"
+            }`}
+            aria-label={`Go to card ${idx + 1}`}
+          />
+        ))}
       </div>
     </motion.div>
   );
