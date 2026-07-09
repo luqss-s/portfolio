@@ -389,8 +389,16 @@ function MainPortfolioContent() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // 1. Lenis Smooth Scroll
+  const lenisRef = useRef<Lenis | null>(null);
+
   useEffect(() => {
-    const lenis = new Lenis();
+    const lenis = new Lenis({
+      lerp: 0.08,
+      wheelMultiplier: 0.7,
+      touchMultiplier: 0.7,
+      syncTouch: true,
+    });
+    lenisRef.current = lenis;
 
     function raf(time: number) {
       lenis.raf(time);
@@ -399,8 +407,24 @@ function MainPortfolioContent() {
 
     requestAnimationFrame(raf);
 
+    // Resize after mount to ensure Lenis captures the full page height
+    requestAnimationFrame(() => {
+      lenis.resize();
+    });
+    // Also resize after a short delay to catch any layout shifts (images, fonts, etc.)
+    const resizeTimer = setTimeout(() => lenis.resize(), 500);
+    // Resize once all resources (images, etc.) have fully loaded
+    const handleLoad = () => lenis.resize();
+    window.addEventListener('load', handleLoad);
+    // Also resize on window resize
+    window.addEventListener('resize', handleLoad);
+
     return () => {
+      clearTimeout(resizeTimer);
+      window.removeEventListener('load', handleLoad);
+      window.removeEventListener('resize', handleLoad);
       lenis.destroy();
+      lenisRef.current = null;
     };
   }, []);
 
@@ -524,6 +548,11 @@ function MainPortfolioContent() {
         setProjects(data);
         sessionStorage.setItem("portfolio_projects_cache", JSON.stringify(data));
       }
+
+      // Recalculate Lenis scroll height after dynamic content loads
+      requestAnimationFrame(() => {
+        lenisRef.current?.resize();
+      });
     };
     fetchProjects();
   }, []);
