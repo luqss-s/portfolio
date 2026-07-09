@@ -44,7 +44,7 @@ const ExpandOnHover = ({ projects }: ExpandOnHoverProps) => {
   });
 
   return (
-    <div className="w-full bg-zinc-950/20 border border-zinc-900/60 rounded-3xl md:rounded-[2.5rem] py-8 px-2.5 md:py-10 md:px-6 backdrop-blur-md shadow-inner">
+    <div className="w-full bg-zinc-200/30 border border-zinc-300/40 rounded-3xl md:rounded-[2.5rem] py-8 px-2.5 md:py-10 md:px-6 backdrop-blur-md shadow-sm">
 
 
       <div className="flex w-full items-center justify-start md:justify-center overflow-x-auto md:overflow-visible no-scrollbar py-2">
@@ -55,7 +55,7 @@ const ExpandOnHover = ({ projects }: ExpandOnHoverProps) => {
             return (
               <div
                 key={project.id || idx}
-                className={`relative cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl border border-zinc-800/40 hover:border-zinc-700/60 shadow-lg transition-all duration-500 ease-in-out shrink-0
+                className={`relative cursor-pointer overflow-hidden rounded-2xl md:rounded-3xl border border-zinc-300/40 hover:border-zinc-400/60 shadow-lg transition-all duration-500 ease-in-out shrink-0
                   ${isExpanded 
                     ? 'w-[62vw] sm:w-[50vw] md:w-auto md:grow-[8] md:basis-0' 
                     : 'w-[13vw] sm:w-[10vw] md:w-auto md:grow-[1] md:basis-0'
@@ -125,7 +125,7 @@ const ExpandOnHover = ({ projects }: ExpandOnHoverProps) => {
                   }}
                 >
                   <span
-                    className="text-[9px] font-extrabold tracking-widest text-zinc-400 uppercase whitespace-nowrap font-mono"
+                    className="text-[9px] font-extrabold tracking-widest text-zinc-500 uppercase whitespace-nowrap font-mono"
                     style={{
                       writingMode: "vertical-lr",
                       transform: "rotate(180deg)",
