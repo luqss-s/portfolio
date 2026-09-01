@@ -11,23 +11,50 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping Supabase Database API
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          if [ -z "${{ secrets.SUPABASE_URL }}" ] || [ -z "${{ secrets.SUPABASE_ANON_KEY }}" ]; then
-            echo "Error: SUPABASE_URL or SUPABASE_ANON_KEY secrets are not set in GitHub repository secrets."
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::error::SUPABASE_URL or SUPABASE_ANON_KEY secrets are not set in GitHub repository secrets."
             exit 1
           fi
-          
+
+          # Trim leading/trailing whitespace and trailing slashes
+          BASE_URL=$(echo "$SUPABASE_URL" | xargs | sed 's:/*$::')
+
+          # Ensure https:// protocol prefix if missing
+          if [[ ! "$BASE_URL" =~ ^https?:// ]]; then
+            BASE_URL="https://$BASE_URL"
+          fi
+
+          TARGET_URL="${BASE_URL}/rest/v1/projects?select=id&limit=1"
+
           # Query a single row from projects table to trigger DB activity
-          RESPONSE_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
-            -X GET "${{ secrets.SUPABASE_URL }}/rest/v1/projects?select=id&limit=1" \
-            -H "apikey: ${{ secrets.SUPABASE_ANON_KEY }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_ANON_KEY }}")
-          
+          CURL_OUTPUT=$(curl -sS -w "\n%{http_code}" \
+            -X GET "$TARGET_URL" \
+            -H "apikey: $SUPABASE_ANON_KEY" \
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY" 2>&1) || CURL_EXIT=$?
+
+          if [ -n "$CURL_EXIT" ] && [ "$CURL_EXIT" -ne 0 ]; then
+            echo "::error::cURL connection failed with exit code $CURL_EXIT (Exit Code 6 means host/domain could not be resolved)."
+            echo "Output/Error details: $CURL_OUTPUT"
+            echo "Action required: Verify that SUPABASE_URL in GitHub Secrets matches your Supabase Project URL (e.g. https://<project-ref>.supabase.co)."
+            exit 1
+          fi
+
+          # Extract HTTP status code from the last line
+          RESPONSE_CODE=$(echo "$CURL_OUTPUT" | tail -n 1)
+          RESPONSE_BODY=$(echo "$CURL_OUTPUT" | sed '$d')
+
           echo "HTTP response code: $RESPONSE_CODE"
-          
+
           if [ "$RESPONSE_CODE" -eq 200 ] || [ "$RESPONSE_CODE" -eq 204 ]; then
             echo "Successfully pinged Supabase!"
           else
-            echo "Failed to ping Supabase. Response code: $RESPONSE_CODE"
+            echo "::error::Failed to ping Supabase. Response code: $RESPONSE_CODE"
+            if [ -n "$RESPONSE_BODY" ]; then
+              echo "Response body: $RESPONSE_BODY"
+            fi
             exit 1
           fi
