@@ -20,32 +20,46 @@ jobs:
             exit 1
           fi
 
-          # Trim leading/trailing whitespace and trailing slashes
+          # Clean and format the base URL
           BASE_URL=$(echo "$SUPABASE_URL" | xargs | sed 's:/*$::')
 
-          # Ensure https:// protocol prefix if missing
           if [[ ! "$BASE_URL" =~ ^https?:// ]]; then
             BASE_URL="https://$BASE_URL"
           fi
 
-          TARGET_URL="${BASE_URL}/rest/v1/projects?select=id&limit=1"
+          # Target the RPC keep_alive function (or fallback to projects table)
+          TARGET_URL="${BASE_URL}/rest/v1/rpc/keep_alive"
 
-          # Query a single row from projects table to trigger DB activity
+          echo "Pinging Supabase database..."
+
+          # Send POST request to RPC function to execute real database work
           CURL_OUTPUT=$(curl -sS -w "\n%{http_code}" \
-            -X GET "$TARGET_URL" \
+            -X POST "$TARGET_URL" \
             -H "apikey: $SUPABASE_ANON_KEY" \
-            -H "Authorization: Bearer $SUPABASE_ANON_KEY" 2>&1) || CURL_EXIT=$?
+            -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{}' 2>&1) || CURL_EXIT=$?
 
           if [ -n "$CURL_EXIT" ] && [ "$CURL_EXIT" -ne 0 ]; then
-            echo "::error::cURL connection failed with exit code $CURL_EXIT (Exit Code 6 means host/domain could not be resolved)."
+            echo "::error::cURL connection failed with exit code $CURL_EXIT"
             echo "Output/Error details: $CURL_OUTPUT"
-            echo "Action required: Verify that SUPABASE_URL in GitHub Secrets matches your Supabase Project URL (e.g. https://<project-ref>.supabase.co)."
+            echo "Action required: Ensure your project is unpaused in the Supabase Dashboard and SUPABASE_URL is correct."
             exit 1
           fi
 
-          # Extract HTTP status code from the last line
           RESPONSE_CODE=$(echo "$CURL_OUTPUT" | tail -n 1)
           RESPONSE_BODY=$(echo "$CURL_OUTPUT" | sed '$d')
+
+          # If RPC function hasn't been created yet (returns 404), fallback to projects table query
+          if [ "$RESPONSE_CODE" -eq 404 ]; then
+            echo "RPC function keep_alive not found. Falling back to table query..."
+            CURL_OUTPUT=$(curl -sS -w "\n%{http_code}" \
+              -X GET "${BASE_URL}/rest/v1/projects?select=id&limit=1" \
+              -H "apikey: $SUPABASE_ANON_KEY" \
+              -H "Authorization: Bearer $SUPABASE_ANON_KEY" 2>&1)
+            RESPONSE_CODE=$(echo "$CURL_OUTPUT" | tail -n 1)
+            RESPONSE_BODY=$(echo "$CURL_OUTPUT" | sed '$d')
+          fi
 
           echo "HTTP response code: $RESPONSE_CODE"
 
