@@ -2,8 +2,8 @@ name: Keep Supabase Alive
 
 on:
   schedule:
-    # Run every 3 days at midnight UTC to prevent auto-pausing (which happens after 7 days of inactivity)
-    - cron: '0 0 */3 * *'
+    # Run every 2 days at midnight UTC to safely prevent auto-pausing (which happens after 7 days)
+    - cron: '0 0 */2 * *'
   workflow_dispatch: # Allows manual run from the GitHub Actions tab
 
 jobs:
@@ -27,12 +27,21 @@ jobs:
             BASE_URL="https://$BASE_URL"
           fi
 
-          # Target the RPC keep_alive function (or fallback to projects table)
+          # Extract hostname to verify which project is actually being pinged
+          TARGET_HOST=$(echo "$BASE_URL" | sed -e 's|^[^/]*//||' -e 's|/.*$||')
+          echo "Targeting Supabase host: $TARGET_HOST"
+
+          if [[ "$TARGET_HOST" == *"bmvrbuvjjtgchowvknut"* ]]; then
+            echo "Confirmed: Pinging Portfolio Supabase project (bmvrbuvjjtgchowvknut)"
+          else
+            echo "::warning::The configured SUPABASE_URL ($TARGET_HOST) does NOT match the Portfolio project (bmvrbuvjjtgchowvknut)! Please check your GitHub Secrets."
+          fi
+
+          # Target the RPC keep_alive function
           TARGET_URL="${BASE_URL}/rest/v1/rpc/keep_alive"
 
-          echo "Pinging Supabase database..."
+          echo "Sending keep-alive request to database..."
 
-          # Send POST request to RPC function to execute real database work
           CURL_OUTPUT=$(curl -sS -w "\n%{http_code}" \
             -X POST "$TARGET_URL" \
             -H "apikey: $SUPABASE_ANON_KEY" \
@@ -41,9 +50,8 @@ jobs:
             -d '{}' 2>&1) || CURL_EXIT=$?
 
           if [ -n "$CURL_EXIT" ] && [ "$CURL_EXIT" -ne 0 ]; then
-            echo "::error::cURL connection failed with exit code $CURL_EXIT"
-            echo "Output/Error details: $CURL_OUTPUT"
-            echo "Action required: Ensure your project is unpaused in the Supabase Dashboard and SUPABASE_URL is correct."
+            echo "::error::cURL network connection failed with exit code $CURL_EXIT"
+            echo "Output: $CURL_OUTPUT"
             exit 1
           fi
 
@@ -52,7 +60,7 @@ jobs:
 
           # If RPC function hasn't been created yet (returns 404), fallback to projects table query
           if [ "$RESPONSE_CODE" -eq 404 ]; then
-            echo "RPC function keep_alive not found. Falling back to table query..."
+            echo "RPC function keep_alive not found (HTTP 404). Falling back to projects table query..."
             CURL_OUTPUT=$(curl -sS -w "\n%{http_code}" \
               -X GET "${BASE_URL}/rest/v1/projects?select=id&limit=1" \
               -H "apikey: $SUPABASE_ANON_KEY" \
@@ -63,8 +71,11 @@ jobs:
 
           echo "HTTP response code: $RESPONSE_CODE"
 
-          if [ "$RESPONSE_CODE" -eq 200 ] || [ "$RESPONSE_CODE" -eq 204 ]; then
-            echo "Successfully pinged Supabase!"
+          if [ "$RESPONSE_CODE" -eq 540 ]; then
+            echo "::error::Supabase project is currently PAUSED (HTTP 540). You must go to the Supabase Dashboard and click 'Restore project' manually first."
+            exit 1
+          elif [ "$RESPONSE_CODE" -eq 200 ] || [ "$RESPONSE_CODE" -eq 204 ]; then
+            echo "Successfully pinged Supabase database! Keep-alive confirmed."
           else
             echo "::error::Failed to ping Supabase. Response code: $RESPONSE_CODE"
             if [ -n "$RESPONSE_BODY" ]; then
